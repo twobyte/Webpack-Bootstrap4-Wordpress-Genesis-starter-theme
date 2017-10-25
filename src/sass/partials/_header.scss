@@ -1,0 +1,60 @@
+
+
+/* # Site Header
+---------------------------------------------------------------------------------------------------- */
+
+.site-header > .wrap {
+	padding: 20px floor(($grid-gutter-width/2));
+}
+
+/* ## Title Area
+--------------------------------------------- */
+
+.title-area {
+	float: left;
+	padding: 10px 0;
+	width: 300px;
+}
+
+.header-image .title-area {
+	margin: 0 auto;
+	max-width: 300px;
+	padding: 0;
+}
+
+.header-full-width .title-area {
+	float: none;
+	width: 100%;
+}
+
+.site-title {
+	font-size: 30px;
+	font-size: 3rem;
+	font-weight: 700;
+	line-height: 1.2;
+	margin-right: 16px;
+	display: inline-block;
+	vertical-align: baseline;
+}
+
+.site-title a,
+.site-title a:hover,
+.site-title a:focus {
+	color: #333;
+	text-decoration: none;
+	display: block;
+}
+
+.site-description {
+	font-size: 16px;
+	font-size: 1.6rem;
+	font-weight: 400;
+	line-height: 1.5;
+	display: inline-block;
+	vertical-align: baseline;
+}
+
+.site-description,
+.site-title {
+	margin-bottom: 0;
+}

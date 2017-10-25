@@ -1,0 +1,32 @@
+/* ==========================================================================
+   Editor Styles
+   ========================================================================== */
+
+
+/* Column Classes
+------------------------------------------------------------ */
+
+@import "settings/mixins";
+@import "settings/variables";
+@import '../../bower_components/font-awesome/scss/font-awesome';
+// Custom Bootstrap option
+@import "settings/bootstrap";
+
+
+// General, Typography
+@import "partials/general";
+@import "partials/typography";
+@import "partials/tables";
+@import "partials/theme";
+
+/* Images
+------------------------------------------------------------ */
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+#tinymce.content {
+	width: initial;
+	margin: 9px 10px;
+}

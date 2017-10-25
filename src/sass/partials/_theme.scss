@@ -1,0 +1,115 @@
+/* THEME SPECIFIC */
+
+.site-title {
+	letter-spacing: -1px;
+}
+#logo {
+	float:left; 
+	margin-right: 16px;
+}
+.site-inner {
+	margin-top:$grid-gutter-width;
+}
+
+/* ## Column Widths and Positions
+--------------------------------------------- */
+.wrap {
+	@extend .container;
+}
+.nav-primary .wrap {
+	padding: 0;
+}
+.site-footer .wrap {
+	padding: 0;
+	& > p {
+		@extend .col-md-10;
+		line-height: 2;
+		text-align:center;
+		/*@media (min-width: $screen-sm-min) {
+			text-align:left;
+			
+		}*/
+		@media (min-width: $screen-md-min) {
+			line-height: 1;
+			text-align:right;
+		}
+	}
+	& > .nav-secondary {
+		@extend .col-md-6;
+				
+		ul {
+			margin: 0;
+			line-height: 2;
+			
+		}
+		@media (min-width: $screen-sm-min) {
+			ul {
+				li {
+					padding: 0 $grid-gutter-width/6;
+					&:first-child {
+						padding-left:0;
+					}
+				}
+			}
+		}
+		@media (min-width: $screen-md-min) {
+			text-align:left;
+			padding-left: 0; // compensate for nav link padding
+			ul {
+				line-height: 1;
+				li {
+					border-right: none;
+					&:first-child {
+						border: none;
+					}
+					&:last-child {
+						padding-right:0;
+					}
+				}
+			}
+		}
+
+	}
+}
+.spcr {
+	padding: 0 $grid-gutter-width/8;
+}
+
+.footer-widgets .wrap {
+	border-top: floor(($grid-gutter-width/3)) solid $white;
+	padding: floor(($grid-gutter-width/2)) 0 0;
+}
+
+
+.content-sidebar-wrap {
+	padding-top: floor(($grid-gutter-width/2));
+	margin-top: floor(($grid-gutter-width/2))*-1;
+	background-color: $background;
+}
+/* ### Wrapping div for .content and .sidebar-primary */
+
+.content-sidebar-wrap {
+	@extend .row;
+}
+
+/* ### Content (16 columns) */
+.content {
+	@extend .col-md-11;
+}
+
+.sidebar-content .content {
+	@extend .col-md-push-5;
+}
+
+.full-width-content .content {
+	@extend .col-md-16;
+}
+
+/* ### Primary Sidebar */
+.sidebar-primary {
+	@extend .col-md-5;
+}
+
+.sidebar-content .sidebar-primary {
+	@extend .col-md-pull-5;
+}

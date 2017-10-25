@@ -1,0 +1,223 @@
+/* # Genesis Framework Admin
+Loaded on all admin pages */
+
+/* # Genesis menu icon font
+----------- */
+
+@font-face {
+	font-family: "genesis-icon";
+	font-weight: normal;
+	font-style: normal;
+
+	src: url("fonts/genesis-icon.eot");
+	src: url("fonts/genesis-icon.eot?#iefix") format("embedded-opentype"),
+		url("fonts/genesis-icon.woff") format("woff"),
+		url("fonts/genesis-icon.ttf") format("truetype"),
+		url("fonts/genesis-icon.svg#genesis-icon") format("svg");
+}
+
+
+/* # A dividing horizontal rule
+----------- */
+
+hr.div {
+	height: 1px;
+	margin: 10px 0;
+	border: none;
+	background: #ccc;
+}
+
+
+/* # Genesis menu icon
+----------- */
+
+#adminmenu .toplevel_page_genesis .wp-menu-image img {
+	width: 16px;
+	height: 16px;
+}
+
+#adminmenu .toplevel_page_genesis .wp-menu-image img {
+	display: none;
+}
+
+#adminmenu .toplevel_page_genesis .wp-menu-image:before {
+	font-family: "genesis-icon" !important;
+	content: "\e600";
+}
+
+
+/* # Scribe nag
+----------- */
+
+.scribe-nag {
+	overflow: hidden;
+}
+
+
+/* # Genesis upgraded
+----------- */
+
+.whats-new {
+	width: 160px;
+	height: 180px;
+	border-radius: 5px;
+}
+
+.changelog ul {
+	list-style: disc;
+	padding: 0 0 0 40px;
+}
+
+
+/* # Fix notice placement on our admin pages
+----------- */
+
+.genesis-form div.error,
+.genesis-form div.updated,
+.genesis-metaboxes div.error,
+.genesis-metaboxes div.updated {
+	clear: both;
+}
+
+
+/* # Genesis meta box styles
+----------- */
+
+.genesis-metaboxes {
+	box-sizing: border-box;
+
+	padding-bottom: 20px;
+}
+
+.genesis-metaboxes .bottom-buttons .button-primary {
+	margin-right: 10px;
+}
+
+.genesis-metaboxes .metabox-holder {
+	clear: both;
+}
+
+.genesis-metaboxes .inside {
+	padding: 0 10px;
+}
+
+.postbox-container {
+	width: 100%;
+}
+
+.postbox .inside > p:last-child {
+	margin: 1em 0 !important;
+}
+
+.genesis-metaboxes fieldset {
+	margin-top: 0;
+}
+
+.genesis-metaboxes legend {
+	line-height: 140%;
+}
+
+
+/* # Layout options styles
+----------- */
+
+.genesis-layout-selector input {
+	text-align: center;
+}
+
+.genesis-layout-selector .default-layout {
+	display: inline-block;
+}
+
+.genesis-layout-selector label.box {
+	border: 3px solid transparent;
+	display: block;
+	float: left;
+	margin: 10px 10px 10px 0;
+	text-align: center;
+	max-width: 85px;
+	max-height: 76px;
+}
+
+.genesis-layout-selector label.box img {
+	max-width: 85px;
+	pointer-events: none;
+}
+
+.genesis-layout-selector label.box:hover {
+	border: 3px solid #ddd;
+}
+
+.genesis-layout-selector label.box.selected {
+	border: 3px solid #ccc;
+}
+
+
+/* ## In-post layout box */
+
+#genesis_inpost_layout_box .inside input#default-layout {
+	margin-left: 5px;
+}
+
+#genesis_inpost_layout_box .genesis-layout-selector {
+	padding-top: 5px;
+}
+
+
+/* ## Layout selector, no JS */
+
+.ie8 .genesis-layout-selector input,
+.no-js .genesis-layout-selector input {
+	display: inline;
+}
+
+.ie8 .genesis-layout-selector label.box img,
+.ie8 .genesis-layout-selector label.box img:hover,
+.ie8 .genesis-layout-selector label.box.selected img,
+.no-js .genesis-layout-selector label.box img,
+.no-js .genesis-layout-selector label.box img:hover,
+.no-js .genesis-layout-selector label.box.selected img {
+	border: 3px solid transparent;
+}
+
+
+/* # Widgets
+----------- */
+
+.genesis-widget-column {
+	float: left;
+	width: 49%;
+}
+
+.genesis-widget-column-right {
+	margin-left: 2%;
+}
+
+.genesis-widget-column-box {
+	margin-top: 10px;
+	padding: 10px 10px 0;
+	border: 1px solid #ddd;
+	background: #f1f1f1;
+}
+
+.genesis-widget-column-box-top {
+	margin-top: 0;
+}
+
+.genesis-pagechecklist {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.genesis-image-size-selector {
+	max-width: 205px;
+}
+
+.no-js .hide-if-no-js {
+	display: none;
+}
+
+.widget-control-actions {
+	clear: both;
+}

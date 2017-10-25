@@ -1,0 +1,53 @@
+/*!
+    Theme Name: Tasty Webpack Starter Theme
+	Theme URI: https://tastydigital.com/themes/tasty-webpack-starter
+	Description: Starter child theme for the Genesis Framework, uses Webpack, built by Tasty Digital.
+    Author: Tasty Digital Ltd.
+    Author URI: https://tastydigital.com/
+ 
+    Version: 2.0
+ 
+    Tags: Webpack, Modernizr, Studiopress Genesis, Child theme
+ 
+    Template: genesis
+    Template Version: 2.0.0
+ 
+	License: GNU General Public License v2.0 (or later)
+	License URI: http://www.opensource.org/licenses/gpl-license.php
+*/
+
+
+// Reset, Variables, Mixins, Etc
+// DO NOT EDIT ORDER OF FILES
+@import "settings/mixins";
+@import "settings/variables";
+@import '~font-awesome/scss/font-awesome';
+// Custom Bootstrap option
+@import "~bootstrap-sass/assets/stylesheets/_bootstrap";
+
+@import "partials/accessibility";
+@import "partials/layout";
+@import "partials/header";
+@import "partials/entrycontent";
+@import "partials/footer";
+
+/// General, Typography
+@import "partials/general";
+@import "partials/layout";
+@import "partials/typography";
+@import "partials/tables";
+
+@import "partials/theme";
+// Menus / Navigation
+@import "partials/menus";
+@import "partials/pagination";
+
+// Widgets, Search, Comments, Forms, Sharing
+@import "partials/widgets";
+@import "partials/comments";
+@import "partials/sidebars";
+@import "partials/forms";
+@import "partials/gallery";
+
+//@import "partials/wp-job-manager";
+

@@ -1,0 +1,137 @@
+
+
+/* ## Typographical Elements
+--------------------------------------------- */
+
+p {
+	margin: 0 0 28px;
+	padding: 0;
+}
+
+ol,
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+li {
+	list-style-type: none;
+}
+
+hr {
+	border: 0;
+	border-collapse: collapse;
+	border-top: 1px solid #ddd;
+	clear: both;
+	margin: 1em 0;
+}
+
+b,
+strong {
+	font-weight: 700;
+}
+
+blockquote,
+cite,
+em,
+i {
+	font-style: italic;
+}
+
+blockquote {
+	margin: 40px;
+}
+
+blockquote::before {
+	content: "\201C";
+	display: block;
+	font-size: 30px;
+	height: 0;
+	left: -20px;
+	position: relative;
+	top: -10px;
+}
+
+
+
+/* ## Headings
+--------------------------------------------- */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: $body-font-family;
+	font-weight: $header-font-weight;
+	line-height: 1.21875;
+	margin: 0 0 10px;
+}
+
+h1 {
+	font-size: 32px;
+	font-size: 3.2rem;
+}
+
+h2 {
+	font-size: 28px;
+	font-size: 2.8rem;
+}
+
+h3 {
+	font-size: 21px;
+	font-size: 2.1rem;
+}
+
+h4 {
+	font-size: 18px;
+	font-size: 1.8rem;
+}
+
+h5 {
+	font-size: 16px;
+	font-size: 1.6rem;
+}
+
+h6 {
+	font-size: 13px;
+	font-size: 1.3rem;
+}
+
+blockquote {
+	margin: 32px 0;
+}
+
+
+/* ## Titles
+--------------------------------------------- */
+
+.archive-description .entry-title,
+.archive-title,
+.author-box-title {
+	font-size: 20px;
+	font-size: 2rem;
+}
+
+.entry-title {
+	font-size: 36px;
+	font-size: 3.6rem;
+}
+
+.entry-title a,
+.sidebar .widget-title a {
+	color: #333;
+	text-decoration: none;
+}
+
+.entry-title a:hover,
+.entry-title a:focus {
+	color: $linkColor;
+}
+
+.widget-title {
+	font-size: 18px;
+	font-size: 1.8rem;
+	margin-bottom: 20px;
+}
