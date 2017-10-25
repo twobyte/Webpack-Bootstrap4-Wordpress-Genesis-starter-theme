@@ -6,13 +6,13 @@
 
 This repo should replace entire theme folder within wp-contents.
 
-Uses WEBPACK to build out front end assets, these are assets are authored within src folder. Webpack writes out these front end assets to dist folder in actual theme folder.  Theme folder contains PHP and static assets and should be renamed to whatever the theme is to be called and also updating the themeFolder constant in webpack.config.js to match this name. 
+Uses WEBPACK to build out front end assets, these assets are authored within ./src folder. Webpack writes out these front end assets to ./dist folder in the actual theme folder.  Theme folder is called ./tasty-webpack-theme by default and contains the Wordpress PHP and other static assets and can be renamed to whatever the new theme is to be called. If renaming you must also update the themeFolder constant in webpack.config.js to match this name. 
 
-Also update your dev env vars proxyURL and allowedHosts in webpack.config.js to your local development website hostname using MAMP or similar.
+Also within webpack.config.js update your dev env constants proxyURL and allowedHosts to your local development website hostname configured using MAMP or similar. Also check publicPath reflects your theme folder name.
 
-Once theme folder named and constants updated appropriately get started with yarn install then yarn run watch to develop and yarn run production to compress and write out all those assets ready for deployment.
+Once theme folder named as required and constants updated get started with `yarn install` then `yarn run watch` to develop and `yarn run production` to compress and write out all those assets ready for deployment.
 
-Logo, favicon and google key can be specified near the top of [theme]/lib/theme.php file.
+Theme specific logo, favicon and google key can be specified near the top of [theme-name]/lib/theme.php file.
 
 ## INSTALL
 
