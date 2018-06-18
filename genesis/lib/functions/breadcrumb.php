@@ -8,13 +8,13 @@
  * @package Genesis\Breadcrumbs
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
  * Helper function for the Genesis Breadcrumb Class.
  *
- * @since 0.1.6
+ * @since 1.0.0
  *
  * @global Genesis_Breadcrumb $_genesis_breadcrumb
  *
@@ -25,7 +25,7 @@ function genesis_breadcrumb( $args = array() ) {
 	global $_genesis_breadcrumb;
 
 	if ( ! $_genesis_breadcrumb ) {
-		$_genesis_breadcrumb = new Genesis_Breadcrumb;
+		$_genesis_breadcrumb = new Genesis_Breadcrumb();
 	}
 
 	$_genesis_breadcrumb->output( $args );
@@ -37,7 +37,7 @@ add_action( 'genesis_before_loop', 'genesis_do_breadcrumbs' );
  * Display Breadcrumbs above the Loop. Concedes priority to popular breadcrumb
  * plugins.
  *
- * @since 0.1.6
+ * @since 1.0.0
  *
  * @return void Return early if Genesis settings dictate that no breadcrumbs should show in current context.
  */
@@ -62,20 +62,15 @@ function genesis_do_breadcrumbs() {
 		echo $breadcrumb_markup_open;
 		bcn_display();
 		echo '</div>';
-	}
-	elseif ( function_exists( 'breadcrumbs' ) ) {
+	} elseif ( function_exists( 'breadcrumbs' ) ) {
 		breadcrumbs();
-	}
-	elseif ( function_exists( 'crumbs' ) ) {
+	} elseif ( function_exists( 'crumbs' ) ) {
 		crumbs();
-	}
-	elseif ( class_exists( 'WPSEO_Breadcrumbs' ) && genesis_get_option( 'breadcrumbs-enable', 'wpseo_internallinks' ) ) {
+	} elseif ( class_exists( 'WPSEO_Breadcrumbs' ) && genesis_get_option( 'breadcrumbs-enable', 'wpseo_titles' ) ) {
 		yoast_breadcrumb( $breadcrumb_markup_open, '</div>' );
-	}
-	elseif( function_exists( 'yoast_breadcrumb' ) && ! class_exists( 'WPSEO_Breadcrumbs' ) ) {
+	} elseif ( function_exists( 'yoast_breadcrumb' ) && ! class_exists( 'WPSEO_Breadcrumbs' ) ) {
 		yoast_breadcrumb( $breadcrumb_markup_open, '</div>' );
-	}
-	else {
+	} else {
 		genesis_breadcrumb();
 	}
 

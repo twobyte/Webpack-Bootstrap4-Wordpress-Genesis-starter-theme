@@ -8,7 +8,7 @@
  * @package Genesis\Admin
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
@@ -30,15 +30,15 @@ class Genesis_Admin_SEO_Settings extends Genesis_Admin_Boxes {
 	 */
 	public function __construct() {
 
-		$page_id = 'seo-settings';
+		$page_id         = 'seo-settings';
 		$this->help_base = GENESIS_VIEWS_DIR . '/help/seo-';
 
 		$menu_ops = array(
 			'submenu' => array(
 				'parent_slug' => 'genesis',
 				'page_title'  => __( 'Genesis - SEO Settings', 'genesis' ),
-				'menu_title'  => __( 'SEO Settings', 'genesis' )
-			)
+				'menu_title'  => __( 'SEO Settings', 'genesis' ),
+			),
 		);
 
 		$page_ops = array(
@@ -165,8 +165,8 @@ class Genesis_Admin_SEO_Settings extends Genesis_Admin_Boxes {
 		$this->add_help_tab( 'settings', __( 'SEO Settings', 'genesis' ) );
 		$this->add_help_tab( 'doctitle', __( 'Doctitle Settings', 'genesis' ) );
 		$this->add_help_tab( 'homepage', __( 'Homepage Settings', 'genesis' ) );
-		$this->add_help_tab( 'dochead',  __( 'Document Head Settings', 'genesis' ) );
-		$this->add_help_tab( 'robots',   __( 'Robots Meta Settings', 'genesis' ) );
+		$this->add_help_tab( 'dochead', __( 'Document Head Settings', 'genesis' ) );
+		$this->add_help_tab( 'robots', __( 'Robots Meta Settings', 'genesis' ) );
 
 		// Add help sidebar.
 		$this->set_help_sidebar();
@@ -180,10 +180,37 @@ class Genesis_Admin_SEO_Settings extends Genesis_Admin_Boxes {
 	 */
 	public function metaboxes() {
 
+		add_action( 'genesis_admin_before_metaboxes', array( $this, 'customizer_notice' ) );
+
 		$this->add_meta_box( 'genesis-seo-settings-sitewide', __( 'Site-wide Settings', 'genesis' ) );
 		$this->add_meta_box( 'genesis-seo-settings-homepage', __( 'Homepage Settings', 'genesis' ) );
 		$this->add_meta_box( 'genesis-seo-settings-dochead', __( 'Document Head Settings', 'genesis' ) );
 		$this->add_meta_box( 'genesis-seo-settings-robots', __( 'Robots Meta Settings', 'genesis' ) );
+
+	}
+
+	/**
+	 * Notify the user that SEO settings are available in the Customizer.
+	 *
+	 * @since 2.6.0
+	 *
+	 * @param string $pagehook Name of the page hook when the menu is registered.
+	 */
+	public function customizer_notice( $pagehook ) {
+
+		if ( $pagehook !== $this->pagehook ) {
+			return;
+		}
+
+		printf(
+			'<div class="notice notice-info"><p>%s</p><p>%s</p></div>',
+			__( 'Hey there! Did you know that SEO settings can now be configured with a live preview in the Customizer?', 'genesis' ),
+			sprintf(
+			  /* translators: %s: Customizer admin URL */
+			  __( 'Eventually, settings pages like this one will no longer be available, and everything will be configured in the Customizer, so go ahead and <a href="%s">start using it now</a>!', 'genesis' ),
+			  esc_url( admin_url( 'customize.php?autofocus[panel]=genesis-seo' ) )
+			)
+		);
 
 	}
 

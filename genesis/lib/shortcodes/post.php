@@ -8,7 +8,7 @@
  * @package Genesis\Shortcodes
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 add_shortcode( 'post_date', 'genesis_post_date_shortcode' );
@@ -41,7 +41,7 @@ function genesis_post_date_shortcode( $atts ) {
 	$atts = shortcode_atts( $defaults, $atts, 'post_date' );
 
 	if ( 'relative' === $atts['format'] ) {
-		$display = genesis_human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ), $atts['relative_depth'] );
+		$display  = genesis_human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ), $atts['relative_depth'] );
 		$display .= ' ' . __( 'ago', 'genesis' );
 	} else {
 		$display = get_the_time( $atts['format'] );
@@ -125,7 +125,7 @@ function genesis_post_modified_date_shortcode( $atts ) {
 	$atts = shortcode_atts( $defaults, $atts, 'post_modified_date' );
 
 	if ( 'relative' === $atts['format'] ) {
-		$display = genesis_human_time_diff( get_the_modified_time( 'U' ), current_time( 'timestamp' ), $atts['relative_depth'] );
+		$display  = genesis_human_time_diff( get_the_modified_time( 'U' ), current_time( 'timestamp' ), $atts['relative_depth'] );
 		$display .= ' ' . __( 'ago', 'genesis' );
 	} else {
 		$display = get_the_modified_time( $atts['format'] );
@@ -295,8 +295,8 @@ function genesis_post_author_link_shortcode( $atts ) {
 	}
 
 	$defaults = array(
-		'after'    => '',
-		'before'   => '',
+		'after'  => '',
+		'before' => '',
 	);
 
 	$atts = shortcode_atts( $defaults, $atts, 'post_author_link' );
@@ -309,7 +309,7 @@ function genesis_post_author_link_shortcode( $atts ) {
 		$output .= esc_html( $author );
 		$output .= '</span></a>' . $atts['after'] . '</span>';
 	} else {
-		$link = '<a href="' . esc_url( $url ) . '" rel="author external">' . esc_html( $author ) . '</a>';
+		$link   = '<a href="' . esc_url( $url ) . '" rel="author external">' . esc_html( $author ) . '</a>';
 		$output = sprintf( '<span class="author vcard">%2$s<span class="fn">%1$s</span>%3$s</span>', $link, $atts['before'], $atts['after'] );
 	}
 
@@ -406,7 +406,7 @@ function genesis_post_comments_shortcode( $atts ) {
 		'one'         => __( '1 Comment', 'genesis' ),
 		'zero'        => __( 'Leave a Comment', 'genesis' ),
 	);
-	$atts = shortcode_atts( $defaults, $atts, 'post_comments' );
+	$atts     = shortcode_atts( $defaults, $atts, 'post_comments' );
 
 	if ( 'enabled' === $atts['hide_if_off'] && ( ! genesis_get_option( 'comments_posts' ) || ! comments_open() ) ) {
 		return '';
@@ -419,13 +419,15 @@ function genesis_post_comments_shortcode( $atts ) {
 
 	$comments = sprintf( '<a href="%s">%s</a>', get_comments_link(), $comments );
 
-	$output = genesis_markup( array(
-		'open'    => '<span class="entry-comments-link">',
-		'close'   => '</span>',
-		'content' => $atts['before'] . $comments . $atts['after'],
-		'context' => 'comments-shortcode',
-		'echo'    => false,
-	) );
+	$output = genesis_markup(
+		array(
+			'open'    => '<span class="entry-comments-link">',
+			'close'   => '</span>',
+			'content' => $atts['before'] . $comments . $atts['after'],
+			'context' => 'comments-shortcode',
+			'echo'    => false,
+		)
+	);
 
 	return apply_filters( 'genesis_post_comments_shortcode', $output, $atts );
 
@@ -445,16 +447,21 @@ add_shortcode( 'post_tags', 'genesis_post_tags_shortcode' );
  * @since 1.1.0
  *
  * @param array|string $atts Shortcode attributes. Empty string if no attributes.
- * @return string Return empty string if the post has no tags. Otherwise, output for `post_tags` shortcode.
+ * @return string Return empty string if the `post_tag` taxonomy is not associated with the current post type
+ *                or if the post has no tags. Otherwise, output for `post_tags` shortcode.
  */
 function genesis_post_tags_shortcode( $atts ) {
+
+	if ( ! is_object_in_taxonomy( get_post_type(), 'post_tag' ) ) {
+		return '';
+	}
 
 	$defaults = array(
 		'after'  => '',
 		'before' => __( 'Tagged With: ', 'genesis' ),
 		'sep'    => ', ',
 	);
-	$atts = shortcode_atts( $defaults, $atts, 'post_tags' );
+	$atts     = shortcode_atts( $defaults, $atts, 'post_tags' );
 
 	$tags = get_the_tag_list( $atts['before'], trim( $atts['sep'] ) . ' ', $atts['after'] );
 
@@ -487,11 +494,14 @@ add_shortcode( 'post_categories', 'genesis_post_categories_shortcode' );
  * @since 1.1.0
  *
  * @param array|string $atts Shortcode attributes. Empty string if no attributes.
- *
- * @return string Return empty string if the post has no categories.
- *                Otherwise, output for `post_categories` shortcode.
+ * @return string Return empty string if the `category` taxonomy is not associated with the current post type
+ *                or if the post has no categories. Otherwise, output for `post_categories` shortcode.
  */
 function genesis_post_categories_shortcode( $atts ) {
+
+	if ( ! is_object_in_taxonomy( get_post_type(), 'category' ) ) {
+		return '';
+	}
 
 	$defaults = array(
 		'sep'    => ', ',
@@ -524,7 +534,7 @@ add_shortcode( 'post_terms', 'genesis_post_terms_shortcode' );
  *
  * Supported shortcode attributes are:
  *   after (output after link, default is empty string),
- *   before (output before link, default is 'Tagged With: '),
+ *   before (output before link, default is 'Filed Under: '),
  *   sep (separator string between tags, default is ', '),
  *    taxonomy (name of the taxonomy, default is 'category').
  *
@@ -615,5 +625,48 @@ function genesis_post_edit_shortcode( $atts ) {
 	$output = $edit;
 
 	return apply_filters( 'genesis_post_edit_shortcode', $output, $atts );
+
+}
+
+add_shortcode( 'adsense_hint', 'genesis_entry_adsense_hint' );
+/**
+ * Produces adsense hint markup.
+ *
+ * Request a Google Adsense advert wherever placed.
+ *
+ * @since 2.6.0
+ *
+ * @param array|string $atts Shortcode attributes. Empty string if no attributes.
+ * @return string Output for `genesis_adsense_hint` shortcode, or empty string if no adsense publisher ID is found.
+ */
+function genesis_entry_adsense_hint( $atts ) {
+
+	if ( ! genesis_get_option( 'adsense_id' ) ) {
+		return '';
+	}
+
+	$defaults = array(
+		'id' => '',
+	);
+
+	$atts = shortcode_atts( $defaults, $atts );
+
+	// Generate ID if none provided.
+	if ( ! $atts['id'] ) {
+
+		static $i = 1;
+
+		$atts['id'] = sprintf( 'ad-%d-%d', get_the_ID(), $i );
+		$i++;
+
+	}
+
+	$output  = '<!-- adsense -->';
+	$output .= sprintf(
+		'<div><ins id="%s" style="display: none;" class="adsbygoogle-placeholder"></ins></div>',
+		esc_attr( $atts['id'] )
+	);
+
+	return $output;
 
 }

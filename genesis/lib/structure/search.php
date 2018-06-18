@@ -8,7 +8,7 @@
  * @package Genesis\Search
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 add_filter( 'get_search_form', 'genesis_search_form' );
@@ -20,12 +20,12 @@ add_filter( 'get_search_form', 'genesis_search_form' );
  * Applies the `genesis_search_text`, `genesis_search_button_text`, `genesis_search_form_label` and
  * `genesis_search_form` filters.
  *
- * @since 0.2.0
+ * @since 1.0.0
  *
  * @return string HTML markup for search form.
  */
 function genesis_search_form() {
-	$search_text = get_search_query() ? apply_filters( 'the_search_query', get_search_query() ) : apply_filters( 'genesis_search_text', __( 'Search this website', 'genesis' ) . ' &#x02026;' );
+	$search_text = get_search_query() ? apply_filters( 'the_search_query', get_search_query() ) : apply_filters( 'genesis_search_text', __( 'Search this website', 'genesis' ) . ' &#x02026;' ); // WPCS: prefix ok.
 
 	$button_text = apply_filters( 'genesis_search_button_text', esc_attr__( 'Search', 'genesis' ) );
 

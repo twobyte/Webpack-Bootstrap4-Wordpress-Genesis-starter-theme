@@ -8,10 +8,9 @@
  * @package Genesis\Markup
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
-add_filter( 'genesis_markup_open', 'genesis_markup_open_xhtml', 10, 2 );
 /**
  * Replace HTML5 opening markup with XHTML equivalent.
  *
@@ -189,7 +188,6 @@ function genesis_markup_open_xhtml( $open, $args ) {
 
 }
 
-add_filter( 'genesis_markup_close', 'genesis_markup_close_xhtml', 10, 2 );
 /**
  * Replace HTML5 closing markup with XHTML equivalent.
  *

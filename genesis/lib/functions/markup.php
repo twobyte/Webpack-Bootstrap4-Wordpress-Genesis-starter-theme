@@ -8,7 +8,7 @@
  * @package Genesis\Markup
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
@@ -62,7 +62,7 @@ function genesis_markup( $args = array() ) {
 	 *
 	 * @since 1.9.0
 	 *
-	 * @param bool  false Flag indicating short curcuit content.
+	 * @param bool  false Flag indicating short circuit content.
 	 * @param array $args Array with markup arguments.
 	 *
 	 * @see genesis_markup $args Array.
@@ -109,7 +109,6 @@ function genesis_markup( $args = array() ) {
 
 	}
 
-	// Add attributes to open tag.
 	if ( $args['context'] ) {
 
 		$open = $args['open'] ? sprintf( $args['open'], genesis_attr( $args['context'], array(), $args ) ) : '';
@@ -138,10 +137,23 @@ function genesis_markup( $args = array() ) {
 		 */
 		$close = apply_filters( "genesis_markup_{$args['context']}_close", $args['close'], $args );
 
+		/**
+		 * Contextual filter to modify 'content'.
+		 *
+		 * @since 2.6.0
+		 *
+		 * @param string $content Content being passed through Markup API.
+		 * @param array  $args  Array with markup arguments.
+		 *
+		 * @see genesis_markup $args Array.
+		 */
+		$content = apply_filters( "genesis_markup_{$args['context']}_content", $args['content'], $args );
+
 	} else {
 
-		$open = $args['open'];
-		$close = $args['close'];
+		$open    = $args['open'];
+		$close   = $args['close'];
+		$content = $args['content'];
 
 	}
 
@@ -174,11 +186,11 @@ function genesis_markup( $args = array() ) {
 	}
 
 	if ( $args['echo'] ) {
-		echo $open . $args['content'] . $close;
+		echo $open . $content . $close;
 
 		return null;
 	} else {
-		return $open . $args['content'] . $close;
+		return $open . $content . $close;
 	}
 
 }
@@ -192,8 +204,9 @@ add_action( 'after_setup_theme', 'genesis_xhtml_check' );
 function genesis_xhtml_check() {
 
 	if ( ! genesis_html5() ) {
-		require_once( PARENT_DIR . '/lib/structure/xhtml.php' );
-
+		require_once PARENT_DIR . '/lib/structure/xhtml.php';
+		add_filter( 'genesis_markup_open', 'genesis_markup_open_xhtml', 10, 2 );
+		add_filter( 'genesis_markup_close', 'genesis_markup_close_xhtml', 10, 2 );
 		_genesis_builtin_sidebar_params();
 	}
 
@@ -213,14 +226,14 @@ function genesis_xhtml_check() {
  */
 function genesis_parse_attr( $context, $attributes = array(), $args = array() ) {
 
-    $defaults = array(
-        'class' => sanitize_html_class( $context ),
-    );
+	$defaults = array(
+		'class' => sanitize_html_class( $context ),
+	);
 
-    $attributes = wp_parse_args( $attributes, $defaults );
+	$attributes = wp_parse_args( $attributes, $defaults );
 
-    // Contextual filter.
-    return apply_filters( "genesis_attr_{$context}", $attributes, $context, $args );
+	// Contextual filter.
+	return apply_filters( "genesis_attr_{$context}", $attributes, $context, $args );
 
 }
 
@@ -305,9 +318,9 @@ add_filter( 'genesis_attr_head', 'genesis_attributes_head' );
  * @param array $attributes Existing attributes for `head` element.
  * @return array Amended attributes for `head` element.
  */
- function genesis_attributes_head( $attributes ) {
+function genesis_attributes_head( $attributes ) {
 
- 	$attributes['class'] = '';
+	$attributes['class'] = '';
 
 	if ( ! is_front_page() ) {
 		return $attributes;
@@ -478,6 +491,40 @@ function genesis_attributes_search_form( $attributes ) {
 
 }
 
+add_filter( 'genesis_attr_nav-primary', 'genesis_attributes_nav_primary' );
+/**
+ * Add attributes for primary navigation element.
+ *
+ * @since 2.6.0
+ *
+ * @param array $attributes Existing attributes for primary navigation element.
+ * @return array Amended attributes for primary navigation element.
+ */
+function genesis_attributes_nav_primary( $attributes ) {
+
+	$attributes['aria-label'] = __( 'Main', 'genesis' );
+
+	return $attributes;
+
+}
+
+add_filter( 'genesis_attr_nav-secondary', 'genesis_attributes_nav_secondary' );
+/**
+ * Add attributes for secondary navigation element.
+ *
+ * @since 2.6.0
+ *
+ * @param array $attributes Existing attributes for secondary navigation element.
+ * @return array Amended attributes for secondary navigation element.
+ */
+function genesis_attributes_nav_secondary( $attributes ) {
+
+	$attributes['aria-label'] = __( 'Secondary', 'genesis' );
+
+	return $attributes;
+
+}
+
 add_filter( 'genesis_attr_nav-primary', 'genesis_attributes_nav' );
 add_filter( 'genesis_attr_nav-secondary', 'genesis_attributes_nav' );
 add_filter( 'genesis_attr_nav-header', 'genesis_attributes_nav' );
@@ -511,7 +558,7 @@ add_filter( 'genesis_attr_nav-link-wrap', 'genesis_attributes_nav_link_wrap' );
  */
 function genesis_attributes_nav_link_wrap( $attributes ) {
 
-	$attributes['class'] = '';
+	$attributes['class']    = '';
 	$attributes['itemprop'] = 'name';
 
 	return $attributes;
@@ -879,6 +926,24 @@ function genesis_attributes_entry_title( $attributes ) {
 
 }
 
+add_filter( 'genesis_attr_entry-title-link', 'genesis_attributes_entry_title_link' );
+/**
+ * Add attributes for entry title link.
+ *
+ * @since 2.6.0
+ *
+ * @param array $attributes Existing attributes for entry title element.
+ * @return array Amended attributes for entry title element.
+ */
+function genesis_attributes_entry_title_link( $attributes ) {
+
+	$attributes['rel']  = 'bookmark';
+	$attributes['href'] = get_permalink();
+
+	return $attributes;
+
+}
+
 add_filter( 'genesis_attr_entry-content', 'genesis_attributes_entry_content' );
 /**
  * Add attributes for entry content element.
@@ -1094,11 +1159,11 @@ add_filter( 'genesis_attr_sidebar-primary', 'genesis_attributes_sidebar_primary'
  */
 function genesis_attributes_sidebar_primary( $attributes ) {
 
-	$attributes['class']     = 'sidebar sidebar-primary widget-area';
-	$attributes['role']      = 'complementary';
-	$attributes['aria-label']  = __( 'Primary Sidebar', 'genesis' );
-	$attributes['itemscope'] = true;
-	$attributes['itemtype']  = 'https://schema.org/WPSideBar';
+	$attributes['class']      = 'sidebar sidebar-primary widget-area';
+	$attributes['role']       = 'complementary';
+	$attributes['aria-label'] = __( 'Primary Sidebar', 'genesis' );
+	$attributes['itemscope']  = true;
+	$attributes['itemtype']   = 'https://schema.org/WPSideBar';
 
 	return $attributes;
 
@@ -1115,11 +1180,11 @@ add_filter( 'genesis_attr_sidebar-secondary', 'genesis_attributes_sidebar_second
  */
 function genesis_attributes_sidebar_secondary( $attributes ) {
 
-	$attributes['class']     = 'sidebar sidebar-secondary widget-area';
-	$attributes['role']      = 'complementary';
-	$attributes['aria-label']  = __( 'Secondary Sidebar', 'genesis' );
-	$attributes['itemscope'] = true;
-	$attributes['itemtype']  = 'https://schema.org/WPSideBar';
+	$attributes['class']      = 'sidebar sidebar-secondary widget-area';
+	$attributes['role']       = 'complementary';
+	$attributes['aria-label'] = __( 'Secondary Sidebar', 'genesis' );
+	$attributes['itemscope']  = true;
+	$attributes['itemtype']   = 'https://schema.org/WPSideBar';
 
 	return $attributes;
 
@@ -1157,6 +1222,7 @@ add_filter( 'genesis_attr_footer-widget-area', 'genesis_attributes_footer_widget
 function genesis_attributes_footer_widget_area( $attributes, $context, $args ) {
 
 	$column = ! empty( $args['params'] ) && ! empty( $args['params']['column'] ) ? $args['params']['column'] : 0;
+
 	$attributes['class'] = sprintf( 'widget-area footer-widgets-%d ', $column ) . $attributes['class'];
 
 	return $attributes;
@@ -1190,8 +1256,7 @@ function genesis_skiplinks_markup() {
  */
 function genesis_skiplinks_attr_nav_primary( $attributes ) {
 
-	$attributes['id']         = 'genesis-nav-primary';
-	$attributes['aria-label'] = esc_html__( 'Main navigation', 'genesis' );
+	$attributes['id'] = 'genesis-nav-primary';
 
 	return $attributes;
 

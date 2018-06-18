@@ -8,11 +8,11 @@
  * @package StudioPress\Genesis
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 ?>
-<h3><?php esc_html_e( 'Layout Settings', 'genesis' ); ?></h3>
+<h2><?php esc_html_e( 'Layout Settings', 'genesis' ); ?></h2>
 
 <table class="form-table">
 	<tbody>
@@ -24,19 +24,19 @@
 
 					<p><input type="radio" class="default-layout" name="genesis-meta[layout]" id="default-layout" value="" <?php checked( get_term_meta( $object->term_id, 'layout', true ), '' ); ?> /> <label for="default-layout" class="default">
 					<?php
-					/* translators: Theme settings admin screen link */
+					/* translators: %s: Theme settings admin screen link. */
 					printf( esc_html__( 'Default Layout set in %s', 'genesis' ), '<a href="' . esc_url( menu_page_url( 'genesis', 0 ) ) . '">' . esc_html__( 'Theme Settings', 'genesis' ) . '</a>' );
 					?>
 					</label></p>
 					<?php
-					$type = 'archive-' . $object->taxonomy . '-' . $object->term_id;
-					genesis_layout_selector( array(
-						'name'        => 'genesis-meta[layout]',
-						'selected'    => get_term_meta( $object->term_id, 'layout', true ),
-						'type'        => array( 'archive', $object->taxonomy, $object->term_id ),
-					) );
+					genesis_layout_selector(
+						array(
+							'name'     => 'genesis-meta[layout]',
+							'selected' => get_term_meta( $object->term_id, 'layout', true ),
+							'type'     => array( 'archive', $object->taxonomy, $object->term_id ),
+						)
+					);
 					?>
-
 				</fieldset>
 			</td>
 		</tr>

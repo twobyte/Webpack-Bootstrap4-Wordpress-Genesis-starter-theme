@@ -8,11 +8,11 @@
  * @package StudioPress\Genesis
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 ?>
-<h3><?php esc_html_e( 'User Permissions', 'genesis' ); ?></h3>
+<h2><?php esc_html_e( 'User Permissions', 'genesis' ); ?></h2>
 <table class="form-table">
 	<tbody>
 		<tr>
@@ -25,9 +25,11 @@
 				<label for="genesis-meta[genesis_seo_settings_menu]"><input id="genesis-meta[genesis_seo_settings_menu]" name="genesis-meta[genesis_seo_settings_menu]" type="checkbox" value="1" <?php checked( get_the_author_meta( 'genesis_seo_settings_menu', $object->ID ) ); ?> />
 				<?php esc_html_e( 'Enable SEO Settings Submenu?', 'genesis' ); ?></label><br />
 				<?php endif; ?>
-
+				
+				<?php if ( current_theme_supports( 'genesis-import-export-menu' ) ) : ?>
 				<label for="genesis-meta[genesis_import_export_menu]"><input id="genesis-meta[genesis_import_export_menu]" name="genesis-meta[genesis_import_export_menu]" type="checkbox" value="1" <?php checked( get_the_author_meta( 'genesis_import_export_menu', $object->ID ) ); ?> />
 				<?php esc_html_e( 'Enable Import/Export Submenu?', 'genesis' ); ?></label>
+				<?php endif; ?>
 			</td>
 		</tr>
 	</tbody>

@@ -8,7 +8,7 @@
  * @package Genesis\Header
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
@@ -21,7 +21,7 @@
 function genesis_get_seo_meta_description() {
 
 	$description = '';
-	$post_id = null;
+	$post_id     = null;
 
 	// If we're on the root page.
 	if ( genesis_is_root_page() ) {
@@ -84,7 +84,7 @@ function genesis_get_seo_meta_description() {
 function genesis_get_seo_meta_keywords() {
 
 	$keywords = '';
-	$post_id = null;
+	$post_id  = null;
 
 	// If we're on the root page.
 	if ( genesis_is_root_page() ) {
@@ -218,7 +218,6 @@ function genesis_get_robots_meta_content() {
 	return implode( ',', $directives );
 }
 
-add_action( 'wp_head', 'genesis_load_favicon' );
 /**
  * Return favicon URL.
  *
@@ -241,7 +240,7 @@ function genesis_get_favicon_url() {
 	 */
 	$pre = apply_filters( 'genesis_pre_load_favicon', false );
 
-	if ( $pre !== false ) {
+	if ( false !== $pre ) {
 		$favicon = $pre;
 	} elseif ( file_exists( CHILD_DIR . '/images/favicon.ico' ) ) {
 		$favicon = CHILD_URL . '/images/favicon.ico';
@@ -258,7 +257,7 @@ function genesis_get_favicon_url() {
 	/**
 	 * Filter the favicon URL.
 	 *
-	 * @since 0.2.0
+	 * @since 1.0.0
 	 *
 	 * @param string $favicon Favicon URL.
 	 */

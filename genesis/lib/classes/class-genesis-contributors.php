@@ -8,7 +8,7 @@
  * @package Genesis\Contributors
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
@@ -58,8 +58,7 @@ class Genesis_Contributors {
 			if ( ! isset( $person['avatar'] ) && isset( $person['gravatar'] ) ) {
 				$person['avatar'] = 'https://0.gravatar.com/avatar/' . $person['gravatar'] . '?s=120';
 			}
-			$all[ $key ] = new Genesis_Contributor( $person['name'], $person['url'], $person['avatar'],
-				$person['role'] );
+			$all[ $key ] = new Genesis_Contributor( $person['name'], $person['url'], $person['avatar'], $person['role'] );
 		}
 
 		$this->people = $all;

@@ -8,11 +8,11 @@
  * @package StudioPress\Genesis
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 ?>
-<h3><?php esc_html_e( 'Author Archive SEO Settings', 'genesis' ); ?></h3>
+<h2><?php esc_html_e( 'Author Archive SEO Settings', 'genesis' ); ?></h2>
 <p><span class="description"><?php esc_html_e( 'These settings apply to this author\'s archive pages.', 'genesis' ); ?></span></p>
 <table class="form-table">
 	<tbody>

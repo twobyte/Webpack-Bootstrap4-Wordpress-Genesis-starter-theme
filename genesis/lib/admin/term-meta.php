@@ -8,7 +8,7 @@
  * @package Genesis\Admin
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
@@ -20,19 +20,22 @@
  */
 function genesis_term_meta_defaults() {
 
-	return apply_filters( 'genesis_term_meta_defaults', array(
-		'headline'            => '',
-		'intro_text'          => '',
-		'display_title'       => 0, // Vestigial.
-		'display_description' => 0, // Vestigial.
-		'doctitle'            => '',
-		'description'         => '',
-		'keywords'            => '',
-		'layout'              => '',
-		'noindex'             => 0,
-		'nofollow'            => 0,
-		'noarchive'           => 0,
-	) );
+	return apply_filters(
+		'genesis_term_meta_defaults',
+		array(
+			'headline'            => '',
+			'intro_text'          => '',
+			'display_title'       => 0, // Vestigial.
+			'display_description' => 0, // Vestigial.
+			'doctitle'            => '',
+			'description'         => '',
+			'keywords'            => '',
+			'layout'              => '',
+			'noindex'             => 0,
+			'nofollow'            => 0,
+			'noarchive'           => 0,
+		)
+	);
 
 }
 
@@ -46,7 +49,11 @@ add_action( 'admin_init', 'genesis_add_taxonomy_archive_options' );
  */
 function genesis_add_taxonomy_archive_options() {
 
-	foreach ( get_taxonomies( array( 'public' => true ) ) as $tax_name ) {
+	foreach ( get_taxonomies(
+		array(
+			'public' => true,
+		)
+	) as $tax_name ) {
 		add_action( $tax_name . '_edit_form', 'genesis_taxonomy_archive_options', 10, 2 );
 	}
 
@@ -80,7 +87,11 @@ add_action( 'admin_init', 'genesis_add_taxonomy_seo_options' );
  */
 function genesis_add_taxonomy_seo_options() {
 
-	foreach ( get_taxonomies( array( 'public' => true ) ) as $tax_name ) {
+	foreach ( get_taxonomies(
+		array(
+			'public' => true,
+		)
+	) as $tax_name ) {
 		add_action( $tax_name . '_edit_form', 'genesis_taxonomy_seo_options', 10, 2 );
 	}
 
@@ -122,7 +133,11 @@ function genesis_add_taxonomy_layout_options() {
 		return;
 	}
 
-	foreach ( get_taxonomies( array( 'public' => true ) ) as $tax_name ) {
+	foreach ( get_taxonomies(
+		array(
+			'public' => true,
+		)
+	) as $tax_name ) {
 		add_action( $tax_name . '_edit_form', 'genesis_taxonomy_layout_options', 10, 2 );
 	}
 
@@ -187,7 +202,7 @@ add_filter( 'get_terms', 'genesis_get_terms_filter', 10, 2 );
  */
 function genesis_get_terms_filter( array $terms, $taxonomy ) {
 
-	foreach( $terms as $key => $term ) {
+	foreach ( $terms as $key => $term ) {
 		$terms[ $key ] = genesis_get_term_filter( $term, $taxonomy );
 	}
 

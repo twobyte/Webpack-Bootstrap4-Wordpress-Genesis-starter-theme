@@ -8,7 +8,7 @@
  * @package StudioPress\Genesis
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 ?>
@@ -24,7 +24,7 @@
 </p>
 <p>
 	<?php
-	/* translators: Open and close anchor tags. */
-	printf( esc_html__( 'You can find more on this feature in the %sHow to Add a Post Category Page tutorial.%s', 'genesis' ), '<a href="http://www.studiopress.com/tutorials/genesis/add-post-category-page" target="_blank">', '</a>' );
+	/* translators: 1: Open anchor tag, 2: Close anchor tag. */
+	printf( esc_html__( 'You can find more on this feature in the %1$sHow to Add a Post Category Page tutorial.%2$s', 'genesis' ), '<a href="https://www.studiopress.com/tutorials/genesis/add-post-category-page" target="_blank">', '</a>' );
 	?>
 </p>

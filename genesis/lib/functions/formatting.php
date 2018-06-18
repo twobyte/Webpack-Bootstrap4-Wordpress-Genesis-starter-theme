@@ -8,7 +8,7 @@
  * @package Genesis\Formatting
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
@@ -53,7 +53,7 @@ function genesis_truncate_phrase( $text, $max_characters ) {
  *
  * Strips out tags and shortcodes, limits the output to `$max_char` characters, and appends an ellipsis and more link to the end.
  *
- * @since 0.1.0
+ * @since 1.0.0
  *
  * @param int    $max_characters The maximum number of characters to return.
  * @param string $more_link_text Optional. Text of the more link. Default is "(more...)".
@@ -94,19 +94,19 @@ function get_the_content_limit( $max_characters, $more_link_text = '(more...)', 
  * @param string $more_link_text Text of the more link.
  * @return string `$more_link_text` with or without the hidden title.
  */
- function genesis_a11y_more_link( $more_link_text )  {
+function genesis_a11y_more_link( $more_link_text ) {
 
  	if ( ! empty( $more_link_text ) && genesis_a11y( 'screen-reader-text' ) ) {
 		$more_link_text .= ' <span class="screen-reader-text">' . __( 'about ', 'genesis' ) . get_the_title() . '</span>';
  	}
  	return $more_link_text;
 
- }
+}
 
 /**
  * Echo the limited content.
  *
- * @since 0.1.0
+ * @since 1.0.0
  *
  * @param int    $max_characters The maximum number of characters to return.
  * @param string $more_link_text Optional. Text of the more link. Default is "(more...)".
@@ -173,11 +173,7 @@ function genesis_strip_attr( $text, $elements, $attributes, $two_passes = true )
 	// Build patterns.
 	$patterns = array();
 	foreach ( (array) $attributes as $attribute ) {
-		// Opening tags.
-		$patterns[] = sprintf( '~(<(?:%s)[^>]*)\s+%s=[\\\'"][^\\\'"]+[\\\'"]([^>]*[^>]*>)~', $elements_pattern, $attribute );
-
-		// Self closing tags.
-		$patterns[] = sprintf( '~(<(?:%s)[^>]*)\s+%s=[\\\'"][^\\\'"]+[\\\'"]([^>]*[^/]+/>)~', $elements_pattern, $attribute );
+		$patterns[] = sprintf( '~(<(?:%s(?=\s+))[^>]*)\s+%s(?:=(?:[\\\'"][^\\\'"]+[\\\'"]|(?:[^\s>\/]|\/(?!>))+))?([^>]*>)~', $elements_pattern, $attribute );
 	}
 
 	// First pass.
@@ -268,15 +264,30 @@ function genesis_formatting_allowedtags() {
 	return apply_filters(
 		'genesis_formatting_allowedtags',
 		array(
-			'a'          => array( 'href' => array(), 'title' => array(), ),
+			'a'          => array(
+				'href'  => array(),
+				'title' => array(),
+			),
 			'b'          => array(),
 			'blockquote' => array(),
 			'br'         => array(),
-			'div'        => array( 'align' => array(), 'class' => array(), 'style' => array(), ),
+			'div'        => array(
+				'align' => array(),
+				'class' => array(),
+				'style' => array(),
+			),
 			'em'         => array(),
 			'i'          => array(),
-			'p'          => array( 'align' => array(), 'class' => array(), 'style' => array(), ),
-			'span'       => array( 'align' => array(), 'class' => array(), 'style' => array(), ),
+			'p'          => array(
+				'align' => array(),
+				'class' => array(),
+				'style' => array(),
+			),
+			'span'       => array(
+				'align' => array(),
+				'class' => array(),
+				'style' => array(),
+			),
 			'strong'     => array(),
 		)
 	);
@@ -331,24 +342,35 @@ function genesis_human_time_diff( $older_date, $newer_date = false, $relative_de
 
 	// Hold units of time in seconds, and their pluralised strings (not translated yet).
 	$units = array(
+		/* translators: %s: Number of year(s). */
 		array( 31536000, _nx_noop( '%s year', '%s years', 'time difference', 'genesis' ) ),  // 60 * 60 * 24 * 365
+		/* translators: %s: Number of month(s). */
 		array( 2592000, _nx_noop( '%s month', '%s months', 'time difference', 'genesis' ) ), // 60 * 60 * 24 * 30
+		/* translators: %s: Number of week(s). */
 		array( 604800, _nx_noop( '%s week', '%s weeks', 'time difference', 'genesis' ) ),    // 60 * 60 * 24 * 7
+		/* translators: %s: Number of day(s). */
 		array( 86400, _nx_noop( '%s day', '%s days', 'time difference', 'genesis' ) ),       // 60 * 60 * 24
+		/* translators: %s: Number of hour(s). */
 		array( 3600, _nx_noop( '%s hour', '%s hours', 'time difference', 'genesis' ) ),      // 60 * 60
+		/* translators: %s: Number of minute(s). */
 		array( 60, _nx_noop( '%s minute', '%s minutes', 'time difference', 'genesis' ) ),
+		/* translators: %s: Number of second(s). */
 		array( 1, _nx_noop( '%s second', '%s seconds', 'time difference', 'genesis' ) ),
 	);
 
 	// Build output with as many units as specified in $relative_depth.
 	$relative_depth = (int) $relative_depth ? (int) $relative_depth : 2;
+
 	$i = 0;
+
 	$counted_seconds = 0;
+
 	$date_partials = array();
+
 	while ( count( $date_partials ) < $relative_depth && $i < count( $units ) ) {
-		$seconds = $units[$i][0];
+		$seconds = $units[ $i ][0];
 		if ( ( $count = floor( ( $since - $counted_seconds ) / $seconds ) ) != 0 ) {
-			$date_partials[] = sprintf( translate_nooped_plural( $units[$i][1], $count, 'genesis' ), $count );
+			$date_partials[] = sprintf( translate_nooped_plural( $units[ $i ][1], $count, 'genesis' ), $count );
 			$counted_seconds += $count * $seconds;
 		}
 		$i++;
@@ -402,6 +424,6 @@ function genesis_code( $content ) {
  */
 function genesis_strip_p_tags( $content ) {
 
-	return preg_replace('/<p\b[^>]*>(.*?)<\/p>/i', '$1', $content );
+	return preg_replace( '/<p\b[^>]*>(.*?)<\/p>/i', '$1', $content );
 
 }

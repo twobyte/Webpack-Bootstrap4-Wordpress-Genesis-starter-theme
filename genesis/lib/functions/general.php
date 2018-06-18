@@ -8,7 +8,7 @@
  * @package Genesis\General
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
@@ -20,7 +20,9 @@
  */
 function genesis_enable_author_box( $args = array() ) {
 
-	$args = wp_parse_args( $args, array( 'type' => 'single' ) );
+	$args = wp_parse_args( $args, array(
+		'type' => 'single',
+	) );
 
 	if ( 'single' === $args['type'] ) {
 		add_filter( 'get_the_author_genesis_author_box_single', '__return_true' );
@@ -49,7 +51,7 @@ function genesis_admin_redirect( $page, array $query_args = array() ) {
 
 	foreach ( (array) $query_args as $key => $value ) {
 		if ( empty( $key ) && empty( $value ) ) {
-			unset( $query_args[$key] );
+			unset( $query_args[ $key ] );
 		}
 	}
 
@@ -99,7 +101,7 @@ function genesis_get_theme_support_arg( $feature, $arg, $default = '' ) {
 
 	$support = get_theme_support( $feature );
 
-	if ( ! $arg &&  $support ) {
+	if ( ! $arg && $support ) {
 		return true;
 	}
 
@@ -428,7 +430,7 @@ function genesis_sitemap( $heading = 'h2' ) {
  * @return string $heading Sitemap content.
  */
 function genesis_get_sitemap( $heading = 'h2' ) {
-	
+
 	/**
 	 * Filter the sitemap before the default sitemap is built.
 	 *
@@ -481,11 +483,19 @@ function genesis_get_sitemap( $heading = 'h2' ) {
  */
 function genesis_plugin_install_link( $plugin_slug = '', $text = '' ) {
 
+	$page = 'plugin-install.php';
+	$args = array(
+		'tab'       => 'plugin-information',
+		'TB_iframe' => true,
+		'width'     => 600,
+		'height'    => 550,
+		'plugin'    => $plugin_slug,
+	);
+
+	$url = add_query_arg( $args, admin_url( $page ) );
+
 	if ( is_main_site() ) {
-		$url = network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=' . $plugin_slug . '&TB_iframe=true&width=600&height=550' );
-	}
-	else {
-		$url = admin_url( 'plugin-install.php?tab=plugin-information&plugin=' . $plugin_slug . '&TB_iframe=true&width=600&height=550' );
+		$url = add_query_arg( $args, network_admin_url( $page ) );
 	}
 
 	return sprintf( '<a href="%s" class="thickbox">%s</a>', esc_url( $url ), esc_html( $text ) );

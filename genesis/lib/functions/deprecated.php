@@ -8,15 +8,53 @@
  * @package Genesis\Deprecated
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
+
+/**
+ * Deprecated. Output the title, wrapped in title tags.
+ *
+ * @since 2.1.0
+ * @deprecated 2.6.0
+ */
+function genesis_do_title() {
+
+	_deprecated_function( __FUNCTION__, '2.6.0', "add_theme_support( 'title-tag' )" );
+
+	if ( get_theme_support( 'title-tag' ) ) {
+		return;
+	}
+	echo '<title>';
+	wp_title( '' );
+	echo '</title>';
+
+}
+
+/**
+ * Deprecated. Legacy filter function that would return a filtered document title.
+ *
+ * @since 1.0.0
+ * @deprecated 2.6.0
+ *
+ * @param string $title       Existing page title.
+ * @param string $sep         Optional. Separator character(s).
+ * @param string $seplocation Optional. Separator location - "left" or "right".
+ * @return string Page title.
+ */
+function genesis_default_title( $title, $sep = '&raquo;', $seplocation = '' ) {
+
+	_deprecated_function( __FUNCTION__, '2.6.0', 'Genesis_SEO_Document_Title_Parts' );
+
+	return $title;
+
+}
 
 /**
  * Deprecated. Return registered image sizes.
  *
  * Return a two-dimensional array of just the additionally registered image sizes, with width, height and crop sub-keys.
  *
- * @since 0.1.7
+ * @since 1.0.0
  * @deprecated 2.5.0
  *
  * @global array $_wp_additional_image_sizes Additionally registered image sizes.
@@ -76,7 +114,7 @@ function genesis_register_scripts() {
  *
  * Applies the `genesis_superfish_enabled`, and `genesis_superfish_args_uri`. filter.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 2.5.0
  */
 function genesis_load_scripts() {
@@ -90,7 +128,7 @@ function genesis_load_scripts() {
  *
  * Includes Thickbox, theme preview and a Genesis script (actually enqueued in genesis_load_admin_js()).
  *
- * @since 0.2.3
+ * @since 1.0.0
  * @deprecated 2.5.0
  *
  * @param string $hook_suffix Admin page identifier.
@@ -177,7 +215,7 @@ function genesis_rel_publisher() {
  * `genesis_nav_items`. They can also filter the complete menu markup via `genesis_nav`. The `$args` (merged with
  * defaults) are available for all filters.
  *
- * @since 0.2.3
+ * @since 1.0.0
  * @deprecated 2.2.0
  *
  * @see genesis_do_nav()
@@ -319,7 +357,7 @@ function _genesis_update_settings( $new, $setting = null ) {
  *
  * Should now use `genesis_prev_next_posts_nav()` instead.
  *
- * @since 0.2.2
+ * @since 1.0.0
  * @deprecated 2.0.0
  */
 function genesis_older_newer_posts_nav() {
@@ -443,7 +481,7 @@ function genesis_custom_header_admin_style() {
  * For some reason, the `wp_get_attachment_image()` function uses the caption field value as the alt text, not the
  * Alternate Text field value. Strange.
  *
- * @since 0.1.8
+ * @since 1.0.0
  * @deprecated 1.8.0
  *
  * @param array    $attr       Associative array of image attributes and values.
@@ -458,7 +496,7 @@ function genesis_filter_attachment_image_attributes( array $attr, $attachment ) 
 /**
  * Deprecated. Create a category checklist.
  *
- * @since 0.2
+ * @since 1.0.0
  * @deprecated 1.8.0
  *
  * @param string $name     Input name (will be an array) of checkboxes.
@@ -473,7 +511,7 @@ function genesis_page_checklist( $name, array $selected = array() ) {
 /**
  * Deprecated. Create a category checklist.
  *
- * @since 0.2
+ * @since 1.0.0
  * @deprecated 1.8.0
  *
  * @param string $name     Input name (will be an array) of checkboxes.
@@ -488,13 +526,14 @@ function genesis_category_checklist( $name, array $selected = array() ) {
 /**
  * Deprecated. Wrapper for `genesis_pre` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_pre() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_pre' )" );
 
+	/** This action is documented in lib/init.php */
 	do_action( 'genesis_pre' );
 
 }
@@ -502,13 +541,14 @@ function genesis_pre() {
 /**
  * Deprecated. Wrapper for `genesis_pre_framework` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_pre_framework() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_pre_framework' )" );
 
+	/** This action is documented in lib/init.php */
 	do_action( 'genesis_pre_framework' );
 
 }
@@ -516,13 +556,14 @@ function genesis_pre_framework() {
 /**
  * Deprecated. Wrapper for `genesis_init` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_init() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_init' )" );
 
+	/** This action is documented in lib/init.php */
 	do_action( 'genesis_init' );
 
 }
@@ -530,13 +571,14 @@ function genesis_init() {
 /**
  * Deprecated. Wrapper for `genesis_doctype` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_doctype() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_doctype' )" );
 
+	/** This action is documented in header.php */
 	do_action( 'genesis_doctype' );
 
 }
@@ -544,13 +586,14 @@ function genesis_doctype() {
 /**
  * Deprecated. Wrapper for `genesis_title` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_title() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_title' )" );
 
+	/** This action is documented in header.php */
 	do_action( 'genesis_title' );
 
 }
@@ -558,13 +601,14 @@ function genesis_title() {
 /**
  * Deprecated. Wrapper for `genesis_meta` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_meta() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_meta' )" );
 
+	/** This action is documented in header.php */
 	do_action( 'genesis_meta' );
 
 }
@@ -572,13 +616,14 @@ function genesis_meta() {
 /**
  * Deprecated. Wrapper for `genesis_before` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_before() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_before' )" );
 
+	/** This action is documented in header.php */
 	do_action( 'genesis_before' );
 
 }
@@ -586,13 +631,14 @@ function genesis_before() {
 /**
  * Deprecated. Wrapper for `genesis_after` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_after() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_after' )" );
 
+	/** This action is documented in footer.php */
 	do_action( 'genesis_after' );
 
 }
@@ -600,13 +646,14 @@ function genesis_after() {
 /**
  * Deprecated. Wrapper for `genesis_before_header` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_before_header() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_before_header' )" );
 
+	/** This action is documented in header.php */
 	do_action( 'genesis_before_header' );
 
 }
@@ -614,13 +661,14 @@ function genesis_before_header() {
 /**
  * Deprecated. Wrapper for `genesis_header` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_header() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_header' )" );
 
+	/** This action is documented in header.php */
 	do_action( 'genesis_header' );
 
 }
@@ -628,13 +676,14 @@ function genesis_header() {
 /**
  * Deprecated. Wrapper for `genesis_header_right` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_header_right() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_header_right' )" );
 
+	/** This action is documented in lib/structure/header.php */
 	do_action( 'genesis_header_right' );
 
 }
@@ -642,13 +691,14 @@ function genesis_header_right() {
 /**
  * Deprecated. Wrapper for `genesis_after_header` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_after_header() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_after_header' )" );
 
+	/** This action is documented in header.php */
 	do_action( 'genesis_after_header' );
 
 }
@@ -656,13 +706,14 @@ function genesis_after_header() {
 /**
  * Deprecated. Wrapper for `genesis_site_title` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_site_title() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_site_title' )" );
 
+	/** This action is documented in lib/structure/header.php */
 	do_action( 'genesis_site_title' );
 
 }
@@ -670,13 +721,14 @@ function genesis_site_title() {
 /**
  * Deprecated. Wrapper for `genesis_site_description` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_site_description() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_site_description' )" );
 
+	/** This action is documented in lib/structure/header.php */
 	do_action( 'genesis_site_description' );
 
 }
@@ -684,13 +736,14 @@ function genesis_site_description() {
 /**
  * Deprecated. Wrapper for `genesis_before_content_sidebar_wrap` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_before_content_sidebar_wrap() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_before_content_sidebar_wrap' )" );
 
+	/** This action is documented in framework.php */
 	do_action( 'genesis_before_content_sidebar_wrap' );
 
 }
@@ -698,13 +751,14 @@ function genesis_before_content_sidebar_wrap() {
 /**
  * Deprecated. Wrapper for `genesis_after_content_sidebar_wrap` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_after_content_sidebar_wrap() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_after_content_sidebar_wrap' )" );
 
+	/** This action is documented in framework.php */
 	do_action( 'genesis_after_content_sidebar_wrap' );
 
 }
@@ -712,13 +766,14 @@ function genesis_after_content_sidebar_wrap() {
 /**
  * Deprecated. Wrapper for `genesis_before_content` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_before_content() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_before_content' )" );
 
+	/** This action is documented in framework.php */
 	do_action( 'genesis_before_content' );
 
 }
@@ -726,13 +781,14 @@ function genesis_before_content() {
 /**
  * Deprecated. Wrapper for `genesis_after_content` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_after_content() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_after_content' )" );
 
+	/** This action is documented in framework.php */
 	do_action( 'genesis_after_content' );
 
 }
@@ -740,13 +796,19 @@ function genesis_after_content() {
 /**
  * Deprecated. Wrapper for `genesis_home` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_home() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_home' )" );
 
+	/**
+	 * Fires only in the deprecated function genesis_home().
+	 *
+	 * @since 1.0.0
+	 * @deprecated 1.7.0
+	 */
 	do_action( 'genesis_home' );
 
 }
@@ -754,13 +816,14 @@ function genesis_home() {
 /**
  * Deprecated. Wrapper for `genesis_before_loop` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_before_loop() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_before_loop' )" );
 
+	/** This action is documented in framework.php */
 	do_action( 'genesis_before_loop' );
 
 }
@@ -768,13 +831,14 @@ function genesis_before_loop() {
 /**
  * Deprecated. Wrapper for `genesis_loop` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_loop() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_loop' )" );
 
+	/** This action is documented in framework.php */
 	do_action( 'genesis_loop' );
 
 }
@@ -782,13 +846,14 @@ function genesis_loop() {
 /**
  * Deprecated. Wrapper for `genesis_after_loop` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_after_loop() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_after_loop' )" );
 
+	/** This action is documented in framework.php */
 	do_action( 'genesis_after_loop' );
 
 }
@@ -796,13 +861,14 @@ function genesis_after_loop() {
 /**
  * Deprecated. Wrapper for `genesis_before_post` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_before_post() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_before_post' )" );
 
+	/** This action is documented in lib/structure/loops.php */
 	do_action( 'genesis_before_post' );
 
 }
@@ -810,13 +876,14 @@ function genesis_before_post() {
 /**
  * Deprecated. Wrapper for `genesis_after_post` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_after_post() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_after_post' )" );
 
+	/** This action is documented in lib/structure/loops.php */
 	do_action( 'genesis_after_post' );
 
 }
@@ -824,13 +891,14 @@ function genesis_after_post() {
 /**
  * Deprecated. Wrapper for `genesis_before_post_title` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_before_post_title() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_before_post_title' )" );
 
+	/** This action is documented in lib/structure/loops.php */
 	do_action( 'genesis_before_post_title' );
 
 }
@@ -838,13 +906,14 @@ function genesis_before_post_title() {
 /**
  * Deprecated. Wrapper for `genesis_post_title` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_post_title() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_post_title' )" );
 
+	/** This action is documented in lib/structure/loops.php */
 	do_action( 'genesis_post_title' );
 
 }
@@ -852,13 +921,14 @@ function genesis_post_title() {
 /**
  * Deprecated. Wrapper for `genesis_after_post_title` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_after_post_title() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_after_post_title' )" );
 
+	/** This action is documented in lib/structure/loops.php */
 	do_action( 'genesis_after_post_title' );
 
 }
@@ -866,13 +936,14 @@ function genesis_after_post_title() {
 /**
  * Deprecated. Wrapper for `genesis_before_post_content` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_before_post_content() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_before_post_content' )" );
 
+	/** This action is documented in lib/structure/loops.php */
 	do_action( 'genesis_before_post_content' );
 
 }
@@ -880,13 +951,14 @@ function genesis_before_post_content() {
 /**
  * Deprecated. Wrapper for `genesis_post_content` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_post_content() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_post_content' )" );
 
+	/** This action is documented in lib/structure/loops.php */
 	do_action( 'genesis_post_content' );
 
 }
@@ -894,13 +966,14 @@ function genesis_post_content() {
 /**
  * Deprecated. Wrapper for `genesis_after_post_content` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_after_post_content() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_after_post_content' )" );
 
+	/** This action is documented in lib/structure/loops.php */
 	do_action( 'genesis_after_post_content' );
 
 }
@@ -908,13 +981,14 @@ function genesis_after_post_content() {
 /**
  * Deprecated. Wrapper for `genesis_after_endwhile` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_after_endwhile() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_after_endwhile' )" );
 
+	/** This action is documented in lib/structure/loops.php */
 	do_action( 'genesis_after_endwhile' );
 
 }
@@ -922,13 +996,14 @@ function genesis_after_endwhile() {
 /**
  * Deprecated. Wrapper for `genesis_loop_else` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_loop_else() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_loop_else' )" );
 
+	/** This action is documented in lib/structure/loops.php */
 	do_action( 'genesis_loop_else' );
 
 }
@@ -936,13 +1011,14 @@ function genesis_loop_else() {
 /**
  * Deprecated. Wrapper for `genesis_before_comments` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_before_comments() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_before_comments' )" );
 
+	/** This action is documented in comments.php */
 	do_action( 'genesis_before_comments' );
 
 }
@@ -950,13 +1026,14 @@ function genesis_before_comments() {
 /**
  * Deprecated. Wrapper for `genesis_comments` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_comments() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_comments' )" );
 
+	/** This action is documented in comments.php */
 	do_action( 'genesis_comments' );
 
 }
@@ -964,13 +1041,14 @@ function genesis_comments() {
 /**
  * Deprecated. Wrapper for `genesis_list_comments` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_list_comments() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_list_comments' )" );
 
+	/** This action is documented in lib/structure/comments.php */
 	do_action( 'genesis_list_comments' );
 
 }
@@ -978,13 +1056,14 @@ function genesis_list_comments() {
 /**
  * Deprecated. Wrapper for `genesis_after_comments` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_after_comments() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_after_comments' )" );
 
+	/** This action is documented in comments.php */
 	do_action( 'genesis_after_comments' );
 
 }
@@ -992,13 +1071,14 @@ function genesis_after_comments() {
 /**
  * Deprecated. Wrapper for `genesis_before_pings` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_before_pings() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_before_pings' )" );
 
+	/** This action is documented in comments.php */
 	do_action( 'genesis_before_pings' );
 
 }
@@ -1006,13 +1086,14 @@ function genesis_before_pings() {
 /**
  * Deprecated. Wrapper for `genesis_pings` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_pings() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_pings' )" );
 
+	/** This action is documented in comments.php */
 	do_action( 'genesis_pings' );
 
 }
@@ -1020,13 +1101,14 @@ function genesis_pings() {
 /**
  * Deprecated. Wrapper for `genesis_list_pings` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_list_pings() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_list_pings' )" );
 
+	/** This action is documented in lib/structure/comments.php */
 	do_action( 'genesis_list_pings' );
 
 }
@@ -1034,13 +1116,14 @@ function genesis_list_pings() {
 /**
  * Deprecated. Wrapper for `genesis_after_pings` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_after_pings() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_after_pings' )" );
 
+	/** This action is documented in comments.php */
 	do_action( 'genesis_after_pings' );
 
 }
@@ -1048,13 +1131,14 @@ function genesis_after_pings() {
 /**
  * Deprecated. Wrapper for `genesis_before_comment` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_before_comment() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_before_comment' )" );
 
+	/** This action is documented in lib/structure/comments.php */
 	do_action( 'genesis_before_comment' );
 
 }
@@ -1062,13 +1146,14 @@ function genesis_before_comment() {
 /**
  * Deprecated. Wrapper for `genesis_after_comment` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_after_comment() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_after_comment' )" );
 
+	/** This action is documented in lib/structure/comments.php */
 	do_action( 'genesis_after_comment' );
 
 }
@@ -1076,13 +1161,14 @@ function genesis_after_comment() {
 /**
  * Deprecated. Wrapper for `genesis_before_comment_form` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_before_comment_form() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_before_comment_form' )" );
 
+	/** This action is documented in comments.php */
 	do_action( 'genesis_before_comment_form' );
 
 }
@@ -1090,13 +1176,14 @@ function genesis_before_comment_form() {
 /**
  * Deprecated. Wrapper for `genesis_comment_form` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_comment_form() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_comment_form' )" );
 
+	/** This action is documented in comments.php */
 	do_action( 'genesis_comment_form' );
 
 }
@@ -1104,13 +1191,14 @@ function genesis_comment_form() {
 /**
  * Deprecated. Wrapper for `genesis_after_comment_form` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_after_comment_form() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_after_comment_form' )" );
 
+	/** This action is documented in comments.php */
 	do_action( 'genesis_after_comment_form' );
 
 }
@@ -1118,13 +1206,14 @@ function genesis_after_comment_form() {
 /**
  * Deprecated. Wrapper for `genesis_before_sidebar_widget_area` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_before_sidebar_widget_area() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_before_sidebar_widget_area' )" );
 
+	/** This action is documented in sidebar.php */
 	do_action( 'genesis_before_sidebar_widget_area' );
 
 }
@@ -1132,13 +1221,14 @@ function genesis_before_sidebar_widget_area() {
 /**
  * Deprecated. Wrapper for `genesis_sidebar` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_sidebar() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_sidebar' )" );
 
+	/** This action is documented in sidebar.php */
 	do_action( 'genesis_sidebar' );
 
 }
@@ -1146,13 +1236,14 @@ function genesis_sidebar() {
 /**
  * Deprecated. Wrapper for `genesis_after_sidebar_widget_area` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_after_sidebar_widget_area() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_after_sidebar_widget_area' )" );
 
+	/** This action is documented in sidebar.php */
 	do_action( 'genesis_after_sidebar_widget_area' );
 
 }
@@ -1160,13 +1251,14 @@ function genesis_after_sidebar_widget_area() {
 /**
  * Deprecated. Wrapper for `genesis_before_sidebar_alt_widget_area` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_before_sidebar_alt_widget_area() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_before_sidebar_alt_widget_area' )" );
 
+	/** This action is documented in sidebar-alt.php */
 	do_action( 'genesis_before_sidebar_alt_widget_area' );
 
 }
@@ -1174,13 +1266,14 @@ function genesis_before_sidebar_alt_widget_area() {
 /**
  * Deprecated. Wrapper for `genesis_sidebar_alt` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_sidebar_alt() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_sidebar_alt' )" );
 
+	/** This action is documented in sidebar-alt.php */
 	do_action( 'genesis_sidebar_alt' );
 
 }
@@ -1188,13 +1281,14 @@ function genesis_sidebar_alt() {
 /**
  * Deprecated. Wrapper for `genesis_after_sidebar_alt_widget_area` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_after_sidebar_alt_widget_area() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_after_sidebar_alt_widget_area' )" );
 
+	/** This action is documented in sidebar-alt.php */
 	do_action( 'genesis_after_sidebar_alt_widget_area' );
 
 }
@@ -1202,13 +1296,14 @@ function genesis_after_sidebar_alt_widget_area() {
 /**
  * Deprecated. Wrapper for `genesis_before_footer` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_before_footer() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_before_footer' )" );
 
+	/** This action is documented in footer.php */
 	do_action( 'genesis_before_footer' );
 
 }
@@ -1216,13 +1311,14 @@ function genesis_before_footer() {
 /**
  * Deprecated. Wrapper for `genesis_footer` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_footer() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_footer' )" );
 
+	/** This action is documented in footer.php */
 	do_action( 'genesis_footer' );
 
 }
@@ -1230,13 +1326,14 @@ function genesis_footer() {
 /**
  * Deprecated. Wrapper for `genesis_after_footer` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_after_footer() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_after_footer' )" );
 
+	/** This action is documented in footer.php */
 	do_action( 'genesis_after_footer' );
 
 }
@@ -1244,13 +1341,14 @@ function genesis_after_footer() {
 /**
  * Deprecated. Wrapper for `genesis_import_export_form` action hook.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.7.0
  */
 function genesis_import_export_form() {
 
 	_deprecated_function( __FUNCTION__, '1.7.0', "do_action( 'genesis_import_export_form' )" );
 
+	/** This action is documented in lib/views/pages/genesis-admin-import-export.php */
 	do_action( 'genesis_import_export_form' );
 
 }
@@ -1260,7 +1358,7 @@ function genesis_import_export_form() {
  *
  * Not loaded by default.
  *
- * @since 0.2.3
+ * @since 1.0.0
  * @deprecated 1.6.0
  *
  * @link http://ie7-js.googlecode.com/svn/test/index.html
@@ -1274,7 +1372,7 @@ function genesis_ie8_js() {
 /**
  * Deprecated. The Genesis-specific post date.
  *
- * @since 0.2.3
+ * @since 1.0.0
  * @deprecated 1.5.0
  *
  * @see genesis_post_date_shortcode()
@@ -1286,14 +1384,17 @@ function genesis_post_date( $format = '', $label = '' ) {
 
 	_deprecated_function( __FUNCTION__, '1.5.0', 'genesis_post_date_shortcode()' );
 
-	echo genesis_post_date_shortcode( array( 'format' => $format, 'label' => $label ) );
+	echo genesis_post_date_shortcode( array(
+		'format' => $format,
+		'label'  => $label,
+	) );
 
 }
 
 /**
  * Deprecated. The Genesis-specific post author link.
  *
- * @since 0.2.3
+ * @since 1.0.0
  * @deprecated 1.5.0
  *
  * @see genesis_post_author_posts_link_shortcode()
@@ -1304,14 +1405,16 @@ function genesis_post_author_posts_link( $label = '' ) {
 
 	_deprecated_function( __FUNCTION__, '1.5.0', 'genesis_post_author_posts_link_shortcode()' );
 
-	echo genesis_post_author_posts_link_shortcode( array( 'before' => $label ) );
+	echo genesis_post_author_posts_link_shortcode( array(
+		'before' => $label,
+	) );
 
 }
 
 /**
  * Deprecated. The Genesis-specific post comments link.
  *
- * @since 0.2.3
+ * @since 1.0.0
  * @deprecated 1.5.0
  *
  * @see genesis_post_comments_shortcode()
@@ -1324,14 +1427,18 @@ function genesis_post_comments_link( $zero = null, $one = null, $more = null ) {
 
 	_deprecated_function( __FUNCTION__, '1.5.0', 'genesis_post_comments_shortcode()' );
 
-	echo genesis_post_comments_shortcode( array( 'zero' => $zero, 'one' => $one, 'more' => $more ) );
+	echo genesis_post_comments_shortcode( array(
+		'zero' => $zero,
+		'one'  => $one,
+		'more' => $more,
+	) );
 
 }
 
 /**
  * Deprecated. The Genesis-specific post categories link.
  *
- * @since 0.2.3
+ * @since 1.0.0
  * @deprecated 1.5.0
  *
  * @see genesis_post_categories_shortcode()
@@ -1343,14 +1450,17 @@ function genesis_post_categories_link( $sep = ', ', $label = '' ) {
 
 	_deprecated_function( __FUNCTION__, '1.5.0', 'genesis_post_categories_shortcode()' );
 
-	echo genesis_post_categories_shortcode( array( 'sep' => $sep, 'before' => $label ) );
+	echo genesis_post_categories_shortcode( array(
+		'sep'    => $sep,
+		'before' => $label,
+	) );
 
 }
 
 /**
  * Deprecated. The Genesis-specific post tags link.
  *
- * @since 0.2.3
+ * @since 1.0.0
  * @deprecated 1.5.0
  *
  * @see genesis_post_tags_shortcode()
@@ -1362,7 +1472,10 @@ function genesis_post_tags_link( $sep = ', ', $label = '' ) {
 
 	_deprecated_function( __FUNCTION__, '1.5.0', 'genesis_post_tags_shortcode()' );
 
-	echo genesis_post_tags_shortcode( array( 'sep' => $sep, 'before' => $label ) );
+	echo genesis_post_tags_shortcode( array(
+		'sep'    => $sep,
+		'before' => $label,
+	) );
 
 }
 
@@ -1371,7 +1484,7 @@ function genesis_post_tags_link( $sep = ', ', $label = '' ) {
  *
  * Use `add_image_size()` instead.
  *
- * @since 0.1.7
+ * @since 1.0.0
  * @deprecated 1.2.0
  *
  * @param string $name   Name of the image size.
@@ -1390,7 +1503,7 @@ function genesis_add_image_size( $name, $width = 0, $height = 0, $crop = false )
 /**
  * Deprecated. Filter intermediate sizes for WP 2.8 backward compatibility.
  *
- * @since 0.1.7
+ * @since 1.0.0
  * @deprecated 1.2.0
  *
  * @param array $sizes Array of sizes to add.
@@ -1407,13 +1520,14 @@ function genesis_add_intermediate_sizes( array $sizes ) {
 /**
  * Deprecated. Was a wrapper for `genesis_comment` hook, but now calls `genesis_after_comment` action hook instead.
  *
- * @since 0.2.0
+ * @since 1.0.0
  * @deprecated 1.2.0
  */
 function genesis_comment() {
 
 	_deprecated_function( __FUNCTION__, '1.2.0', "do_action( 'genesis_after_comment' )" );
 
+	/** This action is documented in lib/structure/comments.php */
 	do_action( 'genesis_after_comment' );
 
 }

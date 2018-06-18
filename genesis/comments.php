@@ -8,11 +8,11 @@
  * @package Genesis\Templates
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 if ( ! empty( $_SERVER['SCRIPT_FILENAME'] ) && 'comments.php' === basename( $_SERVER['SCRIPT_FILENAME'] ) ) {
-	die ( 'Please do not load this page directly. Thanks!' );
+	die( 'Please do not load this page directly. Thanks!' );
 }
 
 if ( post_password_required() ) {
@@ -25,14 +25,65 @@ if ( genesis_a11y( 'headings' ) ) {
 	printf( '<h2 class="screen-reader-text">%s</h2>', __( 'Reader Interactions', 'genesis' ) );
 }
 
+/**
+ * Fires before the main comments action hook.
+ *
+ * @since 1.0.0
+ */
 do_action( 'genesis_before_comments' );
+
+/**
+ * Fires to display the main comments content.
+ *
+ * @since 1.1.2
+ */
 do_action( 'genesis_comments' );
+
+/**
+ * Fires after the main comments action hook.
+ *
+ * @since 1.0.0
+ */
 do_action( 'genesis_after_comments' );
 
+/**
+ * Fires before the main pings action hook.
+ *
+ * @since 1.0.0
+ */
 do_action( 'genesis_before_pings' );
+
+/**
+ * Fires to display the main pings content.
+ *
+ * @since 1.1.2
+ */
 do_action( 'genesis_pings' );
+
+/**
+ * Fires after the main pings action hook.
+ *
+ * @since 1.0.0
+ */
 do_action( 'genesis_after_pings' );
 
+/**
+ * Fires before the main comment form action hook.
+ *
+ * @since 1.1.0
+ */
 do_action( 'genesis_before_comment_form' );
+
+/**
+ * Fires to display the main comment form content.
+ *
+ * @since 1.1.0
+ */
 do_action( 'genesis_comment_form' );
+
+/**
+ * Fires after the main comment form action hook.
+ *
+ * @since 1.1.0
+ */
 do_action( 'genesis_after_comment_form' );

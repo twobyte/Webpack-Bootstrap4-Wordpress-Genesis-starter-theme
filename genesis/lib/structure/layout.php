@@ -8,7 +8,7 @@
  * @package Genesis\Layout
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 add_filter( 'content_width', 'genesis_content_width', 10, 3 );
@@ -70,7 +70,7 @@ add_filter( 'body_class', 'genesis_header_body_classes' );
  *
  * We can use pseudo-variables in our CSS file, which helps us achieve multiple header layouts with minimal code.
  *
- * @since 0.2.2
+ * @since 1.0.0
  *
  * @param array $classes Existing body classes.
  * @return array Amended body classes.
@@ -101,7 +101,7 @@ add_filter( 'body_class', 'genesis_layout_body_classes' );
  *
  * We can use pseudo-variables in our CSS file, which helps us achieve multiple site layouts with minimal code.
  *
- * @since 0.2.2
+ * @since 1.0.0
  *
  * @param array $classes Existing body classes.
  * @return array Amended body classes.
@@ -197,7 +197,7 @@ add_action( 'genesis_after_content', 'genesis_get_sidebar' );
 /**
  * Output the sidebar.php file if layout allows for it.
  *
- * @since 0.2.0
+ * @since 1.0.0
  */
 function genesis_get_sidebar() {
 
@@ -216,7 +216,7 @@ add_action( 'genesis_after_content_sidebar_wrap', 'genesis_get_sidebar_alt' );
 /**
  * Output the sidebar_alt.php file if layout allows for it.
  *
- * @since 0.2.0
+ * @since 1.0.0
  */
 function genesis_get_sidebar_alt() {
 

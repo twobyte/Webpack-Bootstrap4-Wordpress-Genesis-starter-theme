@@ -8,11 +8,11 @@
  * @package StudioPress\Genesis
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 ?>
-<h3><?php esc_html_e( 'Theme SEO Settings', 'genesis' ); ?></h3>
+<h2><?php esc_html_e( 'Theme SEO Settings', 'genesis' ); ?></h2>
 <table class="form-table">
 	<tbody>
 		<tr class="form-field">

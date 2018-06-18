@@ -4,6 +4,51 @@ https://my.studiopress.com/themes/genesis/
 
 This project does not follow semantic versioning. It follows the WordPress policy where updates of _x_ and _y_ in an _x.y.z_ version number means a major release, and updates to _z_ means a patch release.
 
+## [2.6.1] - 2018-03-14
+### Fixed
+- Fix compatibility issue with breadcrumbs in Yoast SEO.
+- Fix issue with extra slashes in settings when using Customizer.
+- Fix PHP 7 issue with non-static methods being used statically.
+- Fix empty string warning in `skip-links.js`.
+
+## [2.6.0] - 2018-03-05
+### Added
+- Add option to sort Featured Posts by date modified.
+- Add contextual filter for `content` passed through the Markup API.
+- Add `Genesis_Customizer` class.
+- Add `Genesis_SEO_Document_Title_Parts` class.
+- Add `title-tag` theme support by default.
+- Add class autoloader.
+- Add support for AdSense Auto Ads.
+- Add `aria-label` attribute to secondary `nav` element.
+- Add allowance for extra attributes on script tags for registered scripts.
+
+### Changed
+- Change URLs to `https` wherever possible.
+- Update normalize.css to `7.0.0`.
+- Duplicate all theme and SEO settings in the Customizer.
+- Move all classes to their own files in `lib/classes`.
+- Use Markup API for `entry-title-link`.
+- Use Markup API for 404 page title.
+- Change description for headings on archive pages to account for accessibility.
+- Improve color scheme retrieval function.
+
+### Fixed
+- More compliance with WordPress coding standards.
+- Set ID of `entry-pings` to `comments` if only pings exist.
+- Ensure default settings get saved to database in new installs.
+- Change `h3` to `h2` for titles in admin metaboxes.
+- Ensure theme support for Genesis import / export menu before outputting.
+- Check for post parents before outputting parent in breadcrumbs.
+- Ensure `[post_tags]` and `[post_categories]` are valid for post type before outputting.
+- Update `aria-label` attributes for `nav` elements to remove redundant "navigation" word.
+
+### Removed
+- Remove duplicate `genesis_load_favicon` from being hooked to `wp_head`.
+- Remove screen reader `h2` from inside Header Right widget area.
+- Remove screen reader `h2` from inside primary `nav` element.
+- Remove feed settings if Genesis 2.6 is your first version.
+
 ## [2.5.3] - 2017-09-27
 ### Fixed
 - Prevent global scripts being slashed if they are unchanged.
@@ -433,7 +478,7 @@ _Requires WordPress 3.5.0._
 - Fix more tag on home page loop with Featured Post.
 - Fix Leave a Comment link when no comments are present.
 
-## [2.0.0] - 2013-08-07
+## 2.0.0 - 2013-08-07
 ### Added
 - Add semantic HTML5 elements across all output.
 - Add attributes markup functions `genesis_attr()` and `genesis_parse_attr()`, allowing key elements to have their attributes filtered in.
@@ -573,7 +618,7 @@ _Requires WordPress 3.5.0._
 - Fix redundant parameter in `genesis_save_custom_fields()`.
 - Fix breadcrumb issue for date archives.
 
-## [1.9.2] - 2013-04-10
+## 1.9.2 - 2013-04-10
 ### Fixed
 - Fix potential notice when saving post custom fields.
 - Fix potential security issue in the search form (props Sucuri Security team and Alun Jones).
@@ -582,11 +627,11 @@ _Requires WordPress 3.5.0._
 - Fix missing class on layout selector default radio input.
 - Fix distorted images in IE8.
 
-## [1.9.1] - 2013-01-08
+## 1.9.1 - 2013-01-08
 ### Fixed
 - Fix loading of child theme main style sheet, so it is referenced before any other extra child theme style sheets.
 
-## [1.9.0] - 2013-01-07
+## 1.9.0 - 2013-01-07
 ### Added
 - Add `.entry` class to all content, in preparation for the potential absence of `.hentry` in a HTML5-flavoured Genesis that prefers Microdata over Microformats.
 - Add filter for term meta defaults.
@@ -656,7 +701,7 @@ _Requires WordPress 3.5.0._
 - Add a new sanitization filter, `url`.
 - Add escaping to names and dimensions of image sizes used in image size dropdowns.
 
-## [1.8.2] - 2012-06-20
+## 1.8.2 - 2012-06-20
 _Requires WordPress 3.3.0._
 ### Changed
 - Improve user interface by removing Header setting box if WP native custom-header has theme support.
@@ -667,11 +712,11 @@ _Requires WordPress 3.3.0._
 - Fix warnings in theme editor by no longer hiding Genesis Framework files.
 - Fix warnings related to custom header by supporting native functionality if WordPress ≥ 3.4.
 
-## [1.8.1] - 2012-04-30
+## 1.8.1 - 2012-04-30
 ### Security
 - This was a security release. Details of what was actually fixed will be revealed when users have had chance to update their Genesis installs (recommended immediately).
 
-## [1.8.0] - 2012-01-20
+## 1.8.0 - 2012-01-20
 ### Added
 - Add new color scheme / style metabox on Theme Settings page which child themes can use instead of building their own.
 - Add setting to enable / disable breadcrumbs on attachment pages.
@@ -767,7 +812,7 @@ _Requires WordPress 3.3.0._
 - Fix missing text-domain for footer widget area description, post author link shortcode, and user profile widget.
 - Fix the Scribe notice to be translatable.
 
-## [1.7.1] - 2011-07-18
+## 1.7.1 - 2011-07-18
 _Requires WordPress 3.2.0._
 ### Added
 - Add new conditionals to feed filter to ensure compatibility with other code that amend the feed link.
@@ -779,7 +824,7 @@ _Requires WordPress 3.2.0._
 - Fix bug with `__genesis_return_content_sidebar` returning the wrong value.
 - Fix tweet text escaping not working as intended, so reverted.
 
-## [1.7.0] - 2011-07-06
+## 1.7.0 - 2011-07-06
 ### Added
 - Add `genesis_human_time_diff()` to use on relative post dates, as a replacement for poor WP function.
 - Add `genesis_canonical` filter.
@@ -863,13 +908,13 @@ _Requires WordPress 3.2.0._
 - Add a capability check before displaying Header and Footer scripts meta box.
 - Add complete new settings sanitization class and API, aimed at core, extendable to child themes.
 
-## [1.6.1] - 2011-05-02
+## 1.6.1 - 2011-05-02
 _Requires WordPress 3.1.0._
 ### Fixed
 - Fix robots meta not outputting unless all meta tags were sent.
 - Fix minor CSS issues.
 
-## [1.6.0] - 2011-04-26
+## 1.6.0 - 2011-04-26
 ### Added
 - Add select / deselect all checkbox switch to category menu widget.
 - Add plugin detection function.
@@ -934,7 +979,49 @@ _Requires WordPress 3.1.0._
 - Fix `sub-sub-menu` issue on non-superfish dropdowns.
 - Fix CSS conflict with admin bar.
 
+## 1.5.0 - 2011-02-08
 
+- https://www.studiopress.com/genesis-framework-v15/
+
+## 1.4.1 - 2010-12-10
+
+## 1.4.0 - 2010-11-17
+
+- https://www.studiopress.com/genesis-framework-v14/
+
+## 1.3.1 - 2010-09-15
+
+## 1.3.0 - 2010-08-10
+
+- https://www.studiopress.com/genesis-framework-v13/
+
+## 1.2.1 - 2010-06-23
+
+## 1.2.0 - 2010-06-17
+
+- https://www.studiopress.com/genesis-framework-v12/
+
+## 1.1.3 - 2010-05-04
+
+## 1.1.2 - 2010-04-26
+
+## 1.1.1 - 2010-04-09
+
+- https://www.studiopress.com/genesis-framework-v111/
+
+## 1.1.0 - 2010-03-26
+
+- https://www.studiopress.com/genesis-framework-v11/
+
+## 1.0.0 - 2010-02-01
+
+- https://www.studiopress.com/genesis-framework-v10/
+
+First public release.
+
+[2.6.1]: https://github.com/copyblogger/genesis/compare/2.6.0...2.6.1
+[2.6.0]: https://github.com/copyblogger/genesis/compare/2.5.3...2.6.0
+[2.5.3]: https://github.com/copyblogger/genesis/compare/2.5.2...2.5.3
 [2.5.3]: https://github.com/copyblogger/genesis/compare/2.5.2...2.5.3
 [2.5.2]: https://github.com/copyblogger/genesis/compare/2.5.1...2.5.2
 [2.5.1]: https://github.com/copyblogger/genesis/compare/2.5.0...2.5.1

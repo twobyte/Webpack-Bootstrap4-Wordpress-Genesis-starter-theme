@@ -8,7 +8,7 @@
  * @package Genesis\Feeds
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 add_filter( 'feed_link', 'genesis_feed_links_filter', 10, 2 );
@@ -25,7 +25,7 @@ add_filter( 'feed_link', 'genesis_feed_links_filter', 10, 2 );
  */
 function genesis_feed_links_filter( $output, $feed ) {
 
-	$feed_uri = genesis_get_option( 'feed_uri' );
+	$feed_uri          = genesis_get_option( 'feed_uri' );
 	$comments_feed_uri = genesis_get_option( 'comments_feed_uri' );
 
 	if ( $feed_uri && ! mb_strpos( $output, 'comments' ) && in_array( $feed, array( '', 'rss2', 'rss', 'rdf', 'atom' ) ) ) {
@@ -62,7 +62,7 @@ function genesis_feed_redirect() {
 		return;
 	}
 
-	$feed_uri = genesis_get_option( 'feed_uri' );
+	$feed_uri          = genesis_get_option( 'feed_uri' );
 	$comments_feed_uri = genesis_get_option( 'comments_feed_uri' );
 
 	if ( $feed_uri && ! is_comment_feed() && genesis_get_option( 'redirect_feed' ) ) {

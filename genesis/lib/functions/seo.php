@@ -8,7 +8,7 @@
  * @package Genesis\SEO
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
@@ -31,10 +31,10 @@ function genesis_disable_seo() {
 
 	remove_filter( 'wp_title', 'genesis_default_title', 10, 3 );
 	remove_action( 'get_header', 'genesis_doc_head_control' );
-	remove_action( 'genesis_meta','genesis_seo_meta_description' );
-	remove_action( 'genesis_meta','genesis_seo_meta_keywords' );
-	remove_action( 'genesis_meta','genesis_robots_meta' );
-	remove_action( 'wp_head','genesis_canonical', 5 );
+	remove_action( 'genesis_meta', 'genesis_seo_meta_description' );
+	remove_action( 'genesis_meta', 'genesis_seo_meta_keywords' );
+	remove_action( 'genesis_meta', 'genesis_robots_meta' );
+	remove_action( 'wp_head', 'genesis_canonical', 5 );
 	remove_action( 'wp_head', 'genesis_meta_name' );
 	remove_action( 'wp_head', 'genesis_meta_url' );
 	remove_action( 'wp_head', 'genesis_paged_rel' );
@@ -72,6 +72,17 @@ function genesis_seo_disabled() {
 
 	return false;
 
+}
+
+/**
+ * Detect whether Genesis SEO is active.
+ *
+ * @since 2.6.0
+ *
+ * @return bool `true` if Genesis SEO is active, `false` otherwise.
+ */
+function genesis_seo_active() {
+	return ! genesis_seo_disabled();
 }
 
 add_action( 'after_setup_theme', 'genesis_seo_compatibility_check' );
@@ -147,7 +158,7 @@ function genesis_detect_seo_plugins() {
 			array(
 
 				// Classes to detect.
-				'classes' => array(
+				'classes'   => array(
 					'All_in_One_SEO_Pack',
 					'All_in_One_SEO_Pack_p',
 					'HeadSpace_Plugin',
@@ -160,7 +171,7 @@ function genesis_detect_seo_plugins() {
 				'functions' => array(),
 
 				// Constants to detect.
-				'constants' => array( 'WPSEO_VERSION', ),
+				'constants' => array( 'WPSEO_VERSION' ),
 			)
 		)
 	);

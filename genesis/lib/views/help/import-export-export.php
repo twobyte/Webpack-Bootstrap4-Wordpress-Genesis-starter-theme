@@ -8,14 +8,14 @@
  * @package StudioPress\Genesis
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 ?>
 <h3><?php esc_html_e( 'Export', 'genesis' ); ?></h3>
 <p>
 	<?php
-	/* translators: JSON name for a11y. */
+	/* translators: %s: Abbreviation element for "JSON". */
 	printf( esc_html__( 'You can export your Genesis-related settings to back them up, or copy them to another site. Child themes and plugins may add their own checkboxes to the list. The settings are exported in %s format.', 'genesis' ), '<abbr title="' . esc_html__( 'JavaScript Object Notation', 'genesis' ) . '">' . esc_html__( 'JSON', 'genesis' ) . '</abbr>' );
 	?>
 </p>

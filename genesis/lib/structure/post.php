@@ -8,7 +8,7 @@
  * @package Genesis\Entry
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
@@ -21,7 +21,7 @@
  *
  * @since 1.5.0
  *
- * @global array $_genesis_loop_args Associative array for grid loop configuration
+ * @global array $_genesis_loop_args Associative array for grid loop configuration.
  */
 function genesis_reset_loops() {
 
@@ -64,6 +64,11 @@ function genesis_reset_loops() {
 	global $_genesis_loop_args;
 	$_genesis_loop_args = array();
 
+	/**
+	 * Fires after resetting the loop actions back to their defaults.
+	 *
+	 * @since 1.6.0
+	 */
 	do_action( 'genesis_reset_loops' );
 
 }
@@ -219,8 +224,14 @@ function genesis_do_post_title() {
 	}
 
 	// Link it, if necessary.
-	if ( ! is_singular() && apply_filters( 'genesis_link_post_title', true ) ){
-		$title = sprintf( '<a href="%s" rel="bookmark">%s</a>', get_permalink(), $title );
+	if ( ! is_singular() && apply_filters( 'genesis_link_post_title', true ) ) {
+		$title = genesis_markup( array(
+			'open'    => '<a %s>',
+			'close'   => '</a>',
+			'content' => $title,
+			'context' => 'entry-title-link',
+			'echo'    => false,
+		) );
 	}
 
 	// Wrap in H1 on singular pages.
@@ -230,7 +241,7 @@ function genesis_do_post_title() {
 	$wrap = genesis_html5() && genesis_get_seo_option( 'semantic_headings' ) ? 'h1' : $wrap;
 
 	/**
-	 * Entry title wrapping element
+	 * Entry title wrapping element.
 	 *
 	 * The wrapping element for the entry title.
 	 *
@@ -267,7 +278,7 @@ add_action( 'genesis_before_post_content', 'genesis_post_info' );
  * The post info makes use of several shortcodes by default, and the whole output
  * is filtered via `genesis_post_info` before echoing.
  *
- * @since 0.2.3
+ * @since 1.0.0
  *
  * @return void Return early if post type lacks support for `genesis-entry-meta-before-content`.
  */
@@ -310,7 +321,9 @@ function genesis_do_post_image() {
 			'format'  => 'html',
 			'size'    => genesis_get_option( 'image_size' ),
 			'context' => 'archive',
-			'attr'    => genesis_parse_attr( 'entry-image', array ( 'alt' => get_the_title() ) ),
+			'attr'    => genesis_parse_attr( 'entry-image', array(
+				'alt' => get_the_title(),
+			) ),
 		) );
 
 		if ( ! empty( $img ) ) {
@@ -319,8 +332,8 @@ function genesis_do_post_image() {
  				'open'    => '<a %s>',
  				'close'   => '</a>',
  				'content' => wp_make_content_images_responsive( $img ),
- 				'context' => 'entry-image-link'
- 			));
+ 				'context' => 'entry-image-link',
+ 			) );
 
  		}
 
@@ -472,7 +485,7 @@ add_action( 'genesis_after_post_content', 'genesis_post_meta' );
  * The post info makes use of a couple of shortcodes by default, and the whole output is filtered via
  * `genesis_post_meta` before echoing.
  *
- * @since 0.2.3
+ * @since 1.0.0
  *
  * @return void Return early if post type lacks support for `genesis-entry-meta-after-content`.
  */
@@ -641,7 +654,7 @@ add_action( 'genesis_after_endwhile', 'genesis_posts_nav' );
  *
  * This is shown at the end of archives to get to another page of entries.
  *
- * @since 0.2.3
+ * @since 1.0.0
  */
 function genesis_posts_nav() {
 
@@ -658,7 +671,7 @@ function genesis_posts_nav() {
  *
  * Applies `genesis_prev_link_text` and `genesis_next_link_text` filters.
  *
- * @since 0.2.2
+ * @since 1.0.0
  */
 function genesis_prev_next_posts_nav() {
 
@@ -696,7 +709,7 @@ function genesis_prev_next_posts_nav() {
  *  * last page,
  *  * next page arrow.
  *
- * @since 0.2.3
+ * @since 1.0.0
  *
  * @global WP_Query $wp_query Query object.
  *

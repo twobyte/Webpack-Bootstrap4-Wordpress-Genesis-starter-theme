@@ -8,7 +8,7 @@
  * @package Genesis\Admin
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
@@ -116,12 +116,12 @@ abstract class Genesis_Admin {
 			return;
 		}
 
-		$this->menu_ops         = $this->menu_ops         ? $this->menu_ops         : (array) $menu_ops;
-		$this->page_ops         = $this->page_ops         ? $this->page_ops         : (array) $page_ops;
-		$this->settings_field   = $this->settings_field   ? $this->settings_field   : $settings_field;
-		$this->default_settings = $this->default_settings ? $this->default_settings : (array) $default_settings;
-		$this->help_base        = $this->help_base        ? $this->help_base        : GENESIS_VIEWS_DIR . '/help/' . $page_id . '-';
-		$this->views_base       = $this->views_base       ? $this->views_base       : GENESIS_VIEWS_DIR;
+		$this->menu_ops         = $this->menu_ops ? $this->menu_ops : $menu_ops;
+		$this->page_ops         = $this->page_ops ? $this->page_ops : $page_ops;
+		$this->settings_field   = $this->settings_field ? $this->settings_field : $settings_field;
+		$this->default_settings = $this->default_settings ? $this->default_settings : $default_settings;
+		$this->help_base        = $this->help_base ? $this->help_base : GENESIS_VIEWS_DIR . '/help/' . $page_id . '-';
+		$this->views_base       = $this->views_base ? $this->views_base : GENESIS_VIEWS_DIR;
 
 		$this->page_ops = wp_parse_args(
 			$this->page_ops,
@@ -134,9 +134,9 @@ abstract class Genesis_Admin {
 			)
 		);
 
-
 		// Check to make sure there we are only creating one menu per subclass.
 		if ( isset( $this->menu_ops['submenu'] ) && ( isset( $this->menu_ops['main_menu'] ) || isset( $this->menu_ops['first_submenu'] ) ) ) {
+			/* translators: %s: Genesis_Admin class name. */
 			wp_die( sprintf( __( 'You cannot use %s to create two menus in the same subclass. Please use separate subclasses for each menu.', 'genesis' ), 'Genesis_Admin' ) );
 		}
 
@@ -181,7 +181,7 @@ abstract class Genesis_Admin {
 			);
 
 			if ( $sep['sep_position'] && $sep['sep_capability'] ) {
-				$GLOBALS['menu'][$sep['sep_position']] = array( '', $sep['sep_capability'], 'separator', '', 'genesis-separator wp-menu-separator' );
+				$GLOBALS['menu'][ $sep['sep_position'] ] = array( '', $sep['sep_capability'], 'separator', '', 'genesis-separator wp-menu-separator' );
 			}
 		}
 
@@ -272,7 +272,15 @@ abstract class Genesis_Admin {
 			return;
 		}
 
-		register_setting( $this->settings_field, $this->settings_field, array( 'default' => $this->default_settings ) );
+		register_setting(
+			$this->settings_field, $this->settings_field, array(
+				'default' => $this->default_settings,
+			)
+		);
+
+		if ( ! genesis_get_option( 'theme_version' ) ) {
+			update_option( $this->settings_field, $this->default_settings );
+		}
 
 		if ( ! genesis_is_menu_page( $this->page_id ) ) {
 			return;
@@ -280,9 +288,17 @@ abstract class Genesis_Admin {
 
 		if ( genesis_get_option( 'reset', $this->settings_field ) ) {
 			if ( update_option( $this->settings_field, $this->default_settings ) ) {
-				genesis_admin_redirect( $this->page_id, array( 'reset' => 'true' ) );
+				genesis_admin_redirect(
+					$this->page_id, array(
+						'reset' => 'true',
+					)
+				);
 			} else {
-				genesis_admin_redirect( $this->page_id, array( 'error' => 'true' ) );
+				genesis_admin_redirect(
+					$this->page_id, array(
+						'error' => 'true',
+					)
+				);
 			}
 			exit;
 		}
@@ -319,9 +335,9 @@ abstract class Genesis_Admin {
 	 *
 	 * @since 1.8.0
 	 *
-	 * @param string $newvalue New value to save.
-	 * @param string $oldvalue Old value.
-	 * @return string Value to save.
+	 * @param mixed $newvalue New value to save.
+	 * @param mixed $oldvalue Old value.
+	 * @return mixed Value to save.
 	 */
 	public function save( $newvalue, $oldvalue ) {
 
@@ -362,12 +378,14 @@ abstract class Genesis_Admin {
 	 */
 	public function add_help_tab( $id, $title ) {
 
-		get_current_screen()->add_help_tab( array(
-			'id'       => $this->pagehook . '-' . $id,
-			'title'    => $title,
-			'content'  => '',
-			'callback' => array( $this, 'help_content' ),
-		) );
+		get_current_screen()->add_help_tab(
+			array(
+				'id'       => $this->pagehook . '-' . $id,
+				'title'    => $title,
+				'content'  => '',
+				'callback' => array( $this, 'help_content' ),
+			)
+		);
 
 	}
 
@@ -382,10 +400,10 @@ abstract class Genesis_Admin {
 	public function help_content( $screen, $tab ) {
 
 		$hook_len = strlen( $this->pagehook ) + 1;
-		$view = $this->help_base . substr( $tab['id'], $hook_len, strlen( $tab['id'] ) - $hook_len ) . '.php';
+		$view     = $this->help_base . substr( $tab['id'], $hook_len ) . '.php';
 
 		if ( is_file( $view ) ) {
-			include( $view );
+			include $view;
 		}
 
 	}
@@ -526,194 +544,3 @@ abstract class Genesis_Admin {
 	}
 
 }
-
-/**
- * Abstract subclass of Genesis_Admin which adds support for displaying a form.
- *
- * This class must be extended when creating an admin page with a form, and the
- * settings_form() method must be defined in the subclass.
- *
- * @since 1.8.0
- *
- * @package Genesis\Admin
- */
-abstract class Genesis_Admin_Form extends Genesis_Admin {
-
-	/**
-	 * Output settings page form elements.
-	 *
-	 * Must be overridden in a subclass, or it obviously won't work.
-	 *
-	 * @since 1.8.0
-	 */
-	abstract public function form();
-
-	/**
-	 * Normal settings page admin.
-	 *
-	 * Includes the necessary markup, form elements, etc.
-	 * Hook to {$this->pagehook}_settings_page_form to insert table and settings form.
-	 *
-	 * Can be overridden in a child class to achieve complete control over the settings page output.
-	 *
-	 * @since 1.8.0
-	 */
-	public function admin() {
-
-		include( GENESIS_VIEWS_DIR . '/pages/genesis-admin-form.php' );
-
-	}
-
-	/**
-	 * Initialize the settings page, by hooking the form into the page.
-	 *
-	 * @since 1.8.0
-	 */
-	public function settings_init() {
-
-		add_action( "{$this->pagehook}_settings_page_form", array( $this, 'form' ) );
-
-	}
-
-}
-
-/**
- * Abstract subclass of Genesis_Admin which adds support for registering and
- * displaying meta boxes.
- *
- * This class must be extended when creating an admin page with meta boxes, and
- * the settings_metaboxes() method must be defined in the subclass.
- *
- * @since 1.8.0
- *
- * @package Genesis\Admin
- */
-abstract class Genesis_Admin_Boxes extends Genesis_Admin {
-
-	/**
-	 * Register the meta boxes.
-	 *
-	 * Must be overridden in a subclass, or it obviously won't work.
-	 *
-	 * @since 1.8.0
-	 */
-	abstract public function metaboxes();
-
-	/**
-	 * Include the necessary sortable meta box scripts.
-	 *
-	 * @since 1.8.0
-	 */
-	public function scripts() {
-
-		wp_enqueue_script( 'common' );
-		wp_enqueue_script( 'wp-lists' );
-		wp_enqueue_script( 'postbox' );
-
-	}
-
-	/**
-	 * Use this as the settings admin callback to create an admin page with sortable meta boxes.
-	 * Create a 'settings_boxes' method to add meta boxes.
-	 *
-	 * @since 1.8.0
-	 */
-	public function admin() {
-
-		include( GENESIS_VIEWS_DIR . '/pages/genesis-admin-boxes.php' );
-
-	}
-
-	/**
-	 * Echo out the do_meta_boxes() and wrapping markup.
-	 *
-	 * This method can be overwritten in a child class, to adjust the markup surrounding the meta boxes, and optionally
-	 * call do_meta_boxes() with other contexts. The overwritten method MUST contain div elements with classes of
-	 * `metabox-holder` and `postbox-container`.
-	 *
-	 * @since 2.0.0
-	 *
-	 * @global array $wp_meta_boxes Holds all meta boxes data.
-	 */
-	public function do_metaboxes() {
-
-		include( GENESIS_VIEWS_DIR . '/misc/genesis-admin-boxes-holder.php' );
-
-	}
-
-	/**
-	 * Add meta box to the current admin screen.
-	 *
-	 * @since 2.5.0
-	 *
-	 * @param string $handle   Meta box handle.
-	 * @param string $title    Meta box title.
-	 * @param string $priority Optional. Meta box priority.
-	 */
-	public function add_meta_box( $handle, $title, $priority = 'default' ) {
-
-		add_meta_box( $handle, $title, array( $this, 'do_meta_box' ), $this->pagehook, 'main', $priority );
-
-	}
-
-	/**
-	 * Echo out the content of a meta box.
-	 *
-	 * @since 2.5.0
-	 *
-	 * @param object $object   Object passed to do_meta_boxes function.
-	 * @param array  $meta_box Array of parameters passed to add_meta_box function.
-	 */
-	public function do_meta_box( $object, $meta_box ) {
-
-		$view = $this->views_base . '/meta-boxes/' . $meta_box['id'] . '.php';
-		if ( is_file( $view ) ) {
-			include( $view );
-		}
-
-	}
-
-	/**
-	 * Initialize the settings page.
-	 *
-	 * @since 1.8.0
-	 */
-	public function settings_init() {
-
-		add_action( 'load-' . $this->pagehook, array( $this, 'metaboxes' ) );
-		add_action( $this->pagehook . '_settings_page_boxes', array( $this, 'do_metaboxes' ) );
-
-		if ( method_exists( $this, 'layout_columns' ) ) {
-			add_filter( 'screen_layout_columns', array( $this, 'layout_columns' ), 10, 2 );
-		}
-
-	}
-
-}
-
-/**
- * Abstract subclass of Genesis_Admin which adds support for creating a basic
- * admin page that does not make use of a Settings API form or meta boxes.
- *
- * This class must be extended when creating a basic admin page and the admin()
- * method must be redefined.
- *
- * @since 1.8.0
- *
- * @package Genesis\Admin
- */
-abstract class Genesis_Admin_Basic extends Genesis_Admin {
-
-	/**
-	 * Satisfies the abstract requirements of Genesis_Admin.
-	 *
-	 * This method can be redefined within the page-specific implementation
-	 * class if you need to hook something into admin_init.
-	 *
-	 * @since 1.8.0
-	 */
-	public function settings_init() {}
-
-}
-
-do_action( 'genesis_admin_init' );

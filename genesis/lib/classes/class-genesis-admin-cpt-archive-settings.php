@@ -8,7 +8,7 @@
  * @package Genesis\Admin
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
@@ -59,15 +59,15 @@ class Genesis_Admin_CPT_Archive_Settings extends Genesis_Admin_Boxes {
 				'parent_slug' => 'edit.php?post_type=' . $this->post_type->name,
 				'page_title'  => apply_filters( 'genesis_cpt_archive_settings_page_label', __( 'Archive Settings', 'genesis' ) ),
 				'menu_title'  => apply_filters( 'genesis_cpt_archive_settings_menu_label', __( 'Archive Settings', 'genesis' ) ),
-				'capability'  => apply_filters( 'genesis_cpt_archive_settings_capability_' . $this->post_type->name, 'manage_options' ),
+				'capability'  => apply_filters( "genesis_cpt_archive_settings_capability_{$this->post_type->name}", 'manage_options' ),
 			),
 		);
 
 		// Handle non-top-level CPT menu items.
 		if ( is_string( $this->post_type->show_in_menu ) ) {
-			$menu_ops['submenu']['parent_slug'] = $this->post_type->show_in_menu;
-			$menu_ops['submenu']['menu_title']  = apply_filters( 'genesis_cpt_archive_settings_label', $this->post_type->labels->name . ' ' . __( 'Archive', 'genesis' ) );
-			$menu_ops['submenu']['menu_position']  = $this->post_type->menu_position;
+			$menu_ops['submenu']['parent_slug']   = $this->post_type->show_in_menu;
+			$menu_ops['submenu']['menu_title']    = apply_filters( 'genesis_cpt_archive_settings_label', $this->post_type->labels->name . ' ' . __( 'Archive', 'genesis' ) );
+			$menu_ops['submenu']['menu_position'] = $this->post_type->menu_position;
 		}
 
 		$page_ops = array(); // Use defaults.
@@ -156,6 +156,13 @@ class Genesis_Admin_CPT_Archive_Settings extends Genesis_Admin_Boxes {
 			$this->add_meta_box( 'genesis-cpt-archives-layout-settings', __( 'Layout Settings', 'genesis' ) );
 		}
 
+		/**
+		 * Fires after CPT archive settings meta boxes have been added.
+		 *
+		 * @since 2.0.0
+		 *
+		 * @param string $pagehook Page hook for the CPT archive settings page.
+		 */
 		do_action( 'genesis_cpt_archives_settings_metaboxes', $this->pagehook );
 
 	}
@@ -168,8 +175,8 @@ class Genesis_Admin_CPT_Archive_Settings extends Genesis_Admin_Boxes {
 	public function help() {
 
 		$this->add_help_tab( 'archive', __( 'Archive Settings', 'genesis' ) );
-		$this->add_help_tab( 'seo',     __( 'SEO Settings', 'genesis' ) );
-		$this->add_help_tab( 'layout',  __( 'Layout Settings', 'genesis' ) );
+		$this->add_help_tab( 'seo', __( 'SEO Settings', 'genesis' ) );
+		$this->add_help_tab( 'layout', __( 'Layout Settings', 'genesis' ) );
 
 	}
 }

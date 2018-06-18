@@ -8,13 +8,13 @@
  * @package StudioPress\Genesis
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 $layout = get_the_author_meta( 'layout', $object->ID );
 $layout = $layout ? $layout : '';
 ?>
-<h3><?php esc_html_e( 'Layout Settings', 'genesis' ); ?></h3>
+<h2><?php esc_html_e( 'Layout Settings', 'genesis' ); ?></h2>
 <p><span class="description"><?php esc_html_e( 'These settings apply to this author\'s archive pages.', 'genesis' ); ?></span></p>
 <table class="form-table">
 	<tbody>
@@ -25,7 +25,7 @@ $layout = $layout ? $layout : '';
 					<legend class="screen-reader-text"><?php _e( 'Choose Layout', 'genesis' ); ?></legend>
 
 					<p><input type="radio" name="genesis-meta[layout]" class="default-layout" id="default-layout" value="" <?php checked( $layout, '' ); ?> /> <label class="default" for="default-layout">						<?php
-					/* translators: Theme settings admin screen link */
+					/* translators: %s: Theme settings admin screen link. */
 					printf( esc_html__( 'Default Layout set in %s', 'genesis' ), '<a href="' . esc_url( menu_page_url( 'genesis', 0 ) ) . '">' . esc_html__( 'Theme Settings', 'genesis' ) . '</a>' );
 					?>
 					</label></p>
@@ -34,7 +34,7 @@ $layout = $layout ? $layout : '';
 					genesis_layout_selector( array(
 						'name'     => 'genesis-meta[layout]',
 						'selected' => $layout,
-						'type'     => array( 'archive', 'author', $object->ID )
+						'type'     => array( 'archive', 'author', $object->ID ),
 					) );
 					?>
 

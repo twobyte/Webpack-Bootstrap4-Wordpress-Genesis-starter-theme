@@ -8,7 +8,7 @@
  * @package Genesis\Widgets
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 add_action( 'widgets_init', 'genesis_load_widgets' );
@@ -51,7 +51,14 @@ function genesis_remove_default_widgets_from_header_right() {
 	}
 
 	$widgets  = get_option( 'sidebars_widgets' );
-	$defaults = array( 0 => 'search-2', 1 => 'recent-posts-2', 2 => 'recent-comments-2', 3 => 'archives-2', 4 => 'categories-2', 5 => 'meta-2', );
+	$defaults = array(
+		0 => 'search-2',
+		1 => 'recent-posts-2',
+		2 => 'recent-comments-2',
+		3 => 'archives-2',
+		4 => 'categories-2',
+		5 => 'meta-2',
+	);
 
 	if ( isset( $widgets['header-right'] ) && $defaults === $widgets['header-right'] ) {
 		$widgets['header-right'] = array();

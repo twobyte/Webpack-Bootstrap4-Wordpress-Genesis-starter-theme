@@ -8,7 +8,7 @@
  * @package Genesis\Menus
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 add_filter( 'nav_menu_link_attributes', 'genesis_nav_menu_link_attributes' );
@@ -20,12 +20,12 @@ add_filter( 'nav_menu_link_attributes', 'genesis_nav_menu_link_attributes' );
  * @since 2.2.0
  *
  * @param array $atts {
- *		The HTML attributes applied to the menu item's link element, empty strings are ignored.
+ *      The HTML attributes applied to the menu item's link element, empty strings are ignored.
  *
- *		@type string $title Title attribute.
- *		@type string $target Target attribute.
- *		@type string $rel The rel attribute.
- *		@type string $href The href attribute.
+ *      @type string $title Title attribute.
+ *      @type string $target Target attribute.
+ *      @type string $rel The rel attribute.
+ *      @type string $href The href attribute.
  * }
  * @return array Maybe modified menu attributes array.
  */
@@ -59,6 +59,11 @@ function genesis_register_nav_menus() {
 
 	register_nav_menus( (array) $menus[0] );
 
+	/**
+	 * Fires after registering custom Genesis navigation menus.
+	 *
+	 * @since 1.8.0
+	 */
 	do_action( 'genesis_register_nav_menus' );
 
 }
@@ -81,10 +86,6 @@ function genesis_do_nav() {
 	$class = 'menu genesis-nav-menu menu-primary';
 	if ( genesis_superfish_enabled() ) {
 		$class .= ' js-superfish';
-	}
-
-	if ( genesis_a11y( 'headings' ) ) {
-		printf( '<h2 class="screen-reader-text">%s</h2>', __( 'Main navigation', 'genesis' ) );
 	}
 
 	genesis_nav_menu( array(
@@ -150,10 +151,10 @@ function genesis_nav_right( $menu, stdClass $args ) {
 			$menu .= '<li class="right rss">' . $rss . '</li>';
 			break;
 		case 'search':
-			$menu  .= '<li class="right search">' . get_search_form( false ) . '</li>';
+			$menu .= '<li class="right search">' . get_search_form( false ) . '</li>';
 			break;
 		case 'twitter':
-			$menu .= sprintf( '<li class="right twitter"><a href="%s">%s</a></li>', esc_url( 'http://twitter.com/' . genesis_get_option( 'nav_extras_twitter_id' ) ), esc_html( genesis_get_option( 'nav_extras_twitter_text' ) ) );
+			$menu .= sprintf( '<li class="right twitter"><a href="%s">%s</a></li>', esc_url( 'https://twitter.com/' . genesis_get_option( 'nav_extras_twitter_id' ) ), esc_html( genesis_get_option( 'nav_extras_twitter_text' ) ) );
 			break;
 		case 'date':
 			$menu .= '<li class="right date">' . date_i18n( get_option( 'date_format' ) ) . '</li>';

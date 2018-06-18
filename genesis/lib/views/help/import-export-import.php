@@ -8,14 +8,14 @@
  * @package StudioPress\Genesis
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 ?>
 <h3><?php esc_html_e( 'Import', 'genesis' ); ?></h3>
 <p>
 	<?php
-	/* translators: File name prefix. */
+	/* translators: %s: File name prefix. */
 	printf( esc_html__( 'You can import a file you\'ve previously exported. The file name will start with %s followed by one or more strings indicating which settings it contains, finally followed by the date and time it was exported.', 'genesis' ), genesis_code( 'genesis-' ) );
 	?>
 </p>

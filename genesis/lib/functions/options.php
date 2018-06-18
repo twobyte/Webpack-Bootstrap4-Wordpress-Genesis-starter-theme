@@ -8,7 +8,7 @@
  * @package Genesis\Options
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
@@ -19,7 +19,7 @@
  * Values pulled from the database are cached on each request, so a second request for the same value won't cause a
  * second DB interaction.
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @param string $key       Option name.
  * @param string $setting   Optional. Settings field name. Eventually defaults to `GENESIS_SETTINGS_FIELD` if not
@@ -39,7 +39,7 @@ function genesis_get_option( $key, $setting = null, $use_cache = true ) {
 		return $pre;
 	}
 
-	// Bypass cache if viewing site in customizer.
+	// Bypass cache if viewing site in Customizer.
 	if ( genesis_is_customizer() ) {
 		$use_cache = false;
 	}
@@ -52,7 +52,7 @@ function genesis_get_option( $key, $setting = null, $use_cache = true ) {
 			return '';
 		}
 
-		return is_array( $options[$key] ) ? stripslashes_deep( $options[$key] ) : stripslashes( wp_kses_decode_entities( $options[$key] ) );
+		return is_array( $options[ $key ] ) ? $options[ $key ] : wp_kses_decode_entities( $options[ $key ] );
 	}
 
 	// Setup caches.
@@ -60,37 +60,37 @@ function genesis_get_option( $key, $setting = null, $use_cache = true ) {
 	static $options_cache  = array();
 
 	// Check options cache.
-	if ( isset( $options_cache[$setting][$key] ) ) {
+	if ( isset( $options_cache[ $setting ][ $key ] ) ) {
 		// Option has been cached.
-		return $options_cache[$setting][$key];
+		return $options_cache[ $setting ][ $key ];
 	}
 
 	// Check settings cache.
-	if ( isset( $settings_cache[$setting] ) ) {
+	if ( isset( $settings_cache[ $setting ] ) ) {
 		// Setting has been cached.
-		$options = apply_filters( 'genesis_options', $settings_cache[$setting], $setting );
+		$options = apply_filters( 'genesis_options', $settings_cache[ $setting ], $setting );
 	} else {
 		// Set value and cache setting.
-		$options = $settings_cache[$setting] = apply_filters( 'genesis_options', get_option( $setting ), $setting );
+		$options = $settings_cache[ $setting ] = apply_filters( 'genesis_options', get_option( $setting ), $setting );
 	}
 
 	// Check for non-existent option.
 	if ( ! is_array( $options ) || ! array_key_exists( $key, (array) $options ) ) {
 		// Cache non-existent option.
-		$options_cache[$setting][$key] = '';
+		$options_cache[ $setting ][ $key ] = '';
 	} else {
 		// Option has not been previously been cached, so cache now.
-		$options_cache[$setting][$key] = is_array( $options[$key] ) ? stripslashes_deep( $options[$key] ) : stripslashes( wp_kses_decode_entities( $options[$key] ) );
+		$options_cache[ $setting ][ $key ] = is_array( $options[ $key ] ) ? $options[ $key ] : wp_kses_decode_entities( $options[ $key ] );
 	}
 
-	return $options_cache[$setting][$key];
+	return $options_cache[ $setting ][ $key ];
 
 }
 
 /**
  * Echo options from the options database.
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @param string $key       Option name.
  * @param string $setting   Optional. Settings field name. Eventually defaults to GENESIS_SETTINGS_FIELD.
@@ -105,7 +105,7 @@ function genesis_option( $key, $setting = null, $use_cache = true ) {
 /**
  * Return SEO options from the SEO options database.
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @param string $key       Option name.
  * @param bool   $use_cache Optional. Whether to use the Genesis cache value or not. Defaults to true.
@@ -121,7 +121,7 @@ function genesis_get_seo_option( $key, $use_cache = true ) {
 /**
  * Echo an SEO option from the SEO options database.
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @param string $key       Option name.
  * @param bool   $use_cache Optional. Whether to use the Genesis cache value or not. Defaults to true.
@@ -173,7 +173,7 @@ function genesis_cpt_option( $key, $post_type_name, $use_cache = true ) {
  *
  * Pass in a `printf()` pattern as the second parameter and have that wrap around the value, if the value is not falsy.
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @param string $field          Custom field key.
  * @param string $output_pattern `printf()` compatible output pattern.
@@ -193,7 +193,7 @@ function genesis_custom_field( $field, $output_pattern = '%s', $post_id = null )
  *
  * Return only the first value of custom field. Return empty string if field is blank or not set.
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @param string $field   Custom field key.
  * @param int    $post_id Optional. Post ID to use for Post Meta lookup, defaults to `get_the_ID()`.
@@ -214,8 +214,7 @@ function genesis_get_custom_field( $field, $post_id = null ) {
 		return '';
 	}
 
-	// Return custom field, slashes stripped, sanitized if string.
-	return is_array( $custom_field ) ? stripslashes_deep( $custom_field ) : stripslashes( wp_kses_decode_entities( $custom_field ) );
+	return is_array( $custom_field ) ? $custom_field : wp_kses_decode_entities( $custom_field );
 
 }
 

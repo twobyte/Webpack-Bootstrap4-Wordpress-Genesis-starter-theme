@@ -8,7 +8,7 @@
  * @package StudioPress\Genesis
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 ?>
@@ -46,21 +46,21 @@
 					/* translators: Meta noindex attribute. */
 					printf( esc_html__( 'Apply %s to this archive', 'genesis' ), genesis_code( 'noindex' ) );
 				?>
-				<a href="http://yoast.com/articles/robots-meta-tags/" target="_blank">[?]</a></label><br />
+				<a href="https://yoast.com/robots-meta-tags/" target="_blank">[?]</a></label><br />
 
 				<label for="<?php $this->field_id( 'nofollow' ); ?>"><input type="checkbox" name="<?php $this->field_name( 'nofollow' ); ?>" id="<?php $this->field_id( 'nofollow' ); ?>" value="1" <?php checked( $this->get_field_value( 'nofollow' ) ); ?> />
 				<?php
 					/* translators: Meta nofollow attribute. */
 					printf( esc_html__( 'Apply %s to this archive', 'genesis' ), genesis_code( 'nofollow' ) );
 				?>
-				<a href="http://yoast.com/articles/robots-meta-tags/" target="_blank">[?]</a></label><br />
+				<a href="https://yoast.com/robots-meta-tags/" target="_blank">[?]</a></label><br />
 
 				<label for="<?php $this->field_id( 'noarchive' ); ?>"><input type="checkbox" name="<?php $this->field_name( 'noarchive' ); ?>" id="<?php $this->field_id( 'noarchive' ); ?>" value="1" <?php checked( $this->get_field_value( 'noarchive' ) ); ?> />
 				<?php
 					/* translators: Meta noarchive attribute. */
 					printf( esc_html__( 'Apply %s to this archive', 'genesis' ), genesis_code( 'noarchive' ) );
 				?>
-				<a href="http://yoast.com/articles/robots-meta-tags/" target="_blank">[?]</a></label>
+				<a href="https://yoast.com/robots-meta-tags/" target="_blank">[?]</a></label>
 			</p>
 		</td>
 	</tr>

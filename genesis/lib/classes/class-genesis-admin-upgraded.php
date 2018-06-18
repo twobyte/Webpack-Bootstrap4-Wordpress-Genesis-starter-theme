@@ -8,7 +8,7 @@
  * @package Genesis\Admin
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
@@ -33,7 +33,7 @@ class Genesis_Admin_Upgraded extends Genesis_Admin_Basic {
 			'submenu' => array(
 				'parent_slug' => 'admin.php',
 				'menu_title'  => '',
-				/* translators: %s: Genesis version */
+				/* translators: %s: Genesis version. */
 				'page_title'  => sprintf( __( 'Welcome to Genesis %s', 'genesis' ), PARENT_THEME_BRANCH ),
 			),
 		);
@@ -51,7 +51,7 @@ class Genesis_Admin_Upgraded extends Genesis_Admin_Basic {
 	 */
 	public function admin() {
 
-		require_once( $this->views_base . '/pages/genesis-admin-upgraded.php' );
+		require_once $this->views_base . '/pages/genesis-admin-upgraded.php';
 
 	}
 

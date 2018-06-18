@@ -8,7 +8,7 @@
  * @package StudioPress\Genesis
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 wp_nonce_field( 'genesis_inpost_seo_save', 'genesis_inpost_seo_nonce' );

@@ -8,7 +8,7 @@
  * @package Genesis\Templates
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 // Output secondary sidebar structure.
@@ -17,8 +17,25 @@ genesis_markup( array(
 	'context' => 'sidebar-secondary',
 ) );
 
+/**
+ * Fires immediately after the Secondary Sidebar opening markup.
+ *
+ * @since 1.0.0
+ */
 do_action( 'genesis_before_sidebar_alt_widget_area' );
+
+/**
+ * Fires to display the main Secondary Sidebar content.
+ *
+ * @since 1.2.0
+ */
 do_action( 'genesis_sidebar_alt' );
+
+/**
+ * Fires immediately before the Secondary Sidebar closing markup.
+ *
+ * @since 1.0.0
+ */
 do_action( 'genesis_after_sidebar_alt_widget_area' );
 
 // End .sidebar-secondary.

@@ -8,7 +8,7 @@
  * @package StudioPress\Genesis
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 ?>
@@ -22,11 +22,13 @@
 			<legend class="screen-reader-text"><?php esc_html_e( 'Default Layout', 'genesis' ); ?></legend>
 
 			<?php
-			genesis_layout_selector( array(
-				'name'     => $this->get_field_name( 'site_layout' ),
-				'selected' => $this->get_field_value( 'site_layout' ),
-				'type'     => array( 'site' ),
-			) );
+			genesis_layout_selector(
+				array(
+					'name'     => $this->get_field_name( 'site_layout' ),
+					'selected' => $this->get_field_value( 'site_layout' ),
+					'type'     => array( 'site' ),
+				)
+			);
 			?>
 
 			</fieldset>

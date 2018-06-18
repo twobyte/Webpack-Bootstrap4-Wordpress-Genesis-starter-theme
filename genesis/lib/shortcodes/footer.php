@@ -8,7 +8,7 @@
  * @package Genesis\Shortcodes
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 add_shortcode( 'footer_backtotop', 'genesis_footer_backtotop_shortcode' );
@@ -39,7 +39,7 @@ function genesis_footer_backtotop_shortcode( $atts ) {
 		'nofollow' => true,
 		'text'     => __( 'Return to top of page', 'genesis' ),
 	);
-	$atts = shortcode_atts( $defaults, $atts, 'footer_backtotop' );
+	$atts     = shortcode_atts( $defaults, $atts, 'footer_backtotop' );
 
 	$nofollow = $atts['nofollow'] ? 'rel="nofollow"' : '';
 
@@ -82,11 +82,11 @@ function genesis_footer_copyright_shortcode( $atts ) {
 		'copyright' => '&#x000A9;',
 		'first'     => '',
 	);
-	$atts = shortcode_atts( $defaults, $atts, 'footer_copyright' );
+	$atts     = shortcode_atts( $defaults, $atts, 'footer_copyright' );
 
 	$output = $atts['before'] . $atts['copyright'] . '&nbsp;';
 
-	if ( '' != $atts['first'] && date( 'Y' ) != $atts['first'] ) {
+	if ( '' !== $atts['first'] && date( 'Y' ) !== $atts['first'] ) {
 		$output .= $atts['first'] . '&#x02013;';
 	}
 
@@ -122,7 +122,7 @@ function genesis_footer_childtheme_link_shortcode( $atts ) {
 		'after'  => '',
 		'before' => '&#x000B7;',
 	);
-	$atts = shortcode_atts( $defaults, $atts, 'footer_childtheme_link' );
+	$atts     = shortcode_atts( $defaults, $atts, 'footer_childtheme_link' );
 
 	$output = sprintf( '%s<a href="%s">%s</a>%s', $atts['before'], esc_url( CHILD_THEME_URL ), esc_html( CHILD_THEME_NAME ), $atts['after'] );
 
@@ -150,9 +150,9 @@ function genesis_footer_genesis_link_shortcode( $atts ) {
 	$defaults = array(
 		'after'  => '',
 		'before' => '',
-		'url'    => 'http://my.studiopress.com/themes/genesis/',
+		'url'    => 'https://my.studiopress.com/themes/genesis/',
 	);
-	$atts = shortcode_atts( $defaults, $atts, 'footer_genesis_link' );
+	$atts     = shortcode_atts( $defaults, $atts, 'footer_genesis_link' );
 
 	$output = $atts['before'] . '<a href="' . esc_url( $atts['url'] ) . '">Genesis Framework</a>' . $atts['after'];
 
@@ -181,9 +181,9 @@ function genesis_footer_studiopress_link_shortcode( $atts ) {
 		'after'  => '',
 		'before' => __( 'by', 'genesis' ),
 	);
-	$atts = shortcode_atts( $defaults, $atts, 'footer_studiopress_link' );
+	$atts     = shortcode_atts( $defaults, $atts, 'footer_studiopress_link' );
 
-	$output = $atts['before'] . ' <a href="http://www.studiopress.com/">StudioPress</a>' . $atts['after'];
+	$output = $atts['before'] . ' <a href="https://www.studiopress.com/">StudioPress</a>' . $atts['after'];
 
 	return apply_filters( 'genesis_footer_studiopress_link_shortcode', $output, $atts );
 
@@ -191,7 +191,7 @@ function genesis_footer_studiopress_link_shortcode( $atts ) {
 
 add_shortcode( 'footer_wordpress_link', 'genesis_footer_wordpress_link_shortcode' );
 /**
- * Adds link to WordPress - http://wordpress.org/ .
+ * Adds link to WordPress - https://wordpress.org/ .
  *
  * Supported shortcode attributes are:
  *   after (output after link, default is empty string),
@@ -210,9 +210,9 @@ function genesis_footer_wordpress_link_shortcode( $atts ) {
 		'after'  => '',
 		'before' => '',
 	);
-	$atts = shortcode_atts( $defaults, $atts, 'footer_wordpress_link' );
+	$atts     = shortcode_atts( $defaults, $atts, 'footer_wordpress_link' );
 
-	$output = sprintf( '%s<a href="%s">%s</a>%s', $atts['before'], 'http://wordpress.org/', 'WordPress', $atts['after'] );
+	$output = sprintf( '%s<a href="%s">%s</a>%s', $atts['before'], 'https://wordpress.org/', 'WordPress', $atts['after'] );
 
 	return apply_filters( 'genesis_footer_wordpress_link_shortcode', $output, $atts );
 
@@ -239,7 +239,7 @@ function genesis_footer_site_title_shortcode( $atts ) {
 		'after'  => '',
 		'before' => '',
 	);
-	$atts = shortcode_atts( $defaults, $atts, 'footer_site_title' );
+	$atts     = shortcode_atts( $defaults, $atts, 'footer_site_title' );
 
 	$output = $atts['before'] . get_bloginfo( 'name' ) . $atts['after'];
 
@@ -270,7 +270,7 @@ function genesis_footer_home_link_shortcode( $atts ) {
 		'before' => '',
 		'text'   => get_bloginfo( 'name' ),
 	);
-	$atts = shortcode_atts( $defaults, $atts, 'footer_home_link' );
+	$atts     = shortcode_atts( $defaults, $atts, 'footer_home_link' );
 
 	$output = sprintf( '%s<a href="%s">%s</a>%s', $atts['before'], home_url(), $atts['text'], $atts['after'] );
 
@@ -301,7 +301,7 @@ function genesis_footer_loginout_shortcode( $atts ) {
 		'before'   => '',
 		'redirect' => '',
 	);
-	$atts = shortcode_atts( $defaults, $atts, 'footer_loginout' );
+	$atts     = shortcode_atts( $defaults, $atts, 'footer_loginout' );
 
 	if ( ! is_user_logged_in() ) {
 		$link = '<a href="' . esc_url( wp_login_url( $atts['redirect'] ) ) . '">' . __( 'Log in', 'genesis' ) . '</a>';
@@ -309,7 +309,7 @@ function genesis_footer_loginout_shortcode( $atts ) {
 		$link = '<a href="' . esc_url( wp_logout_url( $atts['redirect'] ) ) . '">' . __( 'Log out', 'genesis' ) . '</a>';
 	}
 
-	$output = $atts['before'] . apply_filters( 'loginout', $link ) . $atts['after'];
+	$output = $atts['before'] . apply_filters( 'loginout', $link ) . $atts['after']; // WPCS: prefix ok.
 
 	return apply_filters( 'genesis_footer_loginout_shortcode', $output, $atts );
 

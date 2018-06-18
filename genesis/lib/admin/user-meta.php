@@ -8,7 +8,7 @@
  * @package Genesis\Admin
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 add_filter( 'user_contactmethods', 'genesis_user_contactmethods' );
@@ -136,7 +136,7 @@ function genesis_user_layout_fields( $user ) {
 
 }
 
-add_action( 'personal_options_update',  'genesis_user_meta_save' );
+add_action( 'personal_options_update', 'genesis_user_meta_save' );
 add_action( 'edit_user_profile_update', 'genesis_user_meta_save' );
 /**
  * Update user meta when user edit page is saved.
@@ -195,8 +195,8 @@ function genesis_user_meta_save( $user_id ) {
 
 }
 
-add_filter( 'get_the_author_genesis_admin_menu',         'genesis_user_meta_default_on', 10, 2 );
-add_filter( 'get_the_author_genesis_seo_settings_menu',  'genesis_user_meta_default_on', 10, 2 );
+add_filter( 'get_the_author_genesis_admin_menu', 'genesis_user_meta_default_on', 10, 2 );
+add_filter( 'get_the_author_genesis_seo_settings_menu', 'genesis_user_meta_default_on', 10, 2 );
 add_filter( 'get_the_author_genesis_import_export_menu', 'genesis_user_meta_default_on', 10, 2 );
 /**
  * Check to see if user data has actually been saved, or if defaults need to be forced.

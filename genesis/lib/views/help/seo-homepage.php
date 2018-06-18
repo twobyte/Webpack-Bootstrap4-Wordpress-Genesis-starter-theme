@@ -8,7 +8,7 @@
  * @package StudioPress\Genesis
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 ?>
@@ -24,7 +24,7 @@
 </p>
 <p>
 	<?php
-	/* translators: Escaped title tag. */
+	/* translators: %s: Escaped title tag. */
 	printf( esc_html__( 'The home doctitle sets what will appear within the %1$s tags (unseen in the browser) for the home page.', 'genesis' ), '<code>&lt;title&gt;</code>' );
 	?>
 </p>

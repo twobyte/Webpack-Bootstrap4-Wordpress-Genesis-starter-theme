@@ -8,7 +8,7 @@
  * @package Genesis\Admin
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
@@ -43,8 +43,8 @@ class Genesis_Admin_Import_Export extends Genesis_Admin_Basic {
 			'submenu' => array(
 				'parent_slug' => 'genesis',
 				'page_title'  => __( 'Genesis - Import/Export', 'genesis' ),
-				'menu_title'  => __( 'Import/Export', 'genesis' )
-			)
+				'menu_title'  => __( 'Import/Export', 'genesis' ),
+			),
 		);
 
 		$this->create( $page_id, $menu_ops );
@@ -62,8 +62,8 @@ class Genesis_Admin_Import_Export extends Genesis_Admin_Basic {
 	public function help() {
 
 		$this->add_help_tab( 'general', __( 'Import/Export', 'genesis' ) );
-		$this->add_help_tab( 'import',  __( 'Import', 'genesis' ) );
-		$this->add_help_tab( 'export',  __( 'Export', 'genesis' ) );
+		$this->add_help_tab( 'import', __( 'Import', 'genesis' ) );
+		$this->add_help_tab( 'export', __( 'Export', 'genesis' ) );
 
 		// Add help sidebar.
 		$this->set_help_sidebar();
@@ -79,7 +79,7 @@ class Genesis_Admin_Import_Export extends Genesis_Admin_Basic {
 	 */
 	public function admin() {
 
-		include( GENESIS_VIEWS_DIR . '/pages/genesis-admin-import-export.php' );
+		include GENESIS_VIEWS_DIR . '/pages/genesis-admin-import-export.php';
 
 	}
 
@@ -121,10 +121,10 @@ class Genesis_Admin_Import_Export extends Genesis_Admin_Basic {
 				'label'          => __( 'Theme Settings', 'genesis' ),
 				'settings-field' => GENESIS_SETTINGS_FIELD,
 			),
-			'seo' => array(
-				'label' => __( 'SEO Settings', 'genesis' ),
+			'seo'   => array(
+				'label'          => __( 'SEO Settings', 'genesis' ),
 				'settings-field' => GENESIS_SEO_SETTINGS_FIELD,
-			)
+			),
 		);
 
 		return (array) apply_filters( 'genesis_export_options', $options );
@@ -187,6 +187,13 @@ class Genesis_Admin_Import_Export extends Genesis_Admin_Basic {
 
 		check_admin_referer( 'genesis-export', 'genesis-export-nonce' );
 
+		/**
+		 * Fires before export happens, after admin referer has been checked.
+		 *
+		 * @since 1.4.0
+		 *
+		 * @param string Value of `genesis-export` request variable, containing a list of which settings to export.
+		 */
 		do_action( 'genesis_export', $_REQUEST['genesis-export'] );
 
 		$options = $this->get_export_options();
@@ -199,10 +206,10 @@ class Genesis_Admin_Import_Export extends Genesis_Admin_Basic {
 		// Loop through set(s) of options.
 		foreach ( (array) $_REQUEST['genesis-export'] as $export => $value ) {
 			// Grab settings field name (key).
-			$settings_field = $options[$export]['settings-field'];
+			$settings_field = $options[ $export ]['settings-field'];
 
 			// Grab all of the settings from the database under that key.
-			$settings[$settings_field] = get_option( $settings_field );
+			$settings[ $settings_field ] = get_option( $settings_field );
 
 			// Add name of option set to build up export file name.
 			$prefix[] = $export;
@@ -215,7 +222,7 @@ class Genesis_Admin_Import_Export extends Genesis_Admin_Basic {
 		// Complete the export file name by joining parts together.
 		$prefix = implode( '-', $prefix );
 
-		$output = wp_json_encode( (array) $settings );
+		$output = wp_json_encode( $settings );
 
 		// Prepare and send the export file to the browser.
 		header( 'Content-Description: File Transfer' );
@@ -257,6 +264,14 @@ class Genesis_Admin_Import_Export extends Genesis_Admin_Basic {
 
 		check_admin_referer( 'genesis-import', 'genesis-import-nonce' );
 
+		/**
+		 * Fires before importing settings, but after admin referer has been checked
+		 *
+		 * @since 1.4.0
+		 *
+		 * @param string $import Value of `genesis-import` request variable, containing list of which settings to import.
+		 * @param array  $file   Reference to uploaded file to import.
+		 */
 		do_action( 'genesis_import', $_REQUEST['genesis-import'], $_FILES['genesis-import-upload'] );
 
 		$upload = file_get_contents( $_FILES['genesis-import-upload']['tmp_name'] );
@@ -265,12 +280,16 @@ class Genesis_Admin_Import_Export extends Genesis_Admin_Basic {
 
 		// Check for errors.
 		if ( ! $options || $_FILES['genesis-import-upload']['error'] ) {
-			genesis_admin_redirect( 'genesis-import-export', array( 'error' => 'true' ) );
+			genesis_admin_redirect(
+				'genesis-import-export', array(
+					'error' => 'true',
+				)
+			);
 			exit;
 		}
 
 		// Identify the settings keys that we should import.
-		$exportables = $this->get_export_options();
+		$exportables     = $this->get_export_options();
 		$importable_keys = array();
 		foreach ( $exportables as $exportable ) {
 			$importable_keys[] = $exportable['settings-field'];
@@ -284,7 +303,11 @@ class Genesis_Admin_Import_Export extends Genesis_Admin_Basic {
 		}
 
 		// Redirect, add success flag to the URI.
-		genesis_admin_redirect( 'genesis-import-export', array( 'imported' => 'true' ) );
+		genesis_admin_redirect(
+			'genesis-import-export', array(
+				'imported' => 'true',
+			)
+		);
 		exit;
 
 	}

@@ -8,7 +8,7 @@
  * @package Genesis\Layout
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 add_action( 'genesis_setup', 'genesis_create_initial_layouts' );
@@ -32,13 +32,13 @@ function genesis_create_initial_layouts() {
 	$url = GENESIS_ADMIN_IMAGES_URL . '/layouts/';
 
 	$layouts = apply_filters( 'genesis_initial_layouts', array(
-		'content-sidebar' => array(
+		'content-sidebar'         => array(
 			'label'   => __( 'Content, Primary Sidebar', 'genesis' ),
 			'img'     => $url . 'cs.gif',
 			'default' => is_rtl() ? false : true,
 			'type'    => array( 'site' ),
 		),
-		'sidebar-content' => array(
+		'sidebar-content'         => array(
 			'label'   => __( 'Primary Sidebar, Content', 'genesis' ),
 			'img'     => $url . 'sc.gif',
 			'default' => is_rtl() ? true : false,
@@ -59,7 +59,7 @@ function genesis_create_initial_layouts() {
 			'img'   => $url . 'scs.gif',
 			'type'  => array( 'site' ),
 		),
-		'full-width-content' => array(
+		'full-width-content'      => array(
 			'label' => __( 'Full Width Content', 'genesis' ),
 			'img'   => $url . 'c.gif',
 			'type'  => array( 'site' ),
@@ -128,9 +128,8 @@ function genesis_register_layout( $id = '', $args = array() ) {
  *
  * @since 2.5.1
  *
- * @param string $id ID of layout.
+ * @param string       $id   ID of layout.
  * @param array|string $type Array (or string of single type) of types to add.
- *
  * @return array Return merged type array.
  */
 function genesis_add_type_to_layout( $id, $type = array() ) {
@@ -141,7 +140,6 @@ function genesis_add_type_to_layout( $id, $type = array() ) {
 
 	$_genesis_layouts[ $id ]['type'] = $new_type;
 
-	// Return new type array
 	return $new_type;
 
 }
@@ -151,9 +149,8 @@ function genesis_add_type_to_layout( $id, $type = array() ) {
  *
  * @since 2.5.1
  *
- * @param string $id ID of layout.
+ * @param string       $id   ID of layout.
  * @param array|string $type Array (or string of single type) of types to remove.
- *
  * @return array Return type array.
  */
 function genesis_remove_type_from_layout( $id, $type = array() ) {
@@ -164,7 +161,6 @@ function genesis_remove_type_from_layout( $id, $type = array() ) {
 
 	$_genesis_layouts[ $id ]['type'] = $new_type;
 
-	// Return new type array
 	return $new_type;
 
 }
@@ -313,7 +309,7 @@ function genesis_get_layouts_for_customizer( $type = 'site' ) {
 
 	// Simplified layout array.
 	foreach ( (array) $layouts as $id => $data ) {
-		$customizer_layouts[$id] = $data['label'];
+		$customizer_layouts[ $id ] = $data['label'];
 	}
 
 	return $customizer_layouts;
@@ -325,7 +321,8 @@ function genesis_get_layouts_for_customizer( $type = 'site' ) {
  *
  * @since 1.4.0
  *
- * @param string $id ID of the layout to return data for.
+ * @param string $id   ID of the layout to return data for.
+ * @param string $type Optional. Layout type. Default is 'site'.
  * @return null|array `null` if ID is not set, or layout is not registered. Array of layout data
  *                    otherwise, with 'label' and 'image' (and possibly 'default') sub-keys.
  */
@@ -333,11 +330,11 @@ function genesis_get_layout( $id, $type = 'site' ) {
 
 	$layouts = genesis_get_layouts( $type );
 
-	if ( ! $id || ! isset( $layouts[$id] ) ) {
+	if ( ! $id || ! isset( $layouts[ $id ] ) ) {
 		return null;
 	}
 
-	return $layouts[$id];
+	return $layouts[ $id ];
 
 }
 
@@ -391,7 +388,7 @@ function genesis_has_multiple_layouts( $type = 'site' ) {
  *
  * Applies `genesis_site_layout` filter early to allow shortcutting of function.
  *
- * @since 0.2.2
+ * @since 1.0.0
  *
  * @global WP_Query $wp_query Query object.
  *
@@ -424,45 +421,34 @@ function genesis_site_layout( $use_cache = true ) {
 	// Default to site for layout type.
 	$type = 'site';
 
-	// If viewing a singular page or post, or the posts page, but not the front page.
-	if ( is_singular() || ( is_home() && ! genesis_is_root_page() ) ) {
+	if ( is_singular() || ( is_home() && ! genesis_is_root_page() ) ) { // If viewing a singular page or post, or the posts page, but not the front page.
 
 		$post_id      = is_home() ? get_option( 'page_for_posts' ) : null;
 		$custom_field = genesis_get_custom_field( '_genesis_layout', $post_id );
 		$site_layout  = $custom_field ? $custom_field : genesis_get_option( 'site_layout' );
 		$type         = array( 'singular', get_post_type(), $post_id );
 
-	}
-
-	// If viewing a taxonomy archive.
-	elseif ( is_category() || is_tag() || is_tax() ) {
+	} elseif ( is_category() || is_tag() || is_tax() ) { // If viewing a taxonomy archive.
 
 		$term        = $wp_query->get_queried_object();
-		$term_layout = $term ? get_term_meta( $term->term_id, 'layout', true) : '';
+		$term_layout = $term ? get_term_meta( $term->term_id, 'layout', true ) : '';
 		$site_layout = $term_layout ? $term_layout : genesis_get_option( 'site_layout' );
 		$type        = array( 'archive', $term->taxonomy, $term->term_id );
 
-	}
-
-	// If viewing a supported post type.
-	elseif ( is_post_type_archive() && genesis_has_post_type_archive_support() ) {
+	} elseif ( is_post_type_archive() && genesis_has_post_type_archive_support() ) { // If viewing a supported post type.
 
 		$site_layout = genesis_get_cpt_option( 'layout' ) ? genesis_get_cpt_option( 'layout' ) : genesis_get_option( 'site_layout' );
 		$type        = array( 'archive', 'post-type-archive-' . get_post_type() );
 
-	}
-
-	// If viewing an author archive.
-	elseif ( is_author() ) {
+	} elseif ( is_author() ) { // If viewing an author archive.
 
 		$site_layout = get_the_author_meta( 'layout', (int) get_query_var( 'author' ) ) ? get_the_author_meta( 'layout', (int) get_query_var( 'author' ) ) : genesis_get_option( 'site_layout' );
 		$type        = array( 'archive', 'author', get_query_var( 'author' ) );
 
-	}
+	} else { // Else pull the theme option.
 
-	// Else pull the theme option.
-	else {
 		$site_layout = genesis_get_option( 'site_layout' );
+
 	}
 
 	// Use default layout as a fallback, if necessary.

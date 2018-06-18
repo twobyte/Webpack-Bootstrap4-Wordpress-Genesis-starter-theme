@@ -8,7 +8,7 @@
  * @package Genesis\Assets
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
@@ -24,7 +24,6 @@ function genesis_scripts() {
 
 	if ( null === $_genesis_scripts ) {
 
-		require_once( PARENT_DIR . '/lib/classes/class-genesis-script-loader.php' );
 		$_genesis_scripts = new Genesis_Script_Loader();
 		$_genesis_scripts->add_hooks();
 

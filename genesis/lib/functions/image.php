@@ -8,13 +8,13 @@
  * @package Genesis\Images
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
  * Pull an attachment ID from a post, if one exists.
  *
- * @since 0.1.0
+ * @since 1.0.0
  *
  * @param int $index   Optional. Index of which image to return from a post. Default is 0.
  * @param int $post_id Optional. Post ID. Default is `get_the_ID()`.
@@ -26,10 +26,10 @@ function genesis_get_image_id( $index = 0, $post_id = null ) {
 		get_children(
 			array(
 				'post_parent'    => $post_id ? $post_id : get_the_ID(),
-				'post_type'	     => 'attachment',
+				'post_type'      => 'attachment',
 				'post_mime_type' => 'image',
 				'orderby'        => 'menu_order',
-				'order'	         => 'ASC',
+				'order'          => 'ASC',
 			)
 		)
 	);
@@ -55,7 +55,7 @@ function genesis_get_image_id( $index = 0, $post_id = null ) {
  *
  * Applies `genesis_get_image_default_args`, `genesis_pre_get_image` and `genesis_get_image` filters.
  *
- * @since 0.1.0
+ * @since 1.0.0
  *
  * @param array|string $args Optional. Image query arguments. Default is empty array.
  * @return string|bool Return image element HTML, URL of image, or `false`.
@@ -100,7 +100,7 @@ function genesis_get_image( $args = array() ) {
 
 	// If we have an id, get the HTML and URL.
 	if ( isset( $id ) ) {
-		$html = wp_get_attachment_image( $id, $args['size'], false, $args['attr'] );
+		$html        = wp_get_attachment_image( $id, $args['size'], false, $args['attr'] );
 		list( $url ) = wp_get_attachment_image_src( $id, $args['size'], false, $args['attr'] );
 	} elseif ( is_array( $args['fallback'] ) ) {
 		// Else if fallback HTML and URL exist, use them.
@@ -143,7 +143,7 @@ function genesis_get_image( $args = array() ) {
  *  - num    - integer, default is 0
  *  - attr   - string, default is ''
  *
- * @since 0.1.0
+ * @since 1.0.0
  *
  * @param array|string $args Optional. Image query arguments. Default is empty array.
  * @return null|false Returns `false` if URL is empty.
@@ -174,33 +174,27 @@ function genesis_image( $args = array() ) {
  * @return array Two-dimensional, with `width`, `height` and `crop` sub-keys.
  */
 function genesis_get_image_sizes() {
-
 	global $_wp_additional_image_sizes;
 
 	$sizes = array();
 
-	foreach ( get_intermediate_image_sizes() as $_size ) {
-
-		if ( in_array( $_size, array( 'thumbnail', 'medium', 'large' ) ) ) {
-
-			$sizes[ $_size ]['width']  = get_option( "{$_size}_size_w" );
-			$sizes[ $_size ]['height'] = get_option( "{$_size}_size_h" );
-			$sizes[ $_size ]['crop']   = (bool) get_option( "{$_size}_crop" );
-
-		} elseif ( isset( $_wp_additional_image_sizes[ $_size ] ) ) {
-
-			$sizes[ $_size ] = array(
-				'width'  => $_wp_additional_image_sizes[ $_size ]['width'],
-				'height' => $_wp_additional_image_sizes[ $_size ]['height'],
-				'crop'   => $_wp_additional_image_sizes[ $_size ]['crop'],
+	foreach ( get_intermediate_image_sizes() as $size ) {
+		if ( isset( $_wp_additional_image_sizes[ $size ] ) ) {
+			$sizes[ $size ] = array(
+				'width'  => absint( $_wp_additional_image_sizes[ $size ]['width'] ),
+				'height' => absint( $_wp_additional_image_sizes[ $size ]['height'] ),
+				'crop'   => $_wp_additional_image_sizes[ $size ]['crop'],
 			);
-
+		} else {
+			$sizes[ $size ] = array(
+				'width'  => absint( get_option( "{$size}_size_w" ) ),
+				'height' => absint( get_option( "{$size}_size_h" ) ),
+				'crop'   => (bool) get_option( "{$size}_crop" ),
+			);
 		}
-
 	}
 
 	return $sizes;
-
 }
 
 /**

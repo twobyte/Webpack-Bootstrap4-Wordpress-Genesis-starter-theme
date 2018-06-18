@@ -10,7 +10,7 @@
  * @package Genesis\Templates
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 // Remove standard post content output.

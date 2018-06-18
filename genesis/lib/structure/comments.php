@@ -8,7 +8,7 @@
  * @package Genesis\Comments
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 add_action( 'genesis_after_post', 'genesis_get_comments_template' );
@@ -71,7 +71,14 @@ function genesis_do_comments() {
 
 		echo apply_filters( 'genesis_title_comments', __( '<h3>Comments</h3>', 'genesis' ) );
 		printf( '<ol %s>', genesis_attr( 'comment-list' ) );
+
+			/**
+			 * Fires inside comments list markup.
+			 *
+			 * @since 1.0.0
+			 */
 			do_action( 'genesis_list_comments' );
+
 		echo '</ol>';
 
 		// Comment Navigation.
@@ -143,6 +150,10 @@ function genesis_do_pings() {
 	// If have pings.
 	if ( ! empty( $wp_query->comments_by_type['pings'] ) && have_comments() ) {
 
+		if ( empty( $wp_query->comments_by_type['comment'] ) && ! has_filter( 'genesis_no_comments_text' ) ) {
+			add_filter( 'genesis_attr_entry-pings', 'genesis_attributes_entry_comments' );
+		}
+
 		genesis_markup( array(
 			'open'    => '<div %s>',
 			'context' => 'entry-pings',
@@ -150,7 +161,14 @@ function genesis_do_pings() {
 
 		echo apply_filters( 'genesis_title_pings', __( '<h3>Trackbacks</h3>', 'genesis' ) );
 		echo '<ol class="ping-list">';
+
+			/**
+			 * Fires inside the pings list markup.
+			 *
+			 * @since 1.0.0
+			 */
 			do_action( 'genesis_list_pings' );
+
 		echo '</ol>';
 
 		genesis_markup( array(
@@ -229,16 +247,22 @@ function genesis_comment_callback( $comment, array $args, $depth ) {
 
 	<li <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
 
-		<?php do_action( 'genesis_before_comment' ); ?>
+		<?php
+		/** This action is documented in lib/structure/comments.php */
+		do_action( 'genesis_before_comment' );
+		?>
 
 		<div class="comment-header">
 			<div class="comment-author vcard">
 				<?php echo get_avatar( $comment, $args['avatar_size'] ); ?>
-				<?php printf( __( '<cite class="fn">%s</cite> <span class="says">%s:</span>', 'genesis' ), get_comment_author_link(), apply_filters( 'comment_author_says_text', __( 'says', 'genesis' ) ) ); ?>
+				<?php
+				/* translators: 1: get_comment_author_link(), 2: Filtered "says" text. */
+				printf( __( '<cite class="fn">%1$s</cite> <span class="says">%2$s:</span>', 'genesis' ), get_comment_author_link(), apply_filters( 'comment_author_says_text', __( 'says', 'genesis' ) ) );
+				?>
 		 	</div>
 
 			<div class="comment-meta commentmetadata">
-				<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><?php printf( __( '%1$s at %2$s', 'genesis' ), get_comment_date(), get_comment_time() ); ?></a>
+				<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><?php /* translators: 1: Comment date, 2: Comment time. */ printf( __( '%1$s at %2$s', 'genesis' ), get_comment_date(), get_comment_time() ); ?></a>
 				<?php edit_comment_link( __( '(Edit)', 'genesis' ), '' ); ?>
 			</div>
 		</div>
@@ -252,10 +276,17 @@ function genesis_comment_callback( $comment, array $args, $depth ) {
 		</div>
 
 		<div class="reply">
-			<?php comment_reply_link( array_merge( $args, array( 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ); ?>
+			<?php
+			comment_reply_link( array_merge( $args, array(
+				'depth'     => $depth,
+				'max_depth' => $args['max_depth'],
+			) ) );
+			?>
 		</div>
 
-		<?php do_action( 'genesis_after_comment' );
+		<?php
+		/** This action is documented in lib/structure/comments.php */
+		do_action( 'genesis_after_comment' );
 
 		// No ending </li> tag because of comment threading.
 }
@@ -280,7 +311,14 @@ function genesis_html5_comment_callback( $comment, array $args, $depth ) {
 	<li <?php comment_class(); ?> id="comment-<?php comment_ID(); ?>">
 	<article <?php echo genesis_attr( 'comment' ); ?>>
 
-		<?php do_action( 'genesis_before_comment' ); ?>
+		<?php
+		/**
+		 * Fires inside single comment callback, before comment markup.
+		 *
+		 * @since 1.1.0
+		 */
+		do_action( 'genesis_before_comment' );
+		?>
 
 		<header <?php echo genesis_attr( 'comment-header' ); ?>>
 			<p <?php echo genesis_attr( 'comment-author' ); ?>>
@@ -364,7 +402,14 @@ function genesis_html5_comment_callback( $comment, array $args, $depth ) {
 		) ) );
 		?>
 
-		<?php do_action( 'genesis_after_comment' ); ?>
+		<?php
+		/**
+		 * Fires inside legacy single comment callback, after comment markup.
+		 *
+		 * @since 1.1.0
+		 */
+		do_action( 'genesis_after_comment' );
+		?>
 
 	</article>
 	<?php
@@ -389,7 +434,9 @@ function genesis_do_comment_form() {
 		return;
 	}
 
-	comment_form( array( 'format' => 'html5' ) );
+	comment_form( array(
+		'format' => 'html5',
+	) );
 
 }
 

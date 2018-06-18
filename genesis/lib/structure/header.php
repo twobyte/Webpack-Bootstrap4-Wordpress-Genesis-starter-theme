@@ -8,7 +8,7 @@
  * @package Genesis\Header
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 add_action( 'genesis_doctype', 'genesis_do_doctype' );
@@ -56,7 +56,8 @@ function genesis_xhtml_doctype() {
  */
 function genesis_html5_doctype() {
 
-	?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html <?php language_attributes( 'html' ); ?>>
 <head <?php echo genesis_attr( 'head' ); ?>>
 <meta charset="<?php bloginfo( 'charset' ); ?>" />
@@ -64,119 +65,35 @@ function genesis_html5_doctype() {
 
 }
 
-add_action( 'genesis_title', 'genesis_do_title' );
+add_filter( 'document_title_parts', 'genesis_document_title_parts' );
 /**
- * Output the title, wrapped in title tags.
+ * Filter Document title parts based on context and SEO settings values.
  *
- * @since 2.1.0
+ * @since 2.6.0
+ *
+ * @return array Return modified array of title parts.
  */
-function genesis_do_title() {
+function genesis_document_title_parts( $parts ) {
 
-	if ( get_theme_support( 'title-tag' ) ) {
-		return;
-	}
+	$genesis_document_title_parts = new Genesis_SEO_Document_Title_Parts();
 
-	echo '<title>';
-	wp_title( '' );
-	echo '</title>';
+	return $genesis_document_title_parts->get_parts( $parts );
 
 }
 
-add_filter( 'wp_title', 'genesis_default_title', 10, 3 );
+add_filter( 'document_title_separator', 'genesis_document_title_separator' );
 /**
- * Return filtered post title.
+ * Filter Document title parts separator based on SEO setting value.
  *
- * This function does 3 things:
- *  1. Pulls the values for `$sep` and `$seplocation`, uses defaults if necessary.
- *  2. Determines if the site title should be appended.
- *  3. Allows the user to set a custom title on a per-page or per-post basis.
+ * @since 2.6.0
  *
- * @since 0.1.3
- *
- * @global WP_Query $wp_query Query object.
- *
- * @param string $title       Existing page title.
- * @param string $sep         Optional. Separator character(s). Default is `–` if not set.
- * @param string $seplocation Optional. Separator location - "left" or "right". Default is "right" if not set.
- * @return string Page title, formatted depending on context.
+ * @return string Return modified title parts separator.
  */
-function genesis_default_title( $title, $sep = '&raquo;', $seplocation = '' ) {
+function genesis_document_title_separator( $sep ) {
 
-	global $wp_query;
-	$post_id = null;
+	$sep = genesis_get_seo_option( 'doctitle_sep' );
 
-	if ( is_feed() ) {
-		return $title;
-	}
-
-	$sep = genesis_get_seo_option( 'doctitle_sep' ) ? genesis_get_seo_option( 'doctitle_sep' ) : '–';
-	$seplocation = genesis_get_seo_option( 'doctitle_seplocation' ) ? genesis_get_seo_option( 'doctitle_seplocation' ) : 'right';
-
-	// If viewing the root page.
-	if ( genesis_is_root_page() ) {
-		// Determine the doctitle.
-		$title = genesis_get_seo_option( 'home_doctitle' ) ? genesis_get_seo_option( 'home_doctitle' ) : get_bloginfo( 'name' );
-
-		// Append site description, if necessary.
-		$title = genesis_get_seo_option( 'append_description_home' ) ? $title . " $sep " . get_bloginfo( 'description' ) : $title;
-	}
-
-	// When the page is set as the Posts Page in WordPress core, use the $post_id of the page when loading SEO values.
-	if ( is_home() && get_option( 'page_for_posts' ) && get_queried_object_id() ) {
-		$post_id = get_option( 'page_for_posts' );
-	}
-
-	// if viewing a post / page / attachment.
-	if ( null !== $post_id || is_singular() ) {
-		// The User Defined Title (Genesis).
-		if ( genesis_get_custom_field( '_genesis_title', $post_id ) ) {
-			$title = genesis_get_custom_field( '_genesis_title', $post_id );
-		}
-		// All-in-One SEO Pack Title (latest, vestigial).
-		elseif ( genesis_get_custom_field( '_aioseop_title', $post_id ) ) {
-			$title = genesis_get_custom_field( '_aioseop_title', $post_id );
-		}
-		// Headspace Title (vestigial).
-		elseif ( genesis_get_custom_field( '_headspace_page_title', $post_id ) ) {
-			$title = genesis_get_custom_field( '_headspace_page_title', $post_id );
-		}
-		// Thesis Title (vestigial).
-		elseif ( genesis_get_custom_field( 'thesis_title', $post_id ) ) {
-			$title = genesis_get_custom_field( 'thesis_title', $post_id );
-		}
-		// SEO Title Tag (vestigial).
-		elseif ( genesis_get_custom_field( 'title_tag', $post_id ) ) {
-			$title = genesis_get_custom_field( 'title_tag', $post_id );
-		}
-		// All-in-One SEO Pack Title (old, vestigial).
-		elseif ( genesis_get_custom_field( 'title', $post_id ) ) {
-			$title = genesis_get_custom_field( 'title', $post_id );
-		}
-	}
-
-	if ( is_category() || is_tag() || is_tax() ) {
-		$term       = get_queried_object();
-		$title_meta = get_term_meta( $term->term_id, 'doctitle', true );
-		$title      = ! empty( $title_meta ) ? $title_meta : $title;
-	}
-
-	if ( is_author() ) {
-		$user_title = get_the_author_meta( 'doctitle', (int) get_query_var( 'author' ) );
-		$title      = $user_title ? $user_title : $title;
-	}
-
-	if ( is_post_type_archive() && genesis_has_post_type_archive_support() ) {
-		$title = genesis_get_cpt_option( 'doctitle' ) ? genesis_get_cpt_option( 'doctitle' ) : $title;
-	}
-
-	// If we don't want site name appended, or if we're on the home page.
-	if ( ! genesis_get_seo_option( 'append_site_title' ) || is_front_page() ) {
-		return esc_html( trim( $title ) );
-	}
-
-	// Else append the site name.
-	$title = 'right' === $seplocation ? $title . " $sep " . get_bloginfo( 'name' ) : get_bloginfo( 'name' ) . " $sep " . $title;
-	return esc_html( trim( $title ) );
+	return $sep ? $sep : '-';
 
 }
 
@@ -258,7 +175,7 @@ add_action( 'genesis_meta', 'genesis_robots_meta' );
 /**
  * Output the robots meta code in the document `head`.
  *
- * @since 0.1.3
+ * @since 1.0.0
  * @since 2.4.0 Logic moved to `genesis_get_robots_meta_content()`
  *
  * @see genesis_get_robots_meta_content()
@@ -321,7 +238,7 @@ add_action( 'wp_head', 'genesis_load_favicon' );
 /**
  * Echo favicon link.
  *
- * @since 0.2.2
+ * @since 1.0.0
  * @since 2.4.0 Logic moved to `genesis_get_favicon_url()`.
  *
  * @see genesis_get_favicon_url()
@@ -361,7 +278,7 @@ add_action( 'wp_head', 'genesis_paged_rel' );
 /**
  * Output rel links in the head to indicate previous and next pages in paginated archives and posts.
  *
- * @link  http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
+ * @link https://webmasters.googleblog.com/2011/09/pagination-with-relnext-and-relprev.html
  *
  * @since 2.2.0
  *
@@ -457,7 +374,7 @@ add_action( 'wp_head', 'genesis_canonical', 5 );
  * Remove the default WordPress canonical tag, and use our custom
  * one. Gives us more flexibility and effectiveness.
  *
- * @since 0.1.3
+ * @since 1.0.0
  */
 function genesis_canonical() {
 
@@ -483,7 +400,7 @@ add_action( 'wp_head', 'genesis_header_scripts' );
  *
  * Also echoes scripts from the post's custom field.
  *
- * @since 0.2.3
+ * @since 1.0.0
  */
 function genesis_header_scripts() {
 
@@ -556,13 +473,13 @@ function genesis_custom_header() {
 		apply_filters(
 			'genesis_custom_header_defaults',
 			array(
-			'width'                 => 960,
-			'height'                => 80,
-			'textcolor'             => '333333',
-			'no_header_text'        => false,
-			'header_image'          => '%s/images/header.png',
-			'header_callback'       => '',
-			'admin_header_callback' => '',
+				'width'                 => 960,
+				'height'                => 80,
+				'textcolor'             => '333333',
+				'no_header_text'        => false,
+				'header_image'          => '%s/images/header.png',
+				'header_callback'       => '',
+				'admin_header_callback' => '',
 			)
 		)
 	);
@@ -615,7 +532,7 @@ function genesis_custom_header_style() {
 	}
 
 	$header_selector = get_theme_support( 'custom-header', 'header-selector' );
-	$title_selector  = genesis_html5() ? '.custom-header .site-title'       : '.custom-header #title';
+	$title_selector  = genesis_html5() ? '.custom-header .site-title' : '.custom-header #title';
 	$desc_selector   = genesis_html5() ? '.custom-header .site-description' : '.custom-header #description';
 
 	// Header selector fallback.
@@ -691,21 +608,37 @@ function genesis_do_header() {
 		'context' => 'title-area',
 	) );
 
+		/**
+		 * Fires inside the title area, before the site description hook.
+		 *
+		 * @since 2.6.0
+		 */
 		do_action( 'genesis_site_title' );
+
+		/**
+		 * Fires inside the title area, after the site title hook.
+		 *
+		 * @since 1.0.0
+		 */
 		do_action( 'genesis_site_description' );
 
 	genesis_markup( array(
-		'close'    => '</div>',
+		'close'   => '</div>',
 		'context' => 'title-area',
 	) );
 
 	if ( has_action( 'genesis_header_right' ) || ( isset( $wp_registered_sidebars['header-right'] ) && is_active_sidebar( 'header-right' ) ) ) {
 
 		genesis_markup( array(
-			'open'    => '<div %s>' . genesis_sidebar_title( 'header-right' ),
+			'open'    => '<div %s>',
 			'context' => 'header-widget-area',
 		) );
 
+			/**
+			 * Fires inside the header widget area wrapping markup, before the Header Right widget area.
+			 *
+			 * @since 1.5.0
+			 */
 			do_action( 'genesis_header_right' );
 			add_filter( 'wp_nav_menu_args', 'genesis_header_menu_args' );
 			add_filter( 'wp_nav_menu', 'genesis_header_menu_wrap' );
@@ -870,11 +803,11 @@ function genesis_header_menu_wrap( $menu ) {
 
 }
 
-add_action ( 'genesis_before_header', 'genesis_skip_links', 5 );
+add_action( 'genesis_before_header', 'genesis_skip_links', 5 );
 /**
  * Add skip links for screen readers and keyboard navigation.
  *
- * @since  2.2.0
+ * @since 2.2.0
  *
  * @return void Return early if skip links are not supported.
  */
@@ -891,7 +824,7 @@ function genesis_skip_links() {
 	$links = array();
 
 	if ( genesis_nav_menu_supported( 'primary' ) && has_nav_menu( 'primary' ) ) {
-		$links['genesis-nav-primary'] =  __( 'Skip to primary navigation', 'genesis' );
+		$links['genesis-nav-primary'] = __( 'Skip to primary navigation', 'genesis' );
 	}
 
 	$links['genesis-content'] = __( 'Skip to content', 'genesis' );
@@ -911,7 +844,7 @@ function genesis_skip_links() {
 		}
 	}
 
-	 /**
+	/**
 	 * Filter the skip links.
 	 *
 	 * @since 2.2.0
@@ -929,8 +862,8 @@ function genesis_skip_links() {
 	$skiplinks = '<ul class="genesis-skip-link">';
 
 	// Add markup for each skiplink.
-	foreach ($links as $key => $value) {
-		$skiplinks .=  '<li><a href="' . esc_url( '#' . $key ) . '" class="screen-reader-shortcut"> ' . $value . '</a></li>';
+	foreach ( $links as $key => $value ) {
+		$skiplinks .= '<li><a href="' . esc_url( '#' . $key ) . '" class="screen-reader-shortcut"> ' . $value . '</a></li>';
 	}
 
 	$skiplinks .= '</ul>';

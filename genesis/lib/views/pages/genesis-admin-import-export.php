@@ -8,7 +8,7 @@
  * @package StudioPress\Genesis
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 ?>
@@ -65,7 +65,14 @@
 				</td>
 			</tr>
 
-			<?php do_action( 'genesis_import_export_form' ); ?>
+			<?php
+			/**
+			 * Fires on the import export admin page, before the closing tbody tag.
+			 *
+			 * @since 1.6.0
+			 */
+			do_action( 'genesis_import_export_form' );
+			?>
 
 		</tbody>
 	</table>

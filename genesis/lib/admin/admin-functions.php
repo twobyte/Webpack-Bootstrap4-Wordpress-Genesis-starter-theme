@@ -8,7 +8,7 @@
  * @package Genesis\Admin
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
@@ -21,7 +21,6 @@ function genesis_meta_boxes() {
 	static $meta_boxes = null;
 
 	if ( null === $meta_boxes ) {
-		require_once( PARENT_DIR . '/lib/classes/class-genesis-admin-meta-boxes.php' );
 		$meta_boxes = new Genesis_Admin_Meta_Boxes();
 	}
 

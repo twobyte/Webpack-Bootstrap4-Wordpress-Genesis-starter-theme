@@ -8,7 +8,7 @@
  * @package Genesis\Breadcrumbs
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
@@ -44,11 +44,22 @@ class Genesis_Breadcrumb {
 			'home'                    => __( 'Home', 'genesis' ),
 			'sep'                     => __( ' <span aria-label="breadcrumb separator">/</span> ', 'genesis' ),
 			'list_sep'                => ', ',
-			'prefix'                  => genesis_markup( array( 'open' => '<div %s>', 'context' => 'breadcrumb', 'echo' => false ) ),
-			'suffix'                  => genesis_markup( array( 'close' => '</div>', 'echo' => false ) ),
+			'prefix'                  => genesis_markup(
+				array(
+					'open'    => '<div %s>',
+					'context' => 'breadcrumb',
+					'echo'    => false,
+				)
+			),
+			'suffix'                  => genesis_markup(
+				array(
+					'close' => '</div>',
+					'echo'  => false,
+				)
+			),
 			'heirarchial_attachments' => true,
 			'heirarchial_categories'  => true,
-			'labels' => array(
+			'labels'                  => array(
 				'prefix'    => __( 'You are here: ', 'genesis' ),
 				'author'    => __( 'Archives for ', 'genesis' ),
 				'category'  => __( 'Archives for ', 'genesis' ),
@@ -57,8 +68,8 @@ class Genesis_Breadcrumb {
 				'search'    => __( 'Search for ', 'genesis' ),
 				'tax'       => __( 'Archives for ', 'genesis' ),
 				'post_type' => __( 'Archives for ', 'genesis' ),
-				'404'       => __( 'Not found: ', 'genesis' )
-			)
+				'404'       => __( 'Not found: ', 'genesis' ),
+			),
 		);
 
 	}
@@ -158,6 +169,8 @@ class Genesis_Breadcrumb {
 	 * @return string HTML markup for archive breadcrumb.
 	 */
 	protected function get_archive_crumb() {
+
+		$crumb = '';
 
 		if ( is_category() ) {
 			$crumb = $this->get_category_crumb();
@@ -282,7 +295,7 @@ class Genesis_Breadcrumb {
 	 */
 	protected function get_search_crumb() {
 
-		$crumb = $this->args['labels']['search'] . '"' . esc_html( apply_filters( 'the_search_query', get_search_query() ) ) . '"';
+		$crumb = $this->args['labels']['search'] . '"' . esc_html( apply_filters( 'the_search_query', get_search_query() ) ) . '"'; // WPCS: prefix ok.
 
 		/**
 		 * Filter the Search page breadcrumb.
@@ -338,10 +351,7 @@ class Genesis_Breadcrumb {
 		} else {
 			$post = $wp_query->get_queried_object();
 
-			// If this is a top level Page, it's simple to output the breadcrumb.
-			if ( ! $post->post_parent ) {
-				$crumb = get_the_title();
-			} else {
+			if ( $post->post_parent ) {
 				if ( isset( $post->ancestors ) ) {
 					if ( is_array( $post->ancestors ) ) {
 						$ancestors = array_values( $post->ancestors );
@@ -368,6 +378,9 @@ class Genesis_Breadcrumb {
 				$crumbs[] = get_the_title( $post->ID );
 
 				$crumb = implode( $this->args['sep'], $crumbs );
+			} else {
+				// If this is a top level Page, it's simple to output the breadcrumb.
+				$crumb = get_the_title();
 			}
 		}
 
@@ -395,10 +408,10 @@ class Genesis_Breadcrumb {
 		$post = get_post();
 
 		$crumb = '';
-		if ( $this->args['heirarchial_attachments'] ) {
+		if ( $post->post_parent && $this->args['heirarchial_attachments'] ) {
 			// If showing attachment parent.
 			$attachment_parent = get_post( $post->post_parent );
-			$crumb = $this->get_breadcrumb_link(
+			$crumb             = $this->get_breadcrumb_link(
 				get_permalink( $post->post_parent ),
 				'',
 				$attachment_parent->post_title,
@@ -437,17 +450,7 @@ class Genesis_Breadcrumb {
 			$cat_crumb = $this->get_term_parents( $categories[0]->cat_ID, 'category', true ) . $this->args['sep'];
 		}
 		if ( count( $categories ) > 1 ) {
-			if ( ! $this->args['heirarchial_categories'] ) {
-				// Don't show parent categories (unless the post happen to be explicitly in them).
-				foreach ( $categories as $category ) {
-					$crumbs[] = $this->get_breadcrumb_link(
-						get_category_link( $category->term_id ),
-						'',
-						$category->name
-					);
-				}
-				$cat_crumb = implode( $this->args['list_sep'], $crumbs ) . $this->args['sep'];
-			} else {
+			if ( $this->args['heirarchial_categories'] ) {
 				// Show parent categories - see if one is marked as primary and try to use that.
 				$primary_category_id = get_post_meta( get_the_ID(), '_category_permalink', true ); // Support for sCategory Permalink plugin.
 				if ( ! $primary_category_id && function_exists( 'yoast_get_primary_term_id' ) ) {
@@ -459,6 +462,17 @@ class Genesis_Breadcrumb {
 				} else {
 					$cat_crumb = $this->get_term_parents( $categories[0]->cat_ID, 'category', true ) . $this->args['sep'];
 				}
+			} else {
+				$crumbs = array();
+				// Don't show parent categories (unless the post happen to be explicitly in them).
+				foreach ( $categories as $category ) {
+					$crumbs[] = $this->get_breadcrumb_link(
+						get_category_link( $category->term_id ),
+						'',
+						$category->name
+					);
+				}
+				$cat_crumb = implode( $this->args['list_sep'], $crumbs ) . $this->args['sep'];
 			}
 		}
 		$crumb = $cat_crumb . single_post_title( '', false );
@@ -485,7 +499,7 @@ class Genesis_Breadcrumb {
 	 */
 	protected function get_cpt_crumb() {
 
-		$post_type = get_query_var( 'post_type' );
+		$post_type        = get_query_var( 'post_type' );
 		$post_type_object = get_post_type_object( $post_type );
 
 		$cpt_archive_link = get_post_type_archive_link( $post_type );
@@ -623,7 +637,7 @@ class Genesis_Breadcrumb {
 
 		$year = get_query_var( 'm' ) ? mb_substr( get_query_var( 'm' ), 0, 4 ) : get_query_var( 'year' );
 
-		$crumb = $this->get_breadcrumb_link(
+		$crumb  = $this->get_breadcrumb_link(
 			get_year_link( $year ),
 			'',
 			$year,
@@ -752,10 +766,10 @@ class Genesis_Breadcrumb {
 	 */
 	protected function get_term_parents( $parent_id, $taxonomy, $link = false, array $visited = array() ) {
 
-		$parent = get_term( (int)$parent_id, $taxonomy );
+		$parent = get_term( (int) $parent_id, $taxonomy );
 
 		if ( is_wp_error( $parent ) ) {
-			return array();
+			return '';
 		}
 
 		if ( $parent->parent && ( $parent->parent != $parent->term_id ) && ! in_array( $parent->parent, $visited ) ) {
@@ -763,7 +777,7 @@ class Genesis_Breadcrumb {
 			$chain[]   = $this->get_term_parents( $parent->parent, $taxonomy, true, $visited );
 		}
 
-		if ( $link && !is_wp_error( get_term_link( get_term( $parent->term_id, $taxonomy ), $taxonomy ) ) ) {
+		if ( $link && ! is_wp_error( get_term_link( get_term( $parent->term_id, $taxonomy ), $taxonomy ) ) ) {
 			$chain[] = $this->get_breadcrumb_link(
 				get_term_link( get_term( $parent->term_id, $taxonomy ), $taxonomy ),
 				'',

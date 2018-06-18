@@ -8,7 +8,7 @@
  * @package Genesis\Admin
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 /**
@@ -35,8 +35,8 @@ class Genesis_Admin_Settings extends Genesis_Admin_Boxes {
 		$menu_ops = apply_filters(
 			'genesis_theme_settings_menu_ops',
 			array(
-				'main_menu' => array(
-					'sep' => array(
+				'main_menu'     => array(
+					'sep'        => array(
 						'sep_position'   => '58.995',
 						'sep_capability' => 'edit_theme_options',
 					),
@@ -84,6 +84,7 @@ class Genesis_Admin_Settings extends Genesis_Admin_Boxes {
 				'redirect_feed'             => 0,
 				'comments_feed_uri'         => '',
 				'redirect_comments_feed'    => 0,
+				'adsense_id'                => '',
 				'comments_pages'            => 0,
 				'comments_posts'            => 1,
 				'trackbacks_pages'          => 0,
@@ -160,6 +161,7 @@ class Genesis_Admin_Settings extends Genesis_Admin_Boxes {
 			array(
 				'blog_cat_exclude',
 				'blog_title',
+				'adsense_id',
 				'content_archive',
 				'nav_extras',
 				'nav_extras_twitter_id',
@@ -225,21 +227,21 @@ class Genesis_Admin_Settings extends Genesis_Admin_Boxes {
 	public function help() {
 
 		$this->add_help_tab( 'theme-settings', __( 'Theme Settings', 'genesis' ) );
-		$this->add_help_tab( 'information',    __( 'Information', 'genesis' ) );
-		$this->add_help_tab( 'feeds',          __( 'Custom Feeds', 'genesis' ) );
-		$this->add_help_tab( 'layout',         __( 'Default Layout', 'genesis' ) );
-		$this->add_help_tab( 'header',         __( 'Header', 'genesis' ) );
+		$this->add_help_tab( 'information', __( 'Information', 'genesis' ) );
+		$this->add_help_tab( 'feeds', __( 'Custom Feeds', 'genesis' ) );
+		$this->add_help_tab( 'layout', __( 'Default Layout', 'genesis' ) );
+		$this->add_help_tab( 'header', __( 'Header', 'genesis' ) );
 
 		if ( genesis_first_version_compare( '2.0.2', '<=' ) ) {
 			$this->add_help_tab( 'navigation', __( 'Navigation', 'genesis' ) );
 		}
 
 		$this->add_help_tab( 'breadcrumbs', __( 'Breadcrumbs', 'genesis' ) );
-		$this->add_help_tab( 'comments',    __( 'Comments and Trackbacks', 'genesis' ) );
-		$this->add_help_tab( 'archives',    __( 'Content Archives', 'genesis' ) );
-		$this->add_help_tab( 'blog',        __( 'Blog Page', 'genesis' ) );
-		$this->add_help_tab( 'scripts',     __( 'Header and Footer Scripts', 'genesis' ) );
-		$this->add_help_tab( 'home',        __( 'Home Pages', 'genesis' ) );
+		$this->add_help_tab( 'comments', __( 'Comments and Trackbacks', 'genesis' ) );
+		$this->add_help_tab( 'archives', __( 'Content Archives', 'genesis' ) );
+		$this->add_help_tab( 'blog', __( 'Blog Page', 'genesis' ) );
+		$this->add_help_tab( 'scripts', __( 'Header and Footer Scripts', 'genesis' ) );
+		$this->add_help_tab( 'home', __( 'Home Pages', 'genesis' ) );
 
 		// Add help sidebar.
 		$this->set_help_sidebar();
@@ -257,6 +259,7 @@ class Genesis_Admin_Settings extends Genesis_Admin_Boxes {
 	 */
 	public function metaboxes() {
 
+		add_action( 'genesis_admin_before_metaboxes', array( $this, 'customizer_notice' ) );
 		add_action( 'genesis_admin_before_metaboxes', array( $this, 'hidden_fields' ) );
 
 		$this->add_meta_box( 'genesis-theme-settings-version', __( 'Information', 'genesis' ), 'high' );
@@ -265,7 +268,11 @@ class Genesis_Admin_Settings extends Genesis_Admin_Boxes {
 			$this->add_meta_box( 'genesis-theme-settings-style-selector', __( 'Color Style', 'genesis' ) );
 		}
 
-		$this->add_meta_box( 'genesis-theme-settings-feeds', __( 'Custom Feeds', 'genesis' ) );
+		if ( genesis_first_version_compare( '2.6.0', '<=' ) ) {
+			$this->add_meta_box( 'genesis-theme-settings-feeds', __( 'Custom Feeds', 'genesis' ) );
+		}
+
+		$this->add_meta_box( 'genesis-theme-settings-adsense', __( 'Google AdSense', 'genesis' ) );
 
 		if ( genesis_has_multiple_layouts() ) {
 			$this->add_meta_box( 'genesis-theme-settings-layout', __( 'Default Layout', 'genesis' ) );
@@ -291,7 +298,39 @@ class Genesis_Admin_Settings extends Genesis_Admin_Boxes {
 			$this->add_meta_box( 'genesis-theme-settings-scripts', __( 'Header and Footer Scripts', 'genesis' ) );
 		}
 
+		/**
+		 * Fires after Theme Settings meta boxes have been added.
+		 *
+		 * @since 1.7.0
+		 *
+		 * @param string $pagehook Page hook for the Theme Settings page.
+		 */
 		do_action( 'genesis_theme_settings_metaboxes', $this->pagehook );
+
+	}
+
+	/**
+	 * Notify the user that settings are available in the Customizer.
+	 *
+	 * @since 2.6.0
+	 *
+	 * @param string $pagehook Name of the page hook when the menu is registered.
+	 */
+	public function customizer_notice( $pagehook ) {
+
+		if ( $pagehook !== $this->pagehook ) {
+			return;
+		}
+
+		printf(
+			'<div class="notice notice-info"><p>%s</p><p>%s</p></div>',
+			__( 'Hey there! Did you know that theme settings can now be configured with a live preview in the Customizer?', 'genesis' ),
+			sprintf(
+				/* translators: %s: Customizer admin URL */
+				__( 'Eventually, settings pages like this one will no longer be available, and everything will be configured in the Customizer, so go ahead and <a href="%s">start using it now</a>!', 'genesis' ),
+				esc_url( admin_url( 'customize.php?autofocus[panel]=genesis' ) )
+			)
+		);
 
 	}
 
@@ -323,9 +362,8 @@ class Genesis_Admin_Settings extends Genesis_Admin_Boxes {
 	 *
 	 * @since 2.5.0
 	 *
-	 * @param string $new_value New value.
-	 * @param string $old_value Old value.
-	 *
+	 * @param mixed $new_value New value.
+	 * @param mixed $old_value Old value.
 	 * @return string Value to save.
 	 */
 	public function save( $new_value, $old_value ) {
@@ -336,12 +374,19 @@ class Genesis_Admin_Settings extends Genesis_Admin_Boxes {
 			return $new_value;
 		}
 
-		if ( $new_value['header_scripts'] !== $old_value['header_scripts'] ) {
-			$new_value['header_scripts'] = wp_slash( $new_value['header_scripts'] );
-		}
+		// Validate AdSense publisher id format.
+		if ( isset( $new_value['adsense_id'] ) && 23 > strlen( $new_value['adsense_id'] ) ) {
 
-		if ( $new_value['footer_scripts'] !== $old_value['footer_scripts'] ) {
-			$new_value['footer_scripts'] = wp_slash( $new_value['footer_scripts'] );
+			// Remove all but numbers
+			$adsense = preg_replace( '/[^0-9]/', '', $new_value['adsense_id'] );
+
+			if ( 16 === strlen( $adsense ) ) {
+				$new_value['adsense_id'] = 'ca-pub-' . $adsense;
+			}
+			else {
+				$new_value['adsense_id'] = '';
+			}
+
 		}
 
 		return $new_value;

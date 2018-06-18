@@ -8,7 +8,7 @@
  * @package Genesis\Admin
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 add_action( 'admin_menu', 'genesis_add_inpost_seo_box' );
@@ -18,17 +18,20 @@ add_action( 'admin_menu', 'genesis_add_inpost_seo_box' );
  *
  * If the post type does not support genesis-seo, then the SEO meta box will not be added.
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @see genesis_inpost_seo_box() Generates the content in the meta box.
  */
 function genesis_add_inpost_seo_box() {
 
-	foreach ( (array) get_post_types( array( 'public' => true ) ) as $type ) {
+	foreach ( (array) get_post_types(
+		array(
+			'public' => true,
+		)
+	) as $type ) {
 		if ( post_type_supports( $type, 'genesis-seo' ) ) {
 			add_meta_box( 'genesis_inpost_seo_box', __( 'Theme SEO Settings', 'genesis' ), 'genesis_inpost_seo_box', $type, 'normal', 'high' );
 		}
-
 	}
 
 	add_action( 'load-post.php', 'genesis_seo_contextual_help' );
@@ -39,7 +42,7 @@ function genesis_add_inpost_seo_box() {
 /**
  * Callback for in-post SEO meta box.
  *
- * @since 0.1.3
+ * @since 1.0.0
  */
 function genesis_inpost_seo_box() {
 
@@ -68,7 +71,7 @@ add_action( 'save_post', 'genesis_inpost_seo_save', 1, 2 );
  *
  * Some values get sanitized, the rest are pulled from identically named sub-keys in the $_POST['genesis_seo'] array.
  *
- * @since 0.1.3
+ * @since 1.0.0
  *
  * @param int     $post_id Post ID.
  * @param WP_Post $post    Post object.
@@ -81,16 +84,19 @@ function genesis_inpost_seo_save( $post_id, $post ) {
 	}
 
 	// Merge user submitted options with fallback defaults.
-	$data = wp_parse_args( $_POST['genesis_seo'], array(
-		'_genesis_title'         => '',
-		'_genesis_description'   => '',
-		'_genesis_keywords'      => '',
-		'_genesis_canonical_uri' => '',
-		'redirect'               => '',
-		'_genesis_noindex'       => 0,
-		'_genesis_nofollow'      => 0,
-		'_genesis_noarchive'     => 0,
-	) );
+	$data = wp_parse_args(
+		$_POST['genesis_seo'],
+		array(
+			'_genesis_title'         => '',
+			'_genesis_description'   => '',
+			'_genesis_keywords'      => '',
+			'_genesis_canonical_uri' => '',
+			'redirect'               => '',
+			'_genesis_noindex'       => 0,
+			'_genesis_nofollow'      => 0,
+			'_genesis_noarchive'     => 0,
+		)
+	);
 
 	// Sanitize the title, description, and tags.
 	foreach ( (array) $data as $key => $value ) {
@@ -121,7 +127,11 @@ function genesis_add_inpost_scripts_box() {
 		return;
 	}
 
-	foreach ( (array) get_post_types( array( 'public' => true ) ) as $type ) {
+	foreach ( (array) get_post_types(
+		array(
+			'public' => true,
+		)
+	) as $type ) {
 		if ( post_type_supports( $type, 'genesis-scripts' ) ) {
 			add_meta_box( 'genesis_inpost_scripts_box', __( 'Scripts', 'genesis' ), 'genesis_inpost_scripts_box', $type, 'normal', 'low' );
 		}
@@ -163,15 +173,14 @@ function genesis_inpost_scripts_save( $post_id, $post ) {
 	}
 
 	// Merge user submitted options with fallback defaults.
-	$data = wp_parse_args( $_POST['genesis_seo'], array(
-		'_genesis_scripts'               => '',
-		'_genesis_scripts_body'          => '',
-		'_genesis_scripts_body_position' => '',
-	) );
-
-	// Compensate for stripslashes in `genesis_get_custom_field()` by storing with slashes.
-	$data['_genesis_scripts']      = wp_slash( $data['_genesis_scripts'] );
-	$data['_genesis_scripts_body'] = wp_slash( $data['_genesis_scripts_body'] );
+	$data = wp_parse_args(
+		$_POST['genesis_seo'],
+		array(
+			'_genesis_scripts'               => '',
+			'_genesis_scripts_body'          => '',
+			'_genesis_scripts_body_position' => '',
+		)
+	);
 
 	genesis_save_custom_fields( $data, 'genesis_inpost_scripts_save', 'genesis_inpost_scripts_nonce', $post );
 
@@ -182,7 +191,7 @@ add_action( 'admin_menu', 'genesis_add_inpost_layout_box' );
  * Register a new meta box to the post or page edit screen, so that the user can set layout options on a per-post or
  * per-page basis.
  *
- * @since 0.2.2
+ * @since 1.0.0
  *
  * @see genesis_inpost_layout_box() Generates the content in the boxes
  *
@@ -194,7 +203,11 @@ function genesis_add_inpost_layout_box() {
 		return;
 	}
 
-	foreach ( (array) get_post_types( array( 'public' => true ) ) as $type ) {
+	foreach ( (array) get_post_types(
+		array(
+			'public' => true,
+		)
+	) as $type ) {
 		if ( post_type_supports( $type, 'genesis-layouts' ) ) {
 			add_meta_box( 'genesis_inpost_layout_box', __( 'Layout Settings', 'genesis' ), 'genesis_inpost_layout_box', $type, 'normal', 'high' );
 		}
@@ -205,7 +218,7 @@ function genesis_add_inpost_layout_box() {
 /**
  * Callback for in-post layout meta box.
  *
- * @since 0.2.2
+ * @since 1.0.0
  */
 function genesis_inpost_layout_box() {
 
@@ -219,7 +232,7 @@ add_action( 'save_post', 'genesis_inpost_layout_save', 1, 2 );
  *
  * Since there's no sanitizing of data, the values are pulled from identically named keys in $_POST.
  *
- * @since 0.2.2
+ * @since 1.0.0
  *
  * @param int     $post_id Post ID.
  * @param WP_Post $post    Post object.
@@ -231,14 +244,88 @@ function genesis_inpost_layout_save( $post_id, $post ) {
 		return;
 	}
 
-	$data = wp_parse_args( $_POST['genesis_layout'], array(
-		'_genesis_layout'            => '',
-		'_genesis_custom_body_class' => '',
-		'_genesis_post_class'        => '',
-	) );
+	$data = wp_parse_args(
+		$_POST['genesis_layout'],
+		array(
+			'_genesis_layout'            => '',
+			'_genesis_custom_body_class' => '',
+			'_genesis_post_class'        => '',
+		)
+	);
 
 	$data = array_map( 'genesis_sanitize_html_classes', $data );
 
 	genesis_save_custom_fields( $data, 'genesis_inpost_layout_save', 'genesis_inpost_layout_nonce', $post );
+
+}
+
+add_action( 'admin_menu', 'genesis_add_inpost_adsense_box' );
+/**
+ * Register a new meta box to the post or page edit screen, so that the user can disable adsense output.
+ *
+ * @since 2.6.0
+ *
+ * @see genesis_inpost_adsense_box() Generates the content in the boxes
+ *
+ * @return void Return early if adsense disabled.
+ */
+function genesis_add_inpost_adsense_box() {
+
+	if ( ! genesis_get_option( 'adsense_id' ) ) {
+		return;
+	}
+
+	foreach ( (array) get_post_types(
+		array(
+			'public' => true,
+		)
+	) as $type ) {
+		add_meta_box( 'genesis_inpost_adsense_box', __( 'Google Adsense', 'genesis' ), 'genesis_inpost_adsense_box', $type, 'normal', 'high' );
+	}
+
+}
+
+/**
+ * Callback for in-post adsense meta box.
+ *
+ * @since 2.6.0
+ */
+function genesis_inpost_adsense_box() {
+
+	genesis_meta_boxes()->show_meta_box( 'genesis-inpost-adsense-box' );
+
+}
+
+add_action( 'save_post', 'genesis_inpost_adsense_save', 1, 2 );
+/**
+ * Save the adsense option when we save a post or page.
+ *
+ * Since there's no sanitizing of data, the values are pulled from identically named keys in $_POST.
+ *
+ * @since 2.6.0
+ *
+ * @param int     $post_id Post ID.
+ * @param WP_Post $post    Post object.
+ * @return void Return early if `genesis_adsense` is not a key in `POST` data.
+ */
+function genesis_inpost_adsense_save( $post_id, $post ) {
+
+	if ( ! isset( $_POST['genesis_adsense'] ) ) {
+		return;
+	}
+
+	$data = wp_parse_args(
+		$_POST['genesis_adsense'],
+		array(
+			'_disable_adsense' => 0,
+		)
+	);
+
+	$data['_disable_adsense'] = Genesis_Sanitizer::one_zero( $data['_disable_adsense'] );
+
+	// unset the key
+	unset( $data['key'] );
+
+	genesis_save_custom_fields( $data, 'genesis_inpost_adsense_save', 'genesis_inpost_adsense_nonce', $post );
 
 }

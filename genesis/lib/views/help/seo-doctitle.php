@@ -8,32 +8,32 @@
  * @package StudioPress\Genesis
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 ?>
 <h3><?php esc_html_e( 'Doctitle Settings', 'genesis' ); ?></h3>
 <p>
 	<?php
-	/* translators: Opening and closing strong tags. */
-	printf( esc_html__( '%sAppend Site Description%s will insert the site description from your General Settings after the title on your home page.', 'genesis' ), '<strong>', '</strong>' );
+	/* translators: 1: Open strong tag, 2: Close strong tag. */
+	printf( esc_html__( '%1$sAppend Site Description%2$s will insert the site description from your General Settings after the title on your home page.', 'genesis' ), '<strong>', '</strong>' );
 	?>
 </p>
 <p>
 	<?php
-	/* translators: Opening and closing strong tags. */
-	printf( esc_html__( '%sAppend Site Name%s will put the site name from the General Settings after the title on inner page.', 'genesis' ), '<strong>', '</strong>' );
+	/* translators: 1: Open strong tag, 2: Close strong tag. */
+	printf( esc_html__( '%1$sAppend Site Name%2$s will put the site name from the General Settings after the title on inner page.', 'genesis' ), '<strong>', '</strong>' );
 	?>
 </p>
 <p>
 	<?php
-	/* translators: Opening and closing strong tags. */
-	printf( esc_html__( '%sDoctitle Append Location%s determines which side of the title to add the previously mentioned items.', 'genesis' ), '<strong>', '</strong>' );
+	/* translators: 1: Open strong tag, 2: Close strong tag. */
+	printf( esc_html__( '%1$sDoctitle Append Location%2$s determines which side of the title to add the previously mentioned items.', 'genesis' ), '<strong>', '</strong>' );
 	?>
 </p>
 <p>
 	<?php
-	/* translators: Opening and closing strong tags. */
-	printf( esc_html__( 'The %sDoctitle Separator%s is the character that will go between the title and appended text.', 'genesis' ), '<strong>', '</strong>' );
+	/* translators: 1: Open strong tag, 2: Close strong tag. */
+	printf( esc_html__( 'The %1$sDoctitle Separator%2$s is the character that will go between the title and appended text.', 'genesis' ), '<strong>', '</strong>' );
 	?>
 </p>

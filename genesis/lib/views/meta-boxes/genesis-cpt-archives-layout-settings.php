@@ -8,7 +8,7 @@
  * @package StudioPress\Genesis
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 $layout = $this->get_field_value( 'layout' );
@@ -25,17 +25,20 @@ $layout = $this->get_field_value( 'layout' );
 				<p><input type="radio" class="default-layout" name="<?php $this->field_name( 'layout' ); ?>" id="default-layout" value="" <?php checked( $layout, '' ); ?> />
 					<label class="default" for="default-layout">
 					<?php
-					/* translators: Open and close link tags to theme settings. */
-					printf( esc_html__( 'Default Layout set in %sTheme Settings%s', 'genesis' ), '<a href="' . menu_page_url( 'genesis', 0 ) . '">', '</a>' );
+					/* translators: 1: Open anchor tag to theme settings, 2: Close anchor tag to theme settings. */
+					printf( esc_html__( 'Default Layout set in %1$sTheme Settings%2$s', 'genesis' ), '<a href="' . menu_page_url( 'genesis', 0 ) . '">', '</a>' );
 					?>
 					</label>
 				</p>
 				<?php
-				genesis_layout_selector( array(
-					'name'     => $this->get_field_name( 'layout' ),
-					'selected' => $layout,
-					'type'     => array( 'archive', 'post-type-archive-' . $this->post_type->name ),
-				) );
+
+				genesis_layout_selector(
+					array(
+						'name'     => $this->get_field_name( 'layout' ),
+						'selected' => $layout,
+						'type'     => array( 'archive', 'post-type-archive-' . $this->post_type->name ),
+					)
+				);
 				?>
 
 			</fieldset>

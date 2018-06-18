@@ -8,7 +8,7 @@
  * @package StudioPress\Genesis
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 $people = require GENESIS_CONFIG_DIR . '/contributors.php';
@@ -23,72 +23,61 @@ $genesis_allowed_code = array(
 
 <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
-<p class="about-text"><?php _e( 'Genesis 2.5 focuses largely on the integrity, organization, and testability of code, along with other improvements for broad compatibility.' , 'genesis' ); ?></p>
+<p class="about-text"><?php esc_html_e( 'Genesis 2.6 includes the ability to live preview all your theme and SEO settings using the WordPress customizer, support for AdSense Auto Ads, full WordPress title tag compatibility, and much more. See below for full changelog.', 'genesis' ); ?></p>
 
 <div class="changelog">
 	<div class="feature-section">
+		<h2 class="screen-reader-text"><?php _e( 'Changes', 'genesis' ); ?></h2>
 
-	<h2 class="screen-reader-text"><?php _e( 'Changes', 'genesis' ); ?></h2>
+		<h3><?php esc_html_e( 'Added', 'genesis' ); ?></h3>
+		<ul>
+			<li><?php esc_html_e( 'Add option to sort Featured Posts by date modified.', 'genesis' ); ?></li>
+			<li><?php echo wp_kses( __( 'Add contextual filter for <code>content</code> passed through the Markup API.', 'genesis' ), $genesis_allowed_code ); ?></li>
+			<li><?php echo wp_kses( __( 'Add <code>Genesis_Customizer</code> class.', 'genesis' ), $genesis_allowed_code ); ?></li>
+			<li><?php echo wp_kses( __( 'Add <code>Genesis_SEO_Document_Title_Parts</code> class.', 'genesis' ), $genesis_allowed_code ); ?></li>
+			<li><?php echo wp_kses( __( 'Add <code>title-tag</code> theme support by default.', 'genesis' ), $genesis_allowed_code ); ?></li>
+			<li><?php esc_html_e( 'Add class autoloader.', 'genesis' ); ?></li>
+			<li><?php esc_html_e( 'Add support for AdSense Auto Ads.', 'genesis' ); ?></li>
+			<li><?php echo wp_kses( __( 'Add <code>aria-label</code> attribute to secondary <code>nav</code> element.', 'genesis' ), $genesis_allowed_code ); ?></li>
+			<li><?php esc_html_e( 'Add allowance for extra attributes on script tags for registered scripts.', 'genesis' ); ?></li>
+		</ul>
 
-	<h3><?php esc_html_e( 'Added', 'genesis' ); ?></h3>
-	<ul>
-		<li><?php esc_html_e( 'Add instances of markup API use in several locations where it was previously not used.', 'genesis' ); ?></li>
-		<li><?php esc_html_e( 'Add any missed XHTML markup to the XHTML markup filter.', 'genesis' ); ?></li>
-		<li><?php echo wp_kses( __( 'Add <code>Genesis_Contributors</code> and <code>Genesis_Contributor</code> classes.', 'genesis' ), $genesis_allowed_code ); ?></li>
-		<li><?php echo wp_kses( __( 'Add <code>views</code> directory and extracted output to organized view files.', 'genesis' ), $genesis_allowed_code ); ?></li>
-		<li><?php esc_html_e( 'Add full support for WordPress\'s new title tag.', 'genesis' ); ?></li>
-		<li><?php esc_html_e( 'Add slashing for user script input fields.', 'genesis' ); ?></li>
-		<li><?php esc_html_e( 'Add primary category support when Yoast SEO is on, but breadcrumb feature is off.', 'genesis' ); ?></li>
-		<li><?php esc_html_e( 'Add support for multiple layout types depending on context.', 'genesis' ); ?></li>
-		<li><?php esc_html_e( 'Add script loader class.', 'genesis' ); ?></li>
-		<li><?php esc_html_e( 'Add ability to specify location of entry scripts via a second option.', 'genesis' ); ?></li>
-		<li><?php esc_html_e( 'Add filter for capability required to use CPT archive settings.', 'genesis' ); ?></li>
-		<li><?php esc_html_e( 'Add filter to disable layout settings on CPT archive settings page.', 'genesis' ); ?></li>
-		<li><?php esc_html_e( 'Add sanitizer for layout settings on CPT archive settings page.', 'genesis' ); ?></li>
-		<li><?php echo wp_kses( __( 'Add a posts page check to <code>genesis_do_blog_template_heading()</code>.', 'genesis' ), $genesis_allowed_code ); ?></li>
-		<li><?php esc_html_e( 'Add filter for entry content display options in the customizer.', 'genesis' ); ?></li>
-		<li><?php esc_html_e( 'Add terms back to terms array in our terms filter.', 'genesis' ); ?></li>
-		<li><?php echo wp_kses( __( 'Add <code>genesis_strip_p_tags()</code> function.', 'genesis' ), $genesis_allowed_code ); ?></li>
-		<li><?php esc_html_e( 'Add center alignment option to featured image alignment setting.', 'genesis' ); ?></li>
-		<li><?php esc_html_e( 'Add more filters to breadcrumb class.', 'genesis' ); ?></li>
-	</ul>
+		<h3><?php esc_html_e( 'Changed', 'genesis' ); ?></h3>
+		<ul>
+			<li><?php echo wp_kses( __( 'Change URLs to <code>https</code> wherever possible.', 'genesis' ), $genesis_allowed_code ); ?></li>
+			<li><?php echo wp_kses( __( 'Update normalize.css to <code>7.0.0</code>.', 'genesis' ), $genesis_allowed_code ); ?></li>
+			<li><?php esc_html_e( 'Duplicate all theme and SEO settings in the Customizer.', 'genesis' ); ?></li>
+			<li><?php echo wp_kses( __( 'Move all classes to their own files in <code>lib/classes</code>.', 'genesis' ), $genesis_allowed_code ); ?></li>
+			<li><?php echo wp_kses( __( 'Use Markup API for <code>entry-title-link</code>.', 'genesis' ), $genesis_allowed_code ); ?></li>
+			<li><?php esc_html_e( 'Use Markup API for 404 page title.', 'genesis' ); ?></li>
+			<li><?php esc_html_e( 'Change description for headings on archive pages to account for accessibility.', 'genesis' ); ?></li>
+			<li><?php esc_html_e( 'Improve color scheme retrieval function.', 'genesis' ); ?></li>
+		</ul>
 
-	<h3><?php esc_html_e( 'Changed', 'genesis' ); ?></h3>
-	<ul>
-		<li><?php esc_html_e( 'Split featured post and page widget entry header markup, gave markup API context for each.', 'genesis' ); ?></li>
-		<li><?php echo wp_kses( __( 'Restored adding <code>tabindex</code> via JavaScript when <code>genesis-accessibility</code> is supported.', 'genesis' ), $genesis_allowed_code ); ?></li>
-		<li><?php esc_html_e( 'Prevent smushed offscreen accessible text.', 'genesis' ); ?></li>
-		<li><?php echo wp_kses( __( 'Reorganized <code>init.php</code>.', 'genesis' ), $genesis_allowed_code ); ?></li>
-		<li><?php esc_html_e( 'Strip paragraph tags from filtered credits text to avoid paragraph nesting.', 'genesis' ); ?></li>
-		<li><?php esc_html_e( 'Standardize the context naming in widget markup.', 'genesis' ); ?></li>
-		<li><?php echo wp_kses( __( 'Flag entry markup as <code>is_widget</code> via the params array so it can be modified without affecting other entries.', 'genesis' ), $genesis_allowed_code ); ?></li>
-		<li><?php esc_html_e( 'Restored new line between admin screen buttons.', 'genesis' ); ?></li>
-		<li><?php esc_html_e( 'Improvements to composer, PHPCS, and unit tests.', 'genesis' ); ?></li>
-		<li><?php echo wp_kses( __( 'Switch all schema.org URLs to <code>https</code>.', 'genesis' ), $genesis_allowed_code ); ?></li>
-		<li><?php echo wp_kses( __( 'Formally deprecate <code>genesis_get_additional_image_sizes()</code>.', 'genesis' ), $genesis_allowed_code ); ?></li>
-		<li><?php echo wp_kses( __( 'Formally deprecate <code>genesis_conributors()</code>.', 'genesis' ), $genesis_allowed_code ); ?></li>
-		<li><?php echo wp_kses( __( 'Formally deprecate <code>genesis_register_scripts()</code>.', 'genesis' ), $genesis_allowed_code ); ?></li>
-		<li><?php echo wp_kses( __( 'Formally deprecate <code>genesis_load_scripts()</code>.', 'genesis' ), $genesis_allowed_code ); ?></li>
-		<li><?php echo wp_kses( __( 'Formally deprecate <code>genesis_load_admin_scripts()</code>.', 'genesis' ), $genesis_allowed_code ); ?></li>
-		<li><?php echo wp_kses( __( 'Formally deprecate <code>genesis_load_admin_js()</code>.', 'genesis' ), $genesis_allowed_code ); ?></li>
-		<li><?php esc_html_e( 'CSS improvements.', 'genesis' ); ?></li>
-		<li><?php esc_html_e( 'Code optimization and documentation improvements.', 'genesis' ); ?></li>
-		<li><?php esc_html_e( 'Ensure skip links filter returns an array.', 'genesis' ); ?></li>
-		<li><?php esc_html_e( 'Improve randomness of search form ID.', 'genesis' ); ?></li>
-		<li><?php esc_html_e( 'Fix potential issue with footer scripts filter.', 'genesis' ); ?></li>
-		<li><?php echo wp_kses( __( 'Move <code>aria-label</code> to the anchor element so screen readers will announce it.', 'genesis' ), $genesis_allowed_code ); ?></li>
-		<li><?php esc_html_e( 'Add capability check to CPT archive settings link in the toolbar.', 'genesis' ); ?></li>
-		<li><?php esc_html_e( 'Refactor and improve archive headings.', 'genesis' ); ?></li>
-		<li><?php esc_html_e( 'Fix typo in comments feed setting.', 'genesis' ); ?></li>
-	</ul>
+		<h3><?php esc_html_e( 'Fixed', 'genesis' ); ?></h3>
+		<ul>
+			<li><?php esc_html_e( 'More compliance with WordPress coding standards.', 'genesis' ); ?></li>
+			<li><?php echo wp_kses( __( 'Set ID of <code>entry-pings</code> to <code>comments</code> if only pings exist.', 'genesis' ), $genesis_allowed_code ); ?></li>
+			<li><?php esc_html_e( 'Ensure default settings get saved to database in new installs.', 'genesis' ); ?></li>
+			<li><?php echo wp_kses( __( 'Change <code>h3</code> to <code>h2</code> for titles in admin metaboxes.', 'genesis' ), $genesis_allowed_code ); ?></li>
+			<li><?php esc_html_e( 'Ensure theme support for Genesis import / export menu before outputting.', 'genesis' ); ?></li>
+			<li><?php esc_html_e( 'Check for post parents before outputting parent in breadcrumbs.', 'genesis' ); ?></li>
+			<li><?php echo wp_kses( __( 'Ensure <code>[post_tags]</code> and <code>[post_categories]</code> are valid for post type before outputting.', 'genesis' ), $genesis_allowed_code ); ?></li>
+			<li><?php echo wp_kses( __( 'Update <code>aria-label</code> attributes for <code>nav</code> elements to remove redundant "navigation" word.', 'genesis' ), $genesis_allowed_code ); ?></li>
+			<li><?php esc_html_e( 'Compatibility issue with breadcrumbs in Yoast SEO.', 'genesis' ); ?></li>
+			<li><?php esc_html_e( 'Issue with extra slashes in settings when using Customizer.', 'genesis' ); ?></li>
+			<li><?php esc_html_e( 'PHP 7 issue with non-static methods being used statically.', 'genesis' ); ?></li>
+			<li><?php echo wp_kses( __( 'Empty string warning in <code>skip-links.js</code>.', 'genesis' ), $genesis_allowed_code ); ?></li>
+		</ul>
 
-	<h3><?php esc_html_e( 'Removed', 'genesis' ); ?></h3>
-	<ul>
-		<li><?php esc_html_e( 'Remove semantic headings SEO option, with fallback for backward compatibility.', 'genesis' ); ?></li>
-		<li><?php esc_html_e( 'Disable <code>backtotop</code> output if HTML5 is on.', 'genesis' ); ?></li>
-		<li><?php esc_html_e( 'Remove output buffering on search form.', 'genesis' ); ?></li>
-		<li><?php esc_html_e( 'Remove unnecessary heading on skip links.', 'genesis' ); ?></li>
-	</ul>
+		<h3><?php esc_html_e( 'Removed', 'genesis' ); ?></h3>
+		<ul>
+			<li><?php echo wp_kses( __( 'Remove duplicate <code>genesis_load_favicon</code> from being hooked to <code>wp_head</code>.', 'genesis' ), $genesis_allowed_code ); ?></li>
+			<li><?php echo wp_kses( __( 'Remove screen reader <code>h2</code> from inside Header Right widget area.', 'genesis' ), $genesis_allowed_code ); ?></li>
+			<li><?php echo wp_kses( __( 'Remove screen reader <code>h2</code> from inside primary <code>nav</code> element.', 'genesis' ), $genesis_allowed_code ); ?></li>
+			<li><?php esc_html_e( 'Remove feed settings if Genesis 2.6 is your first version.', 'genesis' ); ?></li>
+		</ul>
+
 
 	</div>
 </div>

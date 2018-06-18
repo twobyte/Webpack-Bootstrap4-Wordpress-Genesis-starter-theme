@@ -8,7 +8,7 @@
  * @package Genesis\Assets
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 add_action( 'genesis_meta', 'genesis_load_stylesheet' );
@@ -17,7 +17,7 @@ add_action( 'genesis_meta', 'genesis_load_stylesheet' );
  *
  * If a child theme is active, it loads the child theme's stylesheet, otherwise, it loads the Genesis style sheet.
  *
- * @since 0.2.2
+ * @since 1.0.0
  *
  * @see genesis_enqueue_main_stylesheet() Enqueue main style sheet.
  */
@@ -47,7 +47,7 @@ add_action( 'admin_print_styles', 'genesis_load_admin_styles' );
 /**
  * Enqueue Genesis admin styles.
  *
- * @since 0.2.3
+ * @since 1.0.0
  */
 function genesis_load_admin_styles() {
 

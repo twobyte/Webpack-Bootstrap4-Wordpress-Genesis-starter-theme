@@ -8,7 +8,7 @@
  * @package StudioPress\Genesis
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 wp_nonce_field( 'genesis_inpost_layout_save', 'genesis_inpost_layout_nonce' );
@@ -28,18 +28,20 @@ if ( genesis_has_multiple_layouts() ) :
 
 				<p><input type="radio" name="genesis_layout[_genesis_layout]" class="default-layout" id="default-layout" value="" <?php checked( $layout, '' ); ?> /> <label class="default" for="default-layout">
 					<?php
-					/* translators: Theme settings admin screen link */
+					/* translators: %s: Theme settings admin screen link. */
 					printf( esc_html__( 'Default Layout set in %s', 'genesis' ), '<a href="' . esc_url( menu_page_url( 'genesis', 0 ) ) . '">' . esc_html__( 'Theme Settings', 'genesis' ) . '</a>' );
 					?>
 				</label></p>
 				<?php
-				genesis_layout_selector( array(
-					'name'     => 'genesis_layout[_genesis_layout]',
-					'selected' => $layout,
-					'type'     => array( 'singular', get_post_type(), get_the_ID() ),
-				) );
-				?>
 
+				genesis_layout_selector(
+					array(
+						'name'     => 'genesis_layout[_genesis_layout]',
+						'selected' => $layout,
+						'type'     => array( 'singular', get_post_type(), get_the_ID() ),
+					)
+				);
+				?>
 			</fieldset>
 		</td>
 	</tr>

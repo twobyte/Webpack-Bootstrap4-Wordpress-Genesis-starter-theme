@@ -8,7 +8,7 @@
  * @package Genesis\Sidebars
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 add_action( 'genesis_sidebar', 'genesis_do_sidebar' );
@@ -21,7 +21,7 @@ add_action( 'genesis_sidebar', 'genesis_do_sidebar' );
  */
 function genesis_do_sidebar() {
 
-	if ( ! dynamic_sidebar( 'sidebar' ) && current_user_can( 'edit_theme_options' )  ) {
+	if ( ! dynamic_sidebar( 'sidebar' ) && current_user_can( 'edit_theme_options' ) ) {
 		genesis_default_widget_area_content( __( 'Primary Sidebar Widget Area', 'genesis' ) );
 	}
 
@@ -63,8 +63,8 @@ function genesis_default_widget_area_content( $name ) {
 
 		echo sprintf( '<%1$s class="widgettitle">%2$s</%1$s>', $heading, esc_html( $name ) );
 		echo '<div class="textwidget"><p>';
-
-			printf( __( 'This is the %s. You can add content to this area by visiting your <a href="%s">Widgets Panel</a> and adding new widgets to this area.', 'genesis' ), $name, admin_url( 'widgets.php' ) );
+			/* translators: 1: Widget name, 2: URL to widgets admin page. */
+			printf( __( 'This is the %1$s. You can add content to this area by visiting your <a href="%2$s">Widgets Panel</a> and adding new widgets to this area.', 'genesis' ), $name, admin_url( 'widgets.php' ) );
 
 		echo '</p></div>';
 

@@ -1,6 +1,6 @@
 # Genesis Framework
 
-http://my.studiopress.com/themes/genesis/
+https://my.studiopress.com/themes/genesis/
 
 ## Install
 

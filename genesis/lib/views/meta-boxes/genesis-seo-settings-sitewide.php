@@ -8,7 +8,7 @@
  * @package StudioPress\Genesis
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 ?>
@@ -34,7 +34,7 @@
 			<p>
 				<label for="<?php $this->field_id( 'append_site_title' ); ?>"><input type="checkbox" name="<?php $this->field_name( 'append_site_title' ); ?>" id="<?php $this->field_id( 'append_site_title' ); ?>" value="1" <?php checked( $this->get_field_value( 'append_site_title' ) ); ?> />
 				<?php
-				/* translators: Escaped title tag. */
+				/* translators: %s: Escaped title tag. */
 				printf( esc_html__( 'Add site name to %s on inner pages?', 'genesis' ), genesis_code( '<title>' ) );
 				?> </label>
 			</p>

@@ -8,7 +8,7 @@
  * @package Genesis\Admin
  * @author  StudioPress
  * @license GPL-2.0+
- * @link    http://my.studiopress.com/themes/genesis/
+ * @link    https://my.studiopress.com/themes/genesis/
  */
 
 add_action( 'admin_notices', 'genesis_use_child_theme_notice' );
@@ -30,6 +30,6 @@ function genesis_use_child_theme_notice() {
 		),
 	);
 
-	include( GENESIS_VIEWS_DIR . '/misc/use-child-theme-notice.php' );
+	include GENESIS_VIEWS_DIR . '/misc/use-child-theme-notice.php';
 
 }
