@@ -1,3 +1,6 @@
+// tried to keep this as generic as possible, change configuration within package.json.
+// if theme name changes also update themeFolder/style.css and themeFolder/functions.php
+
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -17,10 +20,6 @@ const webPackFolder = buildFolder+'/'; // this is relative to within the themeFo
 const devPath = 'http://localhost:8080/wp-content/themes/'+themeFolder+'/'+webPackFolder;
 const outputPath = (process.env.NODE_ENV !== 'development') ? webPackFolder : devPath;
 
-
-function getFee(isMember) {
-  return (isMember ? "$2.00" : "$10.00");
-}
 const extractSass = new ExtractTextPlugin({
 	filename: cssFilename,
     allChunks: true,

@@ -10,7 +10,7 @@
  * @link    https://tastydigital.com/themes/tasty-webpack-starter/
  */
  
-
+// props to [Brian Gardner and the CopyBlogger team] (https://github.com/copyblogger/genesis-sample)
 
 /** Child theme (do not remove) */
 define( 'CHILD_THEME_NAME', 'Tasty Webpack Starter' );
