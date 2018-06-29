@@ -1,19 +1,19 @@
 <?php
 /**
- * Tasty Starter.
+ * Tasty Webpack Starter.
  *
  * This is child to the Genesis Theme by StudioPress.
  *
- * @package Tasty Starter
+ * @package Tasty Webpack Starter
  * @author  TastyDigital
  * @license GPL-2.0+
- * @link    https://tastydigital.com/themes/tasty-starter/
+ * @link    https://tastydigital.com/themes/tasty-webpack-starter/
  */
  
 
 
 /** Child theme (do not remove) */
-define( 'CHILD_THEME_NAME', 'Tasty Starter' );
+define( 'CHILD_THEME_NAME', 'Tasty Webpack Starter' );
 define( 'CHILD_THEME_URL', 'http://tastydigital.com/' );
 define( 'CHILD_THEME_VERSION', '2.0.0' );
 
@@ -23,43 +23,20 @@ define( 'FAVICON_URL', '/assets/images/favicon.ico');
 define( 'GOOGLE_API_KEY', 'UA-XXXXXXX-X');
 	
 // secret sauce to support webpack dev server...
-if( isset($_SERVER['HTTP_REFERER']) &&
-	$_SERVER['HTTP_REFERER'] == 'http://localhost:8080/' && 
-	$_SERVER['SERVER_NAME'] == 'tasty.local'
-  ) {
-	define( 'THEME_DIR', 'http://localhost:8080/wp-content/themes/'.get_stylesheet() );
-	remove_action( 'wp_enqueue_scripts', 'genesis_enqueue_main_stylesheet', 5 );
-	add_action( 'wp_enqueue_scripts', 'tasty_enqueue_main_stylesheet', 5 );
-	// also refactor style.css
-}else{
-	define( 'THEME_DIR', get_stylesheet_directory_uri() );
-}
+remove_action( 'wp_enqueue_scripts', 'genesis_enqueue_main_stylesheet', 5 );
+require __DIR__ . '/webpack-wp-scripts.php';
+function webpack_enqueue_assets() {
+	// add script dependencies
+	$opts = [
+		'scripts'  => ['jquery']
+	];
+	// In a theme, pass in the stylesheet directory:
+	\tastyWebpack\enqueue_assets( get_stylesheet_directory(), $opts );
 
-function tasty_enqueue_main_stylesheet() {
-	wp_enqueue_style( sanitize_title_with_dashes( CHILD_THEME_NAME ), THEME_DIR . '/dist/style.css', false, CHILD_THEME_VERSION );
-
+	// In a plugin, pass the plugin dir path:
+	//\tastyWebpack\enqueue_assets( plugin_dir_path( __FILE__ ) );
 }
-
-function tasty_theme_scripts() {
-	if ( !is_admin() ) {
-		//wp_enqueue_style( 'dashicons' );
-	
-		
-		wp_enqueue_script( 'modernizr', THEME_DIR . '/dist/modernizr.js', array(), '3', false );
-		wp_enqueue_script( 'scriptjs', THEME_DIR . '/dist/app.js', array('jquery'), '1.0.0', true );
-		
-		/* // this can be switched on if needed..
-		wp_enqueue_script( 'genesis-sample-responsive-menu', get_stylesheet_directory_uri() . '/js/genesis/responsive-menu.js', array( 'jquery' ), '1.0.0', true );
-		*/
-		$output = array(
-			'mainMenu' => __( 'Menu', 'tasty-starter' ),
-			'subMenu'  => __( 'Menu', 'tasty-starter' ),
-		);
-		wp_localize_script( 'genesis-sample-responsive-menu', 'genesisSampleL10n', $output );
-		
-	}
-}
-add_action( 'wp_enqueue_scripts', 'tasty_theme_scripts' );
+add_action( 'wp_enqueue_scripts', 'webpack_enqueue_assets', 5 );
 
 
 /** Start the engine */

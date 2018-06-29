@@ -25,6 +25,7 @@ topbar.config({
     }
 })
 
+//alert('yo');
 console.log('YO Mofo jo');
 //import '@fancyapps/fancybox/dist/jquery.fancybox.js';
 require("imports-loader?$=jquery!@fancyapps/fancybox/dist/jquery.fancybox.js");

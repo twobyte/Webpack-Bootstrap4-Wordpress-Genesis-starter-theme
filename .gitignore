@@ -2,3 +2,6 @@
 node_modules
 .sass-cache
 .idea
+# should be updated if theme name changes 
+tasty-webpack-starter/dist
+tasty-webpack-starter/vendor

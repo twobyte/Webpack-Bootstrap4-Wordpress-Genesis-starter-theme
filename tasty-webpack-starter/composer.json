@@ -1,0 +1,6 @@
+{
+    "require": {
+        "jjgrainger/posttypes": "^2.0"
+    },
+    "minimum-stability": "dev"
+}
