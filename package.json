@@ -17,7 +17,7 @@
   "config": {
     "theme": "tasty-webpack-starter",
     "buildFolder": "dist",
-    "proxyURL": "mara.local",
+    "proxyURL": "tasty.local",
     "allowedHosts": [
       ".tsty.co",
       ".mara.local"
