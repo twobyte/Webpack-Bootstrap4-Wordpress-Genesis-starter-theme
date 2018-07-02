@@ -1,4 +1,4 @@
-// tried to keep this as generic as possible, change configuration within package.json.
+// tried to keep this as generic as possible, change configuration within package.json. (process.env.npm_package_config_*)
 // if theme name changes also update themeFolder/style.css and themeFolder/functions.php
 
 const path = require('path');

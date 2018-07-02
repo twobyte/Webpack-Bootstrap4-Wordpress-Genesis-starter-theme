@@ -15,7 +15,6 @@
 --------------------------------------------- */
 .wrap {
 	@extend .container;
-	background-color: red;
 }
 .nav-primary .wrap {
 	padding: 0;
@@ -99,7 +98,7 @@
 }
 
 .sidebar-content .content {
-	@extend .col-md-push-5;
+	@extend .order-last;
 }
 
 .full-width-content .content {
@@ -112,5 +111,5 @@
 }
 
 .sidebar-content .sidebar-primary {
-	@extend .col-md-pull-5;
+	@extend .order-first;
 }

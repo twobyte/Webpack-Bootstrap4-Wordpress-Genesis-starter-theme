@@ -17,7 +17,7 @@
   "config": {
     "theme": "tasty-webpack-starter",
     "buildFolder": "dist",
-    "proxyURL": "tasty.local",
+    "proxyURL": "mara.local",
     "allowedHosts": [
       ".tsty.co",
       ".mara.local"
@@ -63,7 +63,7 @@
   },
   "dependencies": {
     "@fancyapps/fancybox": "^3.1.20",
-    "bootstrap-sass": "^3.3.7",
+    "bootstrap": "^4.1.1",
     "fastclick": "^1.0.6",
     "flickity": "^2.0.9",
     "flickity-imagesloaded": "^2.0.0",

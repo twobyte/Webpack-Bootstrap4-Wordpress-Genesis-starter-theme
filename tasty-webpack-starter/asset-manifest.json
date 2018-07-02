@@ -1,16 +1,11 @@
 {
-  "app.js": "http://localhost:8080/wp-content/themes/tasty-webpack-starter/dist/app.67bdc5f3.js",
-  "app.js.map": "http://localhost:8080/wp-content/themes/tasty-webpack-starter/dist/app.67bdc5f3.js.map",
-  "modernizr.js": "http://localhost:8080/wp-content/themes/tasty-webpack-starter/dist/modernizr.6a522ff4.js",
-  "modernizr.js.map": "http://localhost:8080/wp-content/themes/tasty-webpack-starter/dist/modernizr.6a522ff4.js.map",
-  "fonts/glyphicons-halflings-regular.woff": "http://localhost:8080/wp-content/themes/tasty-webpack-starter/dist/fonts/glyphicons-halflings-regular.woff",
+  "app.js": "http://localhost:8080/wp-content/themes/tasty-webpack-starter/dist/app.90157232.js",
+  "app.js.map": "http://localhost:8080/wp-content/themes/tasty-webpack-starter/dist/app.90157232.js.map",
+  "modernizr.js": "http://localhost:8080/wp-content/themes/tasty-webpack-starter/dist/modernizr.33dd3d5f.js",
+  "modernizr.js.map": "http://localhost:8080/wp-content/themes/tasty-webpack-starter/dist/modernizr.33dd3d5f.js.map",
   "fonts/fontawesome-webfont.eot": "http://localhost:8080/wp-content/themes/tasty-webpack-starter/dist/fonts/fontawesome-webfont.eot",
   "fonts/fontawesome-webfont.woff2": "http://localhost:8080/wp-content/themes/tasty-webpack-starter/dist/fonts/fontawesome-webfont.woff2",
   "fonts/fontawesome-webfont.woff": "http://localhost:8080/wp-content/themes/tasty-webpack-starter/dist/fonts/fontawesome-webfont.woff",
   "fonts/fontawesome-webfont.ttf": "http://localhost:8080/wp-content/themes/tasty-webpack-starter/dist/fonts/fontawesome-webfont.ttf",
-  "fonts/fontawesome-webfont.svg": "http://localhost:8080/wp-content/themes/tasty-webpack-starter/dist/fonts/fontawesome-webfont.svg",
-  "fonts/glyphicons-halflings-regular.woff2": "http://localhost:8080/wp-content/themes/tasty-webpack-starter/dist/fonts/glyphicons-halflings-regular.woff2",
-  "fonts/glyphicons-halflings-regular.eot": "http://localhost:8080/wp-content/themes/tasty-webpack-starter/dist/fonts/glyphicons-halflings-regular.eot",
-  "fonts/glyphicons-halflings-regular.ttf": "http://localhost:8080/wp-content/themes/tasty-webpack-starter/dist/fonts/glyphicons-halflings-regular.ttf",
-  "fonts/glyphicons-halflings-regular.svg": "http://localhost:8080/wp-content/themes/tasty-webpack-starter/dist/fonts/glyphicons-halflings-regular.svg"
+  "fonts/fontawesome-webfont.svg": "http://localhost:8080/wp-content/themes/tasty-webpack-starter/dist/fonts/fontawesome-webfont.svg"
 }

@@ -12,7 +12,7 @@
 }
 .footer-widgets {
 	.widget-area {
-		@extend .col-xs-16;
+		@extend .col-16;
 		@extend .col-sm-8;
 		@extend .col-md-4;
 	}
@@ -108,9 +108,7 @@
 }
 
 .enews-widget input {
-	font-size: 16px;
-	font-size: 1.6rem;
-	margin-bottom: 16px;
+	margin-bottom: 1rem;
 }
 
 .enews-widget input[type="submit"] {
