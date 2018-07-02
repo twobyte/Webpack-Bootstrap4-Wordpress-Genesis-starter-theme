@@ -3,13 +3,21 @@
 ---------------------------------------------------------------------------------------------------- */
 
 .site-footer {
-	//background-color: $white;
-	border-top: 1px solid #eee;
-	font-size: 16px;
-	font-size: 1.6rem;
+	color:$white;
+	font-weight: 300;
+	background-color:$charcoal;
 	line-height: 1;
 	padding: 60px 0;
 	text-align: center;
+	a {
+		color: $white;
+		border-bottom: 1px solid $brandColor;
+		&:hover {
+			text-decoration: none;
+			border-bottom: none;
+			color:$brandColor;
+		}
+	}
 }
 
 .site-footer p {

@@ -1,0 +1,13 @@
+{
+  "app.js": "dist/app.bc7388c0.js",
+  "app.css": "dist/app.c3767225.css",
+  "app.js.map": "dist/app.bc7388c0.js.map",
+  "app.css.map": "dist/app.c3767225.css.map",
+  "modernizr.js": "dist/modernizr.3e6076ed.js",
+  "modernizr.js.map": "dist/modernizr.3e6076ed.js.map",
+  "fonts/fontawesome-webfont.eot": "dist/fonts/fontawesome-webfont.eot",
+  "fonts/fontawesome-webfont.woff": "dist/fonts/fontawesome-webfont.woff",
+  "fonts/fontawesome-webfont.ttf": "dist/fonts/fontawesome-webfont.ttf",
+  "fonts/fontawesome-webfont.svg": "dist/fonts/fontawesome-webfont.svg",
+  "fonts/fontawesome-webfont.woff2": "dist/fonts/fontawesome-webfont.woff2"
+}

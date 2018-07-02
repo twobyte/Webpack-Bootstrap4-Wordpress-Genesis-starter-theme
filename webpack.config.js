@@ -1,59 +1,32 @@
+// tried to keep this as generic as possible, change configuration within package.json. (process.env.npm_package_config_*)
+// if theme name changes also update themeFolder/style.css and themeFolder/functions.php
+
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+//const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
+
 //const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-const themeFolder = 'tasty-webpack-theme';
-const proxyURL = 'tasty.local';
-const allowedHosts = [
-	    '.tsty.co',
-	    '.tasty.local'
-	];
+const themeFolder = process.env.npm_package_config_theme;
+const proxyURL = process.env.npm_package_config_proxyURL;
+const allowedHosts = process.env.npm_package_config_allowedHosts;
+const buildFolder = process.env.npm_package_config_buildFolder
+// Note: defined here because it will be used more than once.
+const cssFilename = '[name].[contenthash:8].css';
 
+const webPackFolder = buildFolder+'/'; // this is relative to within the themeFolder
+const devPath = 'http://localhost:8080/wp-content/themes/'+themeFolder+'/'+webPackFolder;
+const outputPath = (process.env.NODE_ENV !== 'development') ? webPackFolder : devPath;
 
 const extractSass = new ExtractTextPlugin({
-    //filename: "[name].[contenthash].css",
-    // changing app.css to WP friendly style.css,
-    filename:  (getPath) => {
-	    if (process.env.NODE_ENV !== 'development') {
-		    // pop it in theme root folder as required by Wordpress
-	    	return getPath('../[name].css').replace('app', 'style');
-	    }else{
-		    // webpack dev server doesn't seem able to stream outside output path
-		    return getPath('[name].css').replace('app', 'style');
-	    }
-    },
+	filename: cssFilename,
     allChunks: true,
-    //disable: process.env.NODE_ENV === "development"
+    disable: process.env.NODE_ENV === "development"
 });
 
-/*
-const browserSync = new BrowserSyncPlugin(
-{
-    //proxy: 'http://'+proxyURL,
-    proxy: 'http://localhost:8080',
-    host: 'localhost',
-        port: 3000,
-    files: [
-        {
-            match: [
-                '**//*.php' <-remove one slash
-            ],
-            fn: function(event, file) {
-                if (event === "change") {
-                    const bs = require('browser-sync').get('bs-webpack-plugin');
-                    bs.reload();
-                }
-            }
-        }
-    ]
-},
-{
-    reload: false
-});
-    
-*/    
+ 
 module.exports = {
   context: path.resolve(__dirname, './src'),
   entry: {
@@ -63,14 +36,15 @@ module.exports = {
   	//     app: './app.js',
   },
   output: {
-    path: path.resolve(__dirname, themeFolder, './dist'),
-    filename: '[name].js',
+    path: path.resolve(__dirname, themeFolder, './'+buildFolder),
+    filename: '[name].[chunkhash:8].js',
+    publicPath: webPackFolder
   },
   devtool: "source-map", // any "source-map"-like devtool is possible
   devServer: {
-	 contentBase: path.join(__dirname, '../../'),
-	 publicPath: 'http://localhost:8080/wp-content/themes/tasty-webpack-theme/dist/', 
-	 proxy: {
+	contentBase: path.join(__dirname, '../../'),
+	publicPath: devPath, 
+	proxy: {
         '/': {
             target: {
                 host: proxyURL,
@@ -158,7 +132,14 @@ module.exports = {
 			'NODE_ENV': process.env.NODE_ENV
 		}
 	}),
-	
+	// Generate a manifest file which contains a mapping of all asset filenames
+    // to their corresponding output file so that tools can pick it up without
+    // having to parse `index.html`.
+    new ManifestPlugin({    
+      fileName: '../asset-manifest.json',
+      writeToFileEmit: true,
+      publicPath: outputPath
+    }),
 	//new BundleAnalyzerPlugin()
     //browserSync
   ],

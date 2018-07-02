@@ -13,8 +13,6 @@
 
 .genesis-nav-menu {
 	clear: both;
-	font-size: 16px;
-	font-size: 1.6rem;
 	font-weight: 600;
 	line-height: 1;
 	width: 100%;
@@ -61,8 +59,6 @@
 	background-color: $white;
 	border: 1px solid #eee;
 	border-top: 0;
-	font-size: 14px;
-	font-size: 1.4rem;
 	padding: 20px;
 	position: relative;
 	width: 200px;
@@ -153,7 +149,23 @@
 	}
 }
 
+.slicknav_menu {
+	a {	
+		padding: 0.5rem 1rem;
+		display: block;
+	}
+	.slicknav_nav {
+		margin-top:-0.5rem;
+	}
+}
+@media only screen and (min-width: $breakpoint+1) {
+	.js .slicknav_menu {
+			display: none;
+	}
+}
+	
 @media only screen and (max-width: $breakpoint) {
+	
 
 	.js nav.nav-primary,
 	.js .site-header nav  {

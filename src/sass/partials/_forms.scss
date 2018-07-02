@@ -13,7 +13,7 @@
 }
 input[type="submit"] {
 	@extend .btn;
-	@extend .btn-default;
+	@extend .btn-secondary;
 }
 
 
@@ -31,6 +31,7 @@ input[name="s"] {
 	input[type="search"] {
 		margin-right: 6px;
 		width: 250px;
+		max-width: 100%;
 	}
 }
 

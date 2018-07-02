@@ -2,6 +2,14 @@
    Variables
    ========================================================================== */
 
+/*
+	issue with webpack production and bootstrap4 css
+	https://github.com/roots/sage/issues/2017#issuecomment-366542617
+*/
+$navbar-dark-toggler-icon-bg:       url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='#{str-replace(str-replace(#{$navbar-dark-color}, "(", "%28"), ")", "%29")}' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+$navbar-light-toggler-icon-bg:      url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='#{str-replace(str-replace(#{$navbar-light-color}, "(", "%28"), ")", "%29")}' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+
+
 // Font Face
 // @include fontface('FONT_NAME', 'assets/fonts/', 'FONT_FAMILY');
 
@@ -22,7 +30,12 @@ $link-color:     $linkColor;
 $offwhite: #efefef; //offwhite
 $white: #fff;
 $black: #1b1e1e;
+
 $midgrey: #878787;
+$gray-600: $midgrey;
+
+$charcoal: #3D3D3D;
+$gray-800: $charcoal;
 
 $background: $white; 
 
@@ -122,11 +135,12 @@ $container-lg:                 $container-large-desktop;
 
 $body-font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $font-family-sans-serif:  $body-font-family;
-$body-font-weight: 300;
+$body-font-weight: 400;
+$font-weight-normal: $body-font-weight;
 $header-font-family: 'Lora', serif;
 $header-font-weight: 700;
 $header-font-style: normal;
-$font-size-base: 16px;
+$font-size-base: 1rem; //16px 0.874rem; // 14px
 $line-height-base: 1.625;
 
 /*
