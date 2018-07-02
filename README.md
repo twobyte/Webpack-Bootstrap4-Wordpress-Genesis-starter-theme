@@ -1,4 +1,4 @@
-# Tasty Webpack Wordpress Genesis Child Theme
+# Tasty Webpack Wordpress Genesis Child Theme using Bootstrap 4
 
 [tastydigital.com/resources/tasty-webpack-starter](https://tastydigital.com/resources/tasty-webpack-starter)
 
