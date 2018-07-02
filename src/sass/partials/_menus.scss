@@ -149,7 +149,23 @@
 	}
 }
 
+.slicknav_menu {
+	a {	
+		padding: 0.5rem 1rem;
+		display: block;
+	}
+	.slicknav_nav {
+		margin-top:-0.5rem;
+	}
+}
+@media only screen and (min-width: $breakpoint+1) {
+	.js .slicknav_menu {
+			display: none;
+	}
+}
+	
 @media only screen and (max-width: $breakpoint) {
+	
 
 	.js nav.nav-primary,
 	.js .site-header nav  {

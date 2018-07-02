@@ -37,8 +37,6 @@
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
     "babel-preset-env": "^1.6.1",
-    "browser-sync": "^2.18.13",
-    "browser-sync-webpack-plugin": "^1.2.0",
     "caniuse-lite": "^1.0.30000749",
     "css-loader": "^0.28.4",
     "extract-text-webpack-plugin": "^3.0.0",
@@ -49,7 +47,6 @@
     "modernizr-loader": "^1.0.1",
     "node-sass": "^4.5.3",
     "postcss": "^6.0.8",
-    "postcss-cssnext": "^3.0.2",
     "postcss-import": "^11.0.0",
     "postcss-loader": "^2.0.6",
     "resolve-url-loader": "^2.1.0",
@@ -62,24 +59,16 @@
     "webpack-dev-server": "^2.6.1"
   },
   "dependencies": {
-    "@fancyapps/fancybox": "^3.1.20",
     "bootstrap": "^4.1.1",
     "fastclick": "^1.0.6",
-    "flickity": "^2.0.9",
-    "flickity-imagesloaded": "^2.0.0",
     "font-awesome": "^4.7.0",
-    "history.js": "^1.8.0",
-    "instafeed.js": "^1.4.1",
     "jquery": "^3.2.1",
-    "jquery.scrollto": "^2.1.2",
-    "normalize.css": "^7.0.0",
-    "pjax": "^0.2.4",
+    "popper.js": "^1.14.3",
     "slicknav": "^1.0.8",
-    "topbar": "^0.1.3",
     "webpack-manifest-plugin": "^2.0.3"
   },
   "scripts": {
-    "clean": "shx rm -rf $npm_package_config_theme/$npm_package_config_buildFolder/ && shx echo 'Dist Cleaned'",
+    "clean": "shx rm -rf $npm_package_config_theme/$npm_package_config_buildFolder/ && shx echo 'Theme’s dist folder cleaned'",
     "production": "npm run clean && NODE_ENV=production node_modules/.bin/webpack -p",
     "start": "npm run clean && NODE_ENV=development node_modules/.bin/webpack-dev-server --open",
     "postinstall": "cd $npm_package_config_theme && composer install && cd .. && npm run production"
