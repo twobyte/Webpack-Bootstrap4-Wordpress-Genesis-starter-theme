@@ -227,7 +227,7 @@ function tasty_unregister_superfish() {
 	wp_deregister_script( 'superfish' );
 	wp_deregister_script( 'superfish-args' );
 }
-add_action( 'custom_disable_superfish', 'tasty_unregister_superfish' );
+add_action( 'wp_enqueue_scripts', 'tasty_unregister_superfish' );
 
 /**
  * Filter Yoast SEO Metabox Priority

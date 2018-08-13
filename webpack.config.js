@@ -19,6 +19,7 @@ const cssFilename = '[name].[contenthash:8].css';
 const webPackFolder = buildFolder+'/'; // this is relative to within the themeFolder
 const devPath = 'http://localhost:8080/wp-content/themes/'+themeFolder+'/'+webPackFolder;
 const outputPath = (process.env.NODE_ENV !== 'development') ? webPackFolder : devPath;
+const assetPath = (process.env.NODE_ENV !== 'development') ? '' : devPath;
 
 const extractSass = new ExtractTextPlugin({
 	filename: cssFilename,
@@ -105,10 +106,16 @@ module.exports = {
 			loader:'url-loader?limit=1024&name=images/[name].[ext]'
 		},
 		{
-			test: /\.(woff|woff2|eot|ttf|svg)$/,
-			//exclude: /node_modules/,
-			loader: 'url-loader?limit=1024&name=fonts/[name].[ext]'
-		},
+            test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+            use: [{
+                loader: 'file-loader',
+                options: {
+                    name: '[name].[ext]',
+                    outputPath: 'fonts/',
+					publicPath:assetPath+'fonts/'
+                }
+            }]
+        },
 		{
 			test: /\.modernizrrc.js$/,
 			use: [ 'modernizr-loader' ]

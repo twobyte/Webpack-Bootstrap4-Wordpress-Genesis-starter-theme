@@ -21,4 +21,3 @@ $('#genesis-nav-primary ul.menu-primary').slicknav({
 		'allowParentLinks': true, 
 		'closeOnClick': true
 	});
-
