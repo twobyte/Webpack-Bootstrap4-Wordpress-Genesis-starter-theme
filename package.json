@@ -12,7 +12,7 @@
   "main": "webpack.config.js",
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/tastydigital/tasty-webpack-wordpress-genesis-child-theme.git"
+    "url": "https://github.com/twobyte/Webpack-Bootstrap4-Wordpress-Genesis-starter-theme"
   },
   "config": {
     "theme": "tasty-webpack-starter",
