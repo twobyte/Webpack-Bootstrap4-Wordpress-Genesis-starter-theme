@@ -7,7 +7,7 @@
  *
  * @package Genesis\Widgets
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -140,13 +140,11 @@ class Genesis_Featured_Post extends WP_Widget {
 					'format'  => 'html',
 					'size'    => $instance['image_size'],
 					'context' => 'featured-post-widget',
-					'attr'    => genesis_parse_attr( 'entry-image-widget', array(
-						'alt' => get_the_title(),
-					) ),
+					'attr'    => genesis_parse_attr( 'entry-image-widget', array() ),
 				) );
 
 				if ( $image && $instance['show_image'] ) {
-					$role = empty( $instance['show_title'] ) ? '' : 'aria-hidden="true"';
+					$role = empty( $instance['show_title'] ) ? '' : 'aria-hidden="true" tabindex="-1"';
 					printf( '<a href="%s" class="%s" %s>%s</a>', get_permalink(), esc_attr( $instance['image_alignment'] ), $role, wp_make_content_images_responsive( $image ) );
 				}
 
@@ -378,8 +376,8 @@ class Genesis_Featured_Post extends WP_Widget {
 		$post_num = (int) $new_instance['posts_num'];
 
 		$new_instance['posts_num'] = $post_num > 0 && $post_num < 100 ? $post_num : 1;
-		$new_instance['title']     = strip_tags( $new_instance['title'] );
-		$new_instance['more_text'] = strip_tags( $new_instance['more_text'] );
+		$new_instance['title']     = wp_strip_all_tags( $new_instance['title'] );
+		$new_instance['more_text'] = wp_strip_all_tags( $new_instance['more_text'] );
 		$new_instance['post_info'] = wp_kses_post( $new_instance['post_info'] );
 
 		return $new_instance;

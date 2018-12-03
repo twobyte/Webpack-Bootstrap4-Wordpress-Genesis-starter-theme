@@ -7,7 +7,7 @@
  *
  * @package Genesis\Archives
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -306,7 +306,7 @@ add_action( 'genesis_archive_title_descriptions', 'genesis_do_archive_headings_h
 function genesis_do_archive_headings_headline( $heading = '', $intro_text = '', $context = '' ) {
 
 	if ( $context && $heading ) {
-		printf( '<h1 %s>%s</h1>', genesis_attr( 'archive-title' ), strip_tags( $heading ) );
+		printf( '<h1 %s>%s</h1>', genesis_attr( 'archive-title' ), wp_strip_all_tags( $heading ) );
 	}
 
 }

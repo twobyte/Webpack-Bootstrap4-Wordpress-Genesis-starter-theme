@@ -7,7 +7,7 @@
  *
  * @package StudioPress\Genesis
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -15,6 +15,7 @@ $people = require GENESIS_CONFIG_DIR . '/contributors.php';
 $genesis_contributors = new Genesis_Contributors( $people );
 $genesis_allowed_code = array(
 		'code' => array(),
+		'a'    => array( 'href' => array() ),
 );
 ?>
 <div class="wrap about-wrap">
@@ -23,61 +24,29 @@ $genesis_allowed_code = array(
 
 <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
-<p class="about-text"><?php esc_html_e( 'Genesis 2.6 includes the ability to live preview all your theme and SEO settings using the WordPress customizer, support for AdSense Auto Ads, full WordPress title tag compatibility, and much more. See below for full changelog.', 'genesis' ); ?></p>
+<p class="about-text"><?php esc_html_e( 'In addition to the typical bug fixes and performance enhancements, Genesis 2.7 is focused on updating some key architectural components, and is aimed at modernizing the codebase to prepare for some exciting future updates.', 'genesis' ); ?></p>
 
 <div class="changelog">
 	<div class="feature-section">
 		<h2 class="screen-reader-text"><?php _e( 'Changes', 'genesis' ); ?></h2>
 
-		<h3><?php esc_html_e( 'Added', 'genesis' ); ?></h3>
-		<ul>
-			<li><?php esc_html_e( 'Add option to sort Featured Posts by date modified.', 'genesis' ); ?></li>
-			<li><?php echo wp_kses( __( 'Add contextual filter for <code>content</code> passed through the Markup API.', 'genesis' ), $genesis_allowed_code ); ?></li>
-			<li><?php echo wp_kses( __( 'Add <code>Genesis_Customizer</code> class.', 'genesis' ), $genesis_allowed_code ); ?></li>
-			<li><?php echo wp_kses( __( 'Add <code>Genesis_SEO_Document_Title_Parts</code> class.', 'genesis' ), $genesis_allowed_code ); ?></li>
-			<li><?php echo wp_kses( __( 'Add <code>title-tag</code> theme support by default.', 'genesis' ), $genesis_allowed_code ); ?></li>
-			<li><?php esc_html_e( 'Add class autoloader.', 'genesis' ); ?></li>
-			<li><?php esc_html_e( 'Add support for AdSense Auto Ads.', 'genesis' ); ?></li>
-			<li><?php echo wp_kses( __( 'Add <code>aria-label</code> attribute to secondary <code>nav</code> element.', 'genesis' ), $genesis_allowed_code ); ?></li>
-			<li><?php esc_html_e( 'Add allowance for extra attributes on script tags for registered scripts.', 'genesis' ); ?></li>
-		</ul>
+		<h3><?php esc_html_e( 'Preparing for WordPress 5.0', 'genesis' ); ?></h3>
+		<p><?php esc_html_e( 'WordPress 5.0 is just around the corner, and we want to make sure your site is prepared!', 'genesis' ) ; ?></p>
+		<p><?php esc_html_e( 'Although Genesis 2.7 does not include any features that directly rely on WordPress 5.0 or the Gutenberg editor, we have spent a great deal of time preparing the Genesis code structure for new features that definitely will integrate with WordPress 5.0.', 'genesis' ) ; ?></p>
 
-		<h3><?php esc_html_e( 'Changed', 'genesis' ); ?></h3>
-		<ul>
-			<li><?php echo wp_kses( __( 'Change URLs to <code>https</code> wherever possible.', 'genesis' ), $genesis_allowed_code ); ?></li>
-			<li><?php echo wp_kses( __( 'Update normalize.css to <code>7.0.0</code>.', 'genesis' ), $genesis_allowed_code ); ?></li>
-			<li><?php esc_html_e( 'Duplicate all theme and SEO settings in the Customizer.', 'genesis' ); ?></li>
-			<li><?php echo wp_kses( __( 'Move all classes to their own files in <code>lib/classes</code>.', 'genesis' ), $genesis_allowed_code ); ?></li>
-			<li><?php echo wp_kses( __( 'Use Markup API for <code>entry-title-link</code>.', 'genesis' ), $genesis_allowed_code ); ?></li>
-			<li><?php esc_html_e( 'Use Markup API for 404 page title.', 'genesis' ); ?></li>
-			<li><?php esc_html_e( 'Change description for headings on archive pages to account for accessibility.', 'genesis' ); ?></li>
-			<li><?php esc_html_e( 'Improve color scheme retrieval function.', 'genesis' ); ?></li>
-		</ul>
+		<h3><?php esc_html_e( 'PHP 5.3', 'genesis' ); ?></h3>
+		<p><?php esc_html_e( 'Genesis 2.7 requires PHP version 5.3 or greater in order to function properly.', 'genesis' ) ; ?></p>
+		<p><?php esc_html_e( 'Why?', 'genesis' ) ; ?></p>
+		<p><?php esc_html_e( 'Because we\'re trying to be good internet citizens! And though we can\'t jump immediately to requiring PHP 7.2, we are beginning to slowly increase our minimum requirements in Genesis, to encourage users to upgrade outdated PHP versions, as well as give ourselves the ability to create cool new features that rely on the more modern tools available only in more modern versions of PHP.', 'genesis' ) ; ?></p>
 
-		<h3><?php esc_html_e( 'Fixed', 'genesis' ); ?></h3>
-		<ul>
-			<li><?php esc_html_e( 'More compliance with WordPress coding standards.', 'genesis' ); ?></li>
-			<li><?php echo wp_kses( __( 'Set ID of <code>entry-pings</code> to <code>comments</code> if only pings exist.', 'genesis' ), $genesis_allowed_code ); ?></li>
-			<li><?php esc_html_e( 'Ensure default settings get saved to database in new installs.', 'genesis' ); ?></li>
-			<li><?php echo wp_kses( __( 'Change <code>h3</code> to <code>h2</code> for titles in admin metaboxes.', 'genesis' ), $genesis_allowed_code ); ?></li>
-			<li><?php esc_html_e( 'Ensure theme support for Genesis import / export menu before outputting.', 'genesis' ); ?></li>
-			<li><?php esc_html_e( 'Check for post parents before outputting parent in breadcrumbs.', 'genesis' ); ?></li>
-			<li><?php echo wp_kses( __( 'Ensure <code>[post_tags]</code> and <code>[post_categories]</code> are valid for post type before outputting.', 'genesis' ), $genesis_allowed_code ); ?></li>
-			<li><?php echo wp_kses( __( 'Update <code>aria-label</code> attributes for <code>nav</code> elements to remove redundant "navigation" word.', 'genesis' ), $genesis_allowed_code ); ?></li>
-			<li><?php esc_html_e( 'Compatibility issue with breadcrumbs in Yoast SEO.', 'genesis' ); ?></li>
-			<li><?php esc_html_e( 'Issue with extra slashes in settings when using Customizer.', 'genesis' ); ?></li>
-			<li><?php esc_html_e( 'PHP 7 issue with non-static methods being used statically.', 'genesis' ); ?></li>
-			<li><?php echo wp_kses( __( 'Empty string warning in <code>skip-links.js</code>.', 'genesis' ), $genesis_allowed_code ); ?></li>
-		</ul>
+		<h3><?php esc_html_e( 'More Modern Architecture', 'genesis' ); ?></h3>
+		<p><p><?php esc_html_e( 'Genesis is nearly a decade old! Which means that it uses some coding methods that could use a modern refresh.', 'genesis' ) ; ?></p>
+		<p><?php esc_html_e( 'We may not be able to modernize the entire codebase in one release, but we can make it better and better each time we release an update. And that\'s exactly what we did in Genesis 2.7.', 'genesis' ) ; ?></p>
+		<p><?php esc_html_e( 'We began moving code to classes where appropriate, and are moving more and more of the default Genesis behavior toward easy to read configuration files.', 'genesis' ) ; ?></p>
+		<p><?php esc_html_e( 'We think this is a worthy investment in the long-term quality and maintainability of the Genesis Framework, clearing the way for newer experiences and better products in the Genesis ecosystem.', 'genesis' ) ; ?></p>
 
-		<h3><?php esc_html_e( 'Removed', 'genesis' ); ?></h3>
-		<ul>
-			<li><?php echo wp_kses( __( 'Remove duplicate <code>genesis_load_favicon</code> from being hooked to <code>wp_head</code>.', 'genesis' ), $genesis_allowed_code ); ?></li>
-			<li><?php echo wp_kses( __( 'Remove screen reader <code>h2</code> from inside Header Right widget area.', 'genesis' ), $genesis_allowed_code ); ?></li>
-			<li><?php echo wp_kses( __( 'Remove screen reader <code>h2</code> from inside primary <code>nav</code> element.', 'genesis' ), $genesis_allowed_code ); ?></li>
-			<li><?php esc_html_e( 'Remove feed settings if Genesis 2.6 is your first version.', 'genesis' ); ?></li>
-		</ul>
-
+		<h3><?php esc_html_e( 'The Details', 'genesis' ); ?></h3>
+		<p><?php printf( wp_kses( __( 'We keep a detailed changelog for each release. The changelog for Genesis 2.7 can be found <a href="%s">here</a>.', 'genesis' ), $genesis_allowed_code ), 'https://studiopress.github.io/genesis/changelog/2.7.0' ); ?></p>
 
 	</div>
 </div>

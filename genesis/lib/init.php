@@ -7,32 +7,47 @@
  *
  * @package Genesis\Framework
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
+/**
+ * Check system requirements before loading the full framework.
+ */
+require_once dirname( __FILE__ ) . '/functions/requirements.php';
+require_once dirname( __FILE__ ) . '/classes/class-genesis-requirements-views.php';
+
+$genesis_requirements_messages = genesis_check_requirements();
+
+if ( true !== $genesis_requirements_messages ) {
+	$genesis_requirements_views = new Genesis_Requirements_Views( $genesis_requirements_messages );
+	$genesis_requirements_views->add_hooks();
+}
+
 spl_autoload_register( 'genesis_autoload_register' );
 /**
- * Allow Genesis_* class files to be loaded automatically.
+ * Allow Genesis_* class and StudioPress\Genesis namespaced files to be loaded automatically.
  *
- * @since 2.6.0
+ * @since 2.7.0 Allowed autoloading of namespaced classes.
  *
  * @param string $class_name Class name.
+ * @return mixed|null|string Null if the classname format is not recognized otherwise the file path.
  */
 function genesis_autoload_register( $class_name ) {
 
 	// If the class being requested does not start with our prefix, we know it's not one in our project.
-	if ( 0 !== strpos( $class_name, 'Genesis_' ) ) {
-		return;
+	if ( 0 !== strpos( $class_name, 'Genesis_' ) && 0 !== strpos( $class_name, 'StudioPress\Genesis' ) ) {
+		return null;
 	}
 
-	$file_name = str_replace( '_', '-', strtolower( $class_name ) );
-
-	$file = get_template_directory() . '/lib/classes/class-' . $file_name . '.php';
+	$file_name = strtolower( str_replace( array( 'StudioPress\Genesis\\', '\\', '_' ), array( '', '-', '-' ), $class_name ) );
+	$file      = get_template_directory() . '/lib/classes/class-' . $file_name . '.php';
 
 	if ( file_exists( $file ) ) {
 		require $file;
 	}
+
+	return $file;
 }
 
 /**
@@ -187,10 +202,10 @@ function genesis_constants() {
 	// Define Theme Info Constants.
 	// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
 	define( 'PARENT_THEME_NAME', 'Genesis' );
-	define( 'PARENT_THEME_VERSION', '2.6.1' );
-	define( 'PARENT_THEME_BRANCH', '2.6' );
-	define( 'PARENT_DB_VERSION', '2603' );
-	define( 'PARENT_THEME_RELEASE_DATE', date_i18n( 'F j, Y', '1520985600' ) );
+	define( 'PARENT_THEME_VERSION', '2.7.1' );
+	define( 'PARENT_THEME_BRANCH', '2.7' );
+	define( 'PARENT_DB_VERSION', '2700' );
+	define( 'PARENT_THEME_RELEASE_DATE', date_i18n( 'F j, Y', '1542240000' ) );
 
 	// Define Parent and Child Directory Location and URL Constants.
 	define( 'PARENT_DIR', get_template_directory() );
@@ -286,9 +301,6 @@ function genesis_load_framework() {
 	// Load Framework.
 	require_once $lib_dir . 'framework.php';
 
-	// Load Classes.
-	$classes_dir = $lib_dir . 'classes/';
-
 	// Load Functions.
 	$functions_dir = $lib_dir . 'functions/';
 	require_once $functions_dir . 'upgrade.php';
@@ -327,16 +339,17 @@ function genesis_load_framework() {
 	require_once $structure_dir . 'comments.php';
 	require_once $structure_dir . 'sidebar.php';
 	require_once $structure_dir . 'archive.php';
-	require_once $structure_dir . 'search.php';
 
 	// Load Admin.
 	$admin_dir = $lib_dir . 'admin/';
 	if ( is_admin() ) {
 		require_once $admin_dir . 'menu.php';
+		require_once $admin_dir . 'dashboard.php';
 		require_once $admin_dir . 'admin-functions.php';
 		require_once $admin_dir . 'inpost-metaboxes.php';
 		require_once $admin_dir . 'use-child-theme.php';
 		require_once $admin_dir . 'sanitization.php';
+		require_once $admin_dir . 'privacy-requests.php';
 	}
 	if ( is_customize_preview() ) {
 		require_once $admin_dir . 'customizer.php';
@@ -363,7 +376,6 @@ function genesis_load_framework() {
 	}
 
 	global $_genesis_formatting_allowedtags;
-	// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 	$_genesis_formatting_allowedtags = genesis_formatting_allowedtags();
 
 	define( 'GENESIS_LOADED_FRAMEWORK', true );

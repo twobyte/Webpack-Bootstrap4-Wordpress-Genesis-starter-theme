@@ -7,7 +7,7 @@
  *
  * @package StudioPress\Genesis
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -28,15 +28,8 @@
 		<td>
 			<p><input type="text" name="<?php $this->field_name( 'comments_feed_uri' ); ?>" class="regular-text" id="<?php $this->field_id( 'comments_feed_uri' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'comments_feed_uri' ) ); ?>" /></p>
 			<p><label for="<?php $this->field_id( 'redirect_comments_feed' ); ?>"><input type="checkbox" name="<?php $this->field_name( 'redirect_comments_feed' ); ?>" id="<?php $this->field_id( 'redirect_comments_feed' ); ?>" value="1"<?php checked( $this->get_field_value( 'redirect_comments_feed' ) ); ?> /><?php esc_html_e( 'Redirect Custom Comments Feed?', 'genesis' ); ?></label></p>
-		</td>
-	</tr>
-
-	<tr valign="top">
-		<th scope="row"></th>
-		<td>
 			<p><span class="description"><?php esc_html_e( 'If your custom feed(s) are not handled by Feedblitz or Feedburner, do not use the redirect options.', 'genesis' ); ?></span></p>
 		</td>
 	</tr>
-
 </tbody>
 </table>

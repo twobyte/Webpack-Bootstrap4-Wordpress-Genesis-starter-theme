@@ -7,7 +7,7 @@
  *
  * @package StudioPress\Genesis
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -20,6 +20,7 @@
 			<th scope="row"><label for="doctitle"><?php esc_html_e( 'Custom Document Title', 'genesis' ); ?></label></th>
 			<td>
 				<input name="genesis-meta[doctitle]" id="genesis-meta[doctitle]" type="text" value="<?php echo esc_attr( get_the_author_meta( 'doctitle', $object->ID ) ); ?>" class="regular-text" />
+				<p class="description"><?php esc_html_e( 'The Custom Document Title sets the page title as seen in browsers and search engines. ', 'genesis' ); ?></p>
 			</td>
 		</tr>
 
@@ -27,6 +28,7 @@
 			<th scope="row"><label for="meta-description"><?php esc_html_e( 'Meta Description', 'genesis' ); ?></label></th>
 			<td>
 				<textarea name="genesis-meta[meta_description]" id="genesis-meta[meta-description]" rows="5" cols="30"><?php echo esc_textarea( get_the_author_meta( 'meta_description', $object->ID ) ); ?></textarea>
+				<p class="description"><?php esc_html_e( 'Text entered in the Meta Description field is used as the short page description under the title on search engine results pages.', 'genesis' ); ?></p>
 			</td>
 		</tr>
 
@@ -34,12 +36,14 @@
 			<th scope="row"><label for="meta-keywords"><?php esc_html_e( 'Meta Keywords', 'genesis' ); ?></label></th>
 			<td>
 				<input name="genesis-meta[meta_keywords]" id="genesis-meta[meta-keywords]" type="text" value="<?php echo esc_attr( get_the_author_meta( 'meta_keywords', $object->ID ) ); ?>" class="regular-text" /><br />
-				<span class="description"><?php esc_html_e( 'Comma separated list', 'genesis' ); ?></span>
+				<p class="description"><?php esc_html_e( 'A comma-separated list of keywords relevant to the page can be entered in the Meta Keywords field. Keywords are generally ignored by Search Engines.', 'genesis' ); ?></p>
 			</td>
 		</tr>
 
 		<tr>
-			<th scope="row"><?php esc_html_e( 'Robots Meta', 'genesis' ); ?></th>
+			<th scope="row"><?php esc_html_e( 'Robots Meta', 'genesis' ); ?>
+				<a href="https://yoast.com/robots-meta-tags/" target="_blank" rel="noopener noreferrer">[?]</a>
+			</th>
 			<td>
 				<label for="genesis-meta[noindex]"><input id="genesis-meta[noindex]" name="genesis-meta[noindex]" type="checkbox" value="1" <?php checked( get_the_author_meta( 'noindex', $object->ID ) ); ?> />
 				<?php

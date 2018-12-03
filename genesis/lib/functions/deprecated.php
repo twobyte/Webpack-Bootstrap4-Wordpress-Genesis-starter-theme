@@ -7,9 +7,59 @@
  *
  * @package Genesis\Deprecated
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
+
+/**
+ * Deprecated. Replace the default search form with a Genesis-specific form.
+ *
+ * `get_search_form()` suggested as replacement.
+ *
+ * In order to avoid an infinite loop if this function is used as a callback for the `get_search_form` filter, we load `searchform.php` directly,
+ * rather than use the suggested replacement `get_search_form()`.
+ *
+ * @since 1.0.0
+ * @deprecated 2.7.0
+ */
+function genesis_search_form() {
+
+	_deprecated_function( __FUNCTION__, '2.7.0', "get_search_form()" );
+
+	$search_form_template = locate_template( 'searchform.php' );
+	ob_start();
+	require $search_form_template;
+	$form = ob_get_clean();
+
+	return $form;
+
+}
+
+/*
+ * Deprecated. Genesis now (as of 2.7.0) uses semantic versioning, and will no longer redirect to different pages based on major/minor version status.
+ *
+ * Determine if a version string is considered a major release under Genesis rules.
+ *
+ * For Genesis, a release of something like 2.5.0 is a major release version, as is 2.6.0.
+ * 2.5.1 or 2.6.2 is considered a minor release version.
+ *
+ * All values of `PARENT_THEME_VERSION` are given as 3 digits (5 characters), x.y.z. The major
+ * release after 2.9.0 will be 3.0.0, and not 2.10.0 - Genesis does not follow semantic versioning.
+ *
+ * As such, we can simply check if the 4th and 5th characters until the end, are `.0`. This means
+ * that a value of `2.6.0-dev` will NOT be counted as a major version.
+ *
+ * @since 2.6.0
+ *
+ * @param string $version Version number.
+ * @return bool True if version has `.0` as 4th and 5th character onwards, false otherwise.
+ */
+function genesis_is_major_version( $version ) {
+
+	_deprecated_function( __FUNCTION__, '2.7.0' );
+	return '.0' === substr( $version, 3 );
+
+}
 
 /**
  * Deprecated. Output the title, wrapped in title tags.
@@ -80,15 +130,15 @@ function genesis_contributors() {
 
 	_deprecated_function( __FUNCTION__, '2.5.0', 'Genesis_Contributors::find_contributors' );
 
-	$people = require GENESIS_CONFIG_DIR . '/contributors.php';
+	$people               = require GENESIS_CONFIG_DIR . '/contributors.php';
 	$genesis_contributors = new Genesis_Contributors( $people );
 
 	// The original function didn't contain the logic to shuffle the list, so we use the un-shuffled list here.
 	foreach ( $genesis_contributors->find_by_role( 'contributor' ) as $key => $contributor ) {
 		// The collection object currently returns an array of Genesis_Contributor object, so it can't
 		// support a to_array() method where this logic would go.
-		$contributors[ $key ]['name'] = $contributor->get_name();
-		$contributors[ $key ]['url'] = $contributor->get_profile_url();
+		$contributors[ $key ]['name']     = $contributor->get_name();
+		$contributors[ $key ]['url']      = $contributor->get_profile_url();
 		$contributors[ $key ]['gravatar'] = $contributor->get_avatar_url();
 	}
 
@@ -377,8 +427,6 @@ function genesis_older_newer_posts_nav() {
  * @since 1.0.0
  * @deprecated 2.0.0
  *
- * @global string $wp_version WordPress version string.
- *
  * @return void Return early if `show_info` setting is falsy, or not a child theme.
  */
 function genesis_show_theme_info_in_head() {
@@ -397,8 +445,6 @@ function genesis_show_theme_info_in_head() {
 	if ( ! is_child_theme() ) {
 		return;
 	}
-
-	global $wp_version;
 
 	// Show Child Info.
 	$child_info = wp_get_theme();
@@ -454,10 +500,10 @@ function genesis_tweet_linkify( $text ) {
 
 	_deprecated_function( __FUNCTION__, '2.0.0' );
 
-	$text = preg_replace( "#(^|[\n ])([\w]+?://[\w]+[^ \"\n\r\t< ]*)#", '\\1<a href="\\2" target="_blank">\\2</a>', $text );
-	$text = preg_replace( "#(^|[\n ])((www|ftp)\.[^ \"\t\n\r< ]*)#", '\\1<a href="http://\\2" target="_blank">\\2</a>', $text );
-	$text = preg_replace( '/@(\w+)/', '<a href="http://www.twitter.com/\\1" target="_blank">@\\1</a>', $text );
-	$text = preg_replace( '/#(\w+)/', '<a href="http://search.twitter.com/search?q=\\1" target="_blank">#\\1</a>', $text );
+	$text = preg_replace( "#(^|[\n ])([\w]+?://[\w]+[^ \"\n\r\t< ]*)#", '\\1<a href="\\2" target="_blank" rel="noopener noreferrer">\\2</a>', $text );
+	$text = preg_replace( "#(^|[\n ])((www|ftp)\.[^ \"\t\n\r< ]*)#", '\\1<a href="http://\\2" target="_blank" rel="noopener noreferrer">\\2</a>', $text );
+	$text = preg_replace( '/@(\w+)/', '<a href="http://www.twitter.com/\\1" target="_blank" rel="noopener noreferrer">@\\1</a>', $text );
+	$text = preg_replace( '/#(\w+)/', '<a href="http://search.twitter.com/search?q=\\1" target="_blank" rel="noopener noreferrer">#\\1</a>', $text );
 
 	return $text;
 

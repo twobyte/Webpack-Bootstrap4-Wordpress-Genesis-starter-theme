@@ -7,7 +7,7 @@
  *
  * @package Genesis\Layout
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -529,20 +529,19 @@ function genesis_layout_selector( $args = array() ) {
 }
 
 /**
- * Potentially echo or return a structural wrap div.
+ * Return a structural wrap div.
  *
  * A check is made to see if the `$context` is in the `genesis-structural-wraps` theme support data. If so, then the
  * `$output` may be echoed or returned.
  *
- * @since 1.6.0
+ * @since 2.7.0
  *
  * @param string $context The location ID.
  * @param string $output  Optional. The markup to include. Can also be 'open'
- *                        (default) or 'closed' to use pre-determined markup for consistency.
- * @param bool   $echo    Optional. Whether to echo or return. Default is true (echo).
+ *                        (default) or 'close' to use pre-determined markup for consistency.
  * @return null|string Wrap HTML, or `null` if `genesis-structural-wraps` support is falsy.
  */
-function genesis_structural_wrap( $context = '', $output = 'open', $echo = true ) {
+function genesis_get_structural_wrap( $context = '', $output = 'open' ) {
 
 	$wraps = get_theme_support( 'genesis-structural-wraps' );
 
@@ -582,13 +581,47 @@ function genesis_structural_wrap( $context = '', $output = 'open', $echo = true 
 
 	$output = apply_filters( "genesis_structural_wrap-{$context}", $output, $original_output );
 
-	if ( $echo ) {
-		echo $output;
+	return $output;
 
-		return null;
-	} else {
+}
+
+/**
+ * Echo a structural wrap div.
+ *
+ * A check is made to see if the `$context` is in the `genesis-structural-wraps` theme support data. If so, then the
+ * `$output` may be echoed or returned.
+ *
+ * @since 1.6.0
+ * @since 2.7.0 Logic moved to `genesis_get_structural_wrap()` and third parameter deprecated.
+ *
+ * @param string $context    The location ID.
+ * @param string $output     Optional. The markup to include. Can also be 'open'
+ *                           (default) or 'close' to use pre-determined markup for consistency.
+ * @param bool   $deprecated Deprecated.
+ * @return null|string Wrap HTML, or `null` if `genesis-structural-wraps` support is falsy.
+ */
+function genesis_structural_wrap( $context = '', $output = 'open', $deprecated = null ) {
+
+	if ( null !== $deprecated ) {
+		$message = 'The default is true, so remove the third argument.';
+
+		if ( false === (bool) $deprecated ) {
+			$message = 'Use `genesis_get_structural_wrap()` instead.';
+		}
+
+		_deprecated_argument( __FUNCTION__, '2.7.0', $message );
+	}
+
+	$output = genesis_get_structural_wrap( $context, $output );
+
+	// Apply original default value.
+	$deprecated = null === $deprecated ? true : $deprecated;
+
+	if ( false === (bool) $deprecated ) { // Kept for backwards compatibility.
 		return $output;
 	}
+
+	echo $output;
 
 }
 

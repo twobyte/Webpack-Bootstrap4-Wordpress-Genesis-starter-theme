@@ -7,7 +7,7 @@
  *
  * @package Genesis\Comments
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -69,7 +69,7 @@ function genesis_do_comments() {
 			'context' => 'entry-comments',
 		) );
 
-		echo apply_filters( 'genesis_title_comments', __( '<h3>Comments</h3>', 'genesis' ) );
+		echo apply_filters( 'genesis_title_comments', __( '<h3>Comments</h3>', 'genesis' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		printf( '<ol %s>', genesis_attr( 'comment-list' ) );
 
 			/**
@@ -159,7 +159,7 @@ function genesis_do_pings() {
 			'context' => 'entry-pings',
 		) );
 
-		echo apply_filters( 'genesis_title_pings', __( '<h3>Trackbacks</h3>', 'genesis' ) );
+		echo apply_filters( 'genesis_title_pings', __( '<h3>Trackbacks</h3>', 'genesis' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '<ol class="ping-list">';
 
 			/**
@@ -178,7 +178,7 @@ function genesis_do_pings() {
 
 	} else {
 
-		echo apply_filters( 'genesis_no_pings_text', '' );
+		echo apply_filters( 'genesis_no_pings_text', '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 	}
 
@@ -269,7 +269,7 @@ function genesis_comment_callback( $comment, array $args, $depth ) {
 
 		<div class="comment-content">
 			<?php if ( ! $comment->comment_approved ) : ?>
-				<p class="alert"><?php echo apply_filters( 'genesis_comment_awaiting_moderation', __( 'Your comment is awaiting moderation.', 'genesis' ) ); ?></p>
+				<p class="alert"><?php echo apply_filters( 'genesis_comment_awaiting_moderation', __( 'Your comment is awaiting moderation.', 'genesis' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 			<?php endif; ?>
 
 			<?php comment_text(); ?>
@@ -323,8 +323,9 @@ function genesis_html5_comment_callback( $comment, array $args, $depth ) {
 		<header <?php echo genesis_attr( 'comment-header' ); ?>>
 			<p <?php echo genesis_attr( 'comment-author' ); ?>>
 				<?php
-				echo get_avatar( $comment, $args['avatar_size'] );
-
+				if ( 0 !== $args['avatar_size'] ) {
+					echo get_avatar( $comment, $args['avatar_size'] );
+				}
 				$author = get_comment_author();
 				$url    = get_comment_author_url();
 

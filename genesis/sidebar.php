@@ -7,15 +7,17 @@
  *
  * @package Genesis\Templates
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
 // Output primary sidebar structure.
-genesis_markup( array(
-	'open'    => '<aside %s>' . genesis_sidebar_title( 'sidebar' ),
-	'context' => 'sidebar-primary',
-) );
+genesis_markup(
+	array(
+		'open'    => '<aside %s>' . genesis_sidebar_title( 'sidebar' ),
+		'context' => 'sidebar-primary',
+	)
+);
 
 /**
  * Fires immediately after the Primary Sidebar opening markup.
@@ -39,7 +41,9 @@ do_action( 'genesis_sidebar' );
 do_action( 'genesis_after_sidebar_widget_area' );
 
 // End .sidebar-primary.
-genesis_markup( array(
-	'close'   => '</aside>',
-	'context' => 'sidebar-primary',
-) );
+genesis_markup(
+	array(
+		'close'   => '</aside>',
+		'context' => 'sidebar-primary',
+	)
+);

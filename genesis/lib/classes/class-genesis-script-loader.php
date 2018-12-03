@@ -7,7 +7,7 @@
  *
  * @package Genesis\Assets
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -44,7 +44,7 @@ class Genesis_Script_Loader {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_front_scripts' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'maybe_enqueue_admin_scripts' ) );
 
-		// Enable extra attributes for enqueued wp_enqueue_scripts
+		// Enable extra attributes for enqueued wp_enqueue_scripts.
 		add_filter( 'script_loader_tag', array( $this, 'maybe_enable_attrs' ), 10, 3 );
 
 	}
@@ -65,8 +65,8 @@ class Genesis_Script_Loader {
 		wp_register_script( 'superfish-compat', GENESIS_JS_URL . "/menu/superfish.compat{$this->suffix}.js", array( 'jquery' ), PARENT_THEME_VERSION, true );
 		wp_register_script( 'skip-links', GENESIS_JS_URL . "/skip-links{$this->suffix}.js", array(), PARENT_THEME_VERSION, true );
 		wp_register_script( 'drop-down-menu', GENESIS_JS_URL . "/drop-down-menu{$this->suffix}.js", array( 'jquery' ), PARENT_THEME_VERSION, true );
-		wp_register_script( 'html5shiv', GENESIS_JS_URL . "/html5shiv{$this->suffix}.js", array(), '3.7.3' );
-		wp_register_script( 'genesis_adsense', 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?async=true' );
+		wp_register_script( 'html5shiv', GENESIS_JS_URL . "/html5shiv{$this->suffix}.js", array(), '3.7.3', false );
+		wp_register_script( 'genesis_adsense', 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?async=true', array(), PARENT_THEME_VERSION, false );
 
 	}
 
@@ -122,7 +122,7 @@ class Genesis_Script_Loader {
 		wp_enqueue_script( 'html5shiv' );
 		wp_script_add_data( 'html5shiv', 'conditional', 'lt IE 9' );
 
-		// AdSense
+		// AdSense.
 		if ( genesis_get_option( 'adsense_id' ) ) {
 
 			// Allow entries to disable adsense output.
@@ -251,9 +251,7 @@ class Genesis_Script_Loader {
 				$tag = genesis_strip_attr( $tag, 'script', $attr );
 				$tag = str_replace( ' src=', ' ' . esc_attr( $attr ) . ' src=', $tag );
 				$tag = str_replace( $src, $new_src, $tag );
-
 			}
-
 		}
 
 		return $tag;

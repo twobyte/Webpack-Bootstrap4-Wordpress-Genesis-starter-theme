@@ -7,7 +7,7 @@
  *
  * @package Genesis\Images
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -101,7 +101,7 @@ function genesis_get_image( $args = array() ) {
 	// If we have an id, get the HTML and URL.
 	if ( isset( $id ) ) {
 		$html        = wp_get_attachment_image( $id, $args['size'], false, $args['attr'] );
-		list( $url ) = wp_get_attachment_image_src( $id, $args['size'], false, $args['attr'] );
+		list( $url ) = wp_get_attachment_image_src( $id, $args['size'], false );
 	} elseif ( is_array( $args['fallback'] ) ) {
 		// Else if fallback HTML and URL exist, use them.
 		$id   = 0;

@@ -7,7 +7,7 @@
  *
  * @package Genesis\Admin
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -378,7 +378,13 @@ abstract class Genesis_Admin {
 	 */
 	public function add_help_tab( $id, $title ) {
 
-		get_current_screen()->add_help_tab(
+		$current_screen = get_current_screen();
+
+		if ( null === $current_screen ) {
+			return;
+		}
+
+		$current_screen->add_help_tab(
 			array(
 				'id'       => $this->pagehook . '-' . $id,
 				'title'    => $title,
@@ -415,12 +421,18 @@ abstract class Genesis_Admin {
 	 */
 	public function set_help_sidebar() {
 
+		$current_screen = get_current_screen();
+
+		if ( null === $current_screen ) {
+			return;
+		}
+
 		$screen_reader = '<span class="screen-reader-text">. ' . esc_html__( 'Link opens in a new window.', 'genesis' ) . '</span>';
-		get_current_screen()->set_help_sidebar(
+		$current_screen->set_help_sidebar(
 			'<p><strong>' . esc_html__( 'For more information:', 'genesis' ) . '</strong></p>' .
-			'<p><a href="http://my.studiopress.com/help/" target="_blank">' . esc_html__( 'Get Support', 'genesis' ) . $screen_reader . '</a></p>' .
-			'<p><a href="http://my.studiopress.com/snippets/" target="_blank">' . esc_html__( 'Genesis Snippets', 'genesis' ) . $screen_reader . '</a></p>' .
-			'<p><a href="http://my.studiopress.com/tutorials/" target="_blank">' . esc_html__( 'Genesis Tutorials', 'genesis' ) . $screen_reader . '</a></p>'
+			'<p><a href="http://my.studiopress.com/help/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Get Support', 'genesis' ) . $screen_reader . '</a></p>' .
+			'<p><a href="http://my.studiopress.com/snippets/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Genesis Snippets', 'genesis' ) . $screen_reader . '</a></p>' .
+			'<p><a href="http://my.studiopress.com/tutorials/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Genesis Tutorials', 'genesis' ) . $screen_reader . '</a></p>'
 		);
 
 	}

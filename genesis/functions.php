@@ -8,7 +8,7 @@
  *
  * @package  Genesis
  * @author   StudioPress
- * @license  GPL-2.0+
+ * @license  GPL-2.0-or-later
  * @link     https://my.studiopress.com/themes/genesis/
  */
 

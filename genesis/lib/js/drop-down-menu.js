@@ -17,7 +17,7 @@
  *
  * @package Genesis\JS
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  */
 
 var genesis_drop_down_menu = ( function( $ ) {

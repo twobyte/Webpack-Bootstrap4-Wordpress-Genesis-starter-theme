@@ -7,7 +7,7 @@
  *
  * @package Genesis\Header
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -71,6 +71,7 @@ add_filter( 'document_title_parts', 'genesis_document_title_parts' );
  *
  * @since 2.6.0
  *
+ * @param array $parts The document title parts.
  * @return array Return modified array of title parts.
  */
 function genesis_document_title_parts( $parts ) {
@@ -108,7 +109,7 @@ function genesis_doc_head_control() {
 	remove_action( 'wp_head', 'wp_generator' );
 
 	if ( ! genesis_get_seo_option( 'head_adjacent_posts_rel_link' ) ) {
-		remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0 );
+		remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10 );
 	}
 
 	if ( ! genesis_get_seo_option( 'head_wlwmanifest_link' ) ) {
@@ -116,7 +117,7 @@ function genesis_doc_head_control() {
 	}
 
 	if ( ! genesis_get_seo_option( 'head_shortlink' ) ) {
-		remove_action( 'wp_head', 'wp_shortlink_wp_head', 10, 0 );
+		remove_action( 'wp_head', 'wp_shortlink_wp_head', 10 );
 	}
 
 	if ( is_single() && ! genesis_get_option( 'comments_posts' ) ) {
@@ -209,6 +210,7 @@ add_action( 'genesis_meta', 'genesis_responsive_viewport' );
  * Applies `genesis_viewport_value` filter on content attribute.
  *
  * @since 1.9.0
+ * @since 2.7.0 Adds `minimum-scale=1` when AMP URL.
  *
  * @return void Return early if child theme does not support `genesis-responsive-viewport`.
  */
@@ -226,6 +228,11 @@ function genesis_responsive_viewport() {
 	 * @param string $viewport_default Default value of the viewport meta tag.
 	 */
 	$viewport_value = apply_filters( 'genesis_viewport_value', 'width=device-width, initial-scale=1' );
+
+	// If the web page is an AMP URL and `minimum-scale` is missing, add it.
+	if ( genesis_is_amp() && strpos( $viewport_value, 'minimum-scale') === false ) {
+		$viewport_value .= ',minimum-scale=1';
+	}
 
 	printf(
 		'<meta name="viewport" content="%s" />' . "\n",
@@ -294,12 +301,9 @@ function genesis_paged_rel() {
 	$page  = (int) get_query_var( 'page' );
 
 	if ( ! is_singular() ) {
-
 		$prev = $paged > 1 ? get_previous_posts_page_link() : $prev;
 		$next = $paged < $wp_query->max_num_pages ? get_next_posts_page_link( $wp_query->max_num_pages ) : $next;
-
 	} else {
-
 		// No need for this on previews.
 		if ( is_preview() ) {
 			return;
@@ -318,7 +322,6 @@ function genesis_paged_rel() {
 		if ( $page < $numpages ) {
 			$next = genesis_paged_post_url( $page + 1 );
 		}
-
 	}
 
 	if ( $prev ) {
@@ -404,7 +407,7 @@ add_action( 'wp_head', 'genesis_header_scripts' );
  */
 function genesis_header_scripts() {
 
-	echo apply_filters( 'genesis_header_scripts', genesis_get_option( 'header_scripts' ) );
+	echo apply_filters( 'genesis_header_scripts', genesis_get_option( 'header_scripts' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Need to output scripts.
 
 	// If singular, echo scripts from custom field.
 	if ( is_singular() ) {
@@ -527,7 +530,7 @@ function genesis_custom_header_style() {
 	$text_color   = get_header_textcolor();
 
 	// If no options set, don't waste the output. Do nothing.
-	if ( empty( $header_image ) && ! display_header_text() && $text_color === get_theme_support( 'custom-header', 'default-text-color' ) ) {
+	if ( empty( $header_image ) && ! display_header_text() && get_theme_support( 'custom-header', 'default-text-color' ) === $text_color ) {
 		return;
 	}
 
@@ -546,7 +549,7 @@ function genesis_custom_header_style() {
 	}
 
 	// Header text color CSS, if showing text.
-	if ( display_header_text() && $text_color !== get_theme_support( 'custom-header', 'default-text-color' ) ) {
+	if ( display_header_text() && get_theme_support( 'custom-header', 'default-text-color' ) !== $text_color ) {
 		$output .= sprintf( '%2$s a, %2$s a:hover, %3$s { color: #%1$s !important; }', esc_html( $text_color ), esc_html( $title_selector ), esc_html( $desc_selector ) );
 	}
 
@@ -705,7 +708,7 @@ function genesis_seo_site_title() {
 		),
 	) );
 
-	echo apply_filters( 'genesis_seo_title', $title, $inside, $wrap );
+	echo apply_filters( 'genesis_seo_title', $title, $inside, $wrap ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 }
 

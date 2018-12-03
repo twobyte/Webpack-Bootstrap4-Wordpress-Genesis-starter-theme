@@ -7,7 +7,7 @@
  *
  * @package StudioPress\Genesis
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -57,8 +57,9 @@
 							<?php
 							wp_nonce_field( 'genesis-export', 'genesis-export-nonce' );
 							$this->export_checkboxes();
-							if ( $this->get_export_options() )
-								submit_button( __( 'Download Export File', 'genesis' ), 'primary', 'download' );
+							if ( $this->get_export_options() ) {
+								submit_button(__('Download Export File', 'genesis'), 'primary', 'download');
+							}
 							?>
 						</form>
 

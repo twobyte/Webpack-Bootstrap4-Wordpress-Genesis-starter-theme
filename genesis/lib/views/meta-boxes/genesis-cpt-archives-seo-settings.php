@@ -7,7 +7,7 @@
  *
  * @package StudioPress\Genesis
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -38,7 +38,9 @@
 	</tr>
 
 	<tr valign="top">
-		<th scope="row"><?php esc_html_e( 'Robots Meta Tags', 'genesis' ); ?></th>
+		<th scope="row"><?php esc_html_e( 'Robots Meta Tags', 'genesis' ); ?>
+			<a href="https://yoast.com/robots-meta-tags/" target="_blank" rel="noopener noreferrer">[?]</a>
+		</th>
 		<td>
 			<p>
 				<label for="<?php $this->field_id( 'noindex' ); ?>"><input type="checkbox" name="<?php $this->field_name( 'noindex' ); ?>" id="<?php $this->field_id( 'noindex' ); ?>" value="1" <?php checked( $this->get_field_value( 'noindex' ) ); ?> />
@@ -46,21 +48,21 @@
 					/* translators: Meta noindex attribute. */
 					printf( esc_html__( 'Apply %s to this archive', 'genesis' ), genesis_code( 'noindex' ) );
 				?>
-				<a href="https://yoast.com/robots-meta-tags/" target="_blank">[?]</a></label><br />
+				</label><br />
 
 				<label for="<?php $this->field_id( 'nofollow' ); ?>"><input type="checkbox" name="<?php $this->field_name( 'nofollow' ); ?>" id="<?php $this->field_id( 'nofollow' ); ?>" value="1" <?php checked( $this->get_field_value( 'nofollow' ) ); ?> />
 				<?php
 					/* translators: Meta nofollow attribute. */
 					printf( esc_html__( 'Apply %s to this archive', 'genesis' ), genesis_code( 'nofollow' ) );
 				?>
-				<a href="https://yoast.com/robots-meta-tags/" target="_blank">[?]</a></label><br />
+				</label><br />
 
 				<label for="<?php $this->field_id( 'noarchive' ); ?>"><input type="checkbox" name="<?php $this->field_name( 'noarchive' ); ?>" id="<?php $this->field_id( 'noarchive' ); ?>" value="1" <?php checked( $this->get_field_value( 'noarchive' ) ); ?> />
 				<?php
 					/* translators: Meta noarchive attribute. */
 					printf( esc_html__( 'Apply %s to this archive', 'genesis' ), genesis_code( 'noarchive' ) );
 				?>
-				<a href="https://yoast.com/robots-meta-tags/" target="_blank">[?]</a></label>
+				</label>
 			</p>
 		</td>
 	</tr>

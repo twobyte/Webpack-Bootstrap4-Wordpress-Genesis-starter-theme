@@ -7,7 +7,7 @@
  *
  * @package Genesis\Breadcrumbs
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -56,22 +56,22 @@ function genesis_do_breadcrumbs() {
 		return;
 	}
 
-	$breadcrumb_markup_open = sprintf( '<div %s>', genesis_attr( 'breadcrumb' ) );
+	$config = require GENESIS_CONFIG_DIR . '/breadcrumbs.php';
 
 	if ( function_exists( 'bcn_display' ) ) {
-		echo $breadcrumb_markup_open;
+		echo $config['prefix'];
 		bcn_display();
-		echo '</div>';
+		echo $config['suffix'];
 	} elseif ( function_exists( 'breadcrumbs' ) ) {
 		breadcrumbs();
 	} elseif ( function_exists( 'crumbs' ) ) {
 		crumbs();
 	} elseif ( class_exists( 'WPSEO_Breadcrumbs' ) && genesis_get_option( 'breadcrumbs-enable', 'wpseo_titles' ) ) {
-		yoast_breadcrumb( $breadcrumb_markup_open, '</div>' );
+		yoast_breadcrumb( $config['prefix'], $config['suffix'] );
 	} elseif ( function_exists( 'yoast_breadcrumb' ) && ! class_exists( 'WPSEO_Breadcrumbs' ) ) {
-		yoast_breadcrumb( $breadcrumb_markup_open, '</div>' );
+		yoast_breadcrumb( $config['prefix'], $config['suffix'] );
 	} else {
-		genesis_breadcrumb();
+		genesis_breadcrumb( $config );
 	}
 
 }

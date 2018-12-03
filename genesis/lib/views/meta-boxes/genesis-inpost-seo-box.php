@@ -7,7 +7,7 @@
  *
  * @package StudioPress\Genesis
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -21,6 +21,7 @@ wp_nonce_field( 'genesis_inpost_seo_save', 'genesis_inpost_seo_nonce' );
 		<th scope="row"><label for="genesis_title"><?php esc_html_e( 'Document Title', 'genesis' ); ?><span class="screen-reader-text"> &lt;title&gt; Tag. </span></label></th>
 		<td>
 			<p><input class="large-text" type="text" name="genesis_seo[_genesis_title]" id="genesis_title" value="<?php echo esc_attr( genesis_get_custom_field( '_genesis_title' ) ); ?>" /></p>
+			<p class="description"><?php esc_html_e( 'The Custom Document Title sets the page title as seen in browsers and search engines. ', 'genesis' ); ?></p>
 			<p><span class="hide-if-no-js description">
 				<?php
 				/* translators: Title string length */
@@ -34,6 +35,7 @@ wp_nonce_field( 'genesis_inpost_seo_save', 'genesis_inpost_seo_nonce' );
 		<th scope="row"><label for="genesis_description"><?php esc_html_e( 'Meta Description', 'genesis' ); ?><span class="screen-reader-text"> &lt;meta name=&quot;description&quot; /&gt;. </span></label></th>
 		<td>
 			<p><textarea class="widefat" name="genesis_seo[_genesis_description]" id="genesis_description" rows="4" cols="4"><?php echo esc_textarea( genesis_get_custom_field( '_genesis_description' ) ); ?></textarea></p>
+			<p class="description"><?php esc_html_e( 'Text entered in the Meta Description field is used as the short page description under the title on search engine results pages.', 'genesis' ); ?></p>
 			<p><span class="hide-if-no-js description">
 				<?php
 				/* translators: Description string length */
@@ -45,7 +47,10 @@ wp_nonce_field( 'genesis_inpost_seo_save', 'genesis_inpost_seo_nonce' );
 
 	<tr valign="top">
 		<th scope="row"><label for="genesis_keywords"><strong><?php esc_html_e( 'Meta Keywords', 'genesis' ); ?></strong><span class="screen-reader-text"> &lt;meta name=&quot;keywords&quot; /&gt;. </span></label></th>
-		<td><p><input class="large-text" type="text" name="genesis_seo[_genesis_keywords]" id="genesis_keywords" value="<?php echo esc_attr( genesis_get_custom_field( '_genesis_keywords' ) ); ?>" /></p></td>
+		<td>
+			<p><input class="large-text" type="text" name="genesis_seo[_genesis_keywords]" id="genesis_keywords" value="<?php echo esc_attr( genesis_get_custom_field( '_genesis_keywords' ) ); ?>" /></p>
+			<p class="description"><?php esc_html_e( 'A comma-separated list of keywords relevant to the page can be entered in the Meta Keywords field. Keywords are generally ignored by Search Engines.', 'genesis' ); ?></p>
+		</td>
 	</tr>
 
 	<tr valign="top">
@@ -59,7 +64,9 @@ wp_nonce_field( 'genesis_inpost_seo_save', 'genesis_inpost_seo_nonce' );
 	</tr>
 
 	<tr valign="top">
-		<th scope="row"><?php esc_html_e( 'Robots Meta Settings', 'genesis' ); ?></th>
+		<th scope="row"><?php esc_html_e( 'Robots Meta Settings', 'genesis' ); ?>
+			<a href="https://yoast.com/robots-meta-tags/" target="_blank" rel="noopener noreferrer">[?]</a>
+		</th>
 		<td>
 			<p>
 				<label for="genesis_noindex"><input type="checkbox" name="genesis_seo[_genesis_noindex]" id="genesis_noindex" value="1" <?php checked( genesis_get_custom_field( '_genesis_noindex' ) ); ?> />

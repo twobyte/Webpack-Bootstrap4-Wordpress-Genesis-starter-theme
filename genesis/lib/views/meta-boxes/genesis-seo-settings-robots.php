@@ -7,7 +7,7 @@
  *
  * @package StudioPress\Genesis
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -16,7 +16,9 @@
 <tbody>
 
 	<tr valign="top">
-		<th scope="row"><?php esc_html_e( 'Indexing', 'genesis' ); ?></th>
+		<th scope="row"><?php esc_html_e( 'Indexing', 'genesis' ); ?>
+			<a href="https://yoast.com/robots-meta-tags/" target="_blank" rel="noopener noreferrer">[?]</a>
+		</th>
 		<td>
 			<p>
 				<label for="<?php $this->field_id( 'noindex_cat_archive' ); ?>"><input type="checkbox" name="<?php $this->field_name( 'noindex_cat_archive' ); ?>" id="<?php $this->field_id( 'noindex_cat_archive' ); ?>" value="1" <?php checked( $this->get_field_value( 'noindex_cat_archive' ) ); ?> />
@@ -64,7 +66,9 @@
 <tbody>
 
 	<tr valign="top">
-		<th scope="row"><?php esc_html_e( 'Archiving', 'genesis' ); ?></th>
+		<th scope="row"><?php esc_html_e( 'Archiving', 'genesis' ); ?>
+			<a href="https://yoast.com/robots-meta-tags/" target="_blank" rel="noopener noreferrer">[?]</a>
+		</th>
 		<td>
 			<p>
 				<label for="<?php $this->field_id( 'noarchive' ); ?>"><input type="checkbox" name="<?php $this->field_name( 'noarchive' ); ?>" id="<?php $this->field_id( 'noarchive' ); ?>" value="1" <?php checked( $this->get_field_value( 'noarchive' ) ); ?> />
@@ -122,7 +126,9 @@
 <tbody>
 
 	<tr valign="top">
-		<th scope="row"><?php esc_html_e( 'Directories', 'genesis' ); ?></th>
+		<th scope="row"><?php esc_html_e( 'Directories', 'genesis' ); ?>
+			<a href="https://yoast.com/robots-meta-tags/" target="_blank" rel="noopener noreferrer">[?]</a>
+		</th>
 		<td>
 			<p>
 				<label for="<?php $this->field_id( 'noodp' ); ?>"><input type="checkbox" name="<?php $this->field_name( 'noodp' ); ?>" id="<?php $this->field_id( 'noodp' ); ?>" value="1" <?php checked( $this->get_field_value( 'noodp' ) ); ?> />

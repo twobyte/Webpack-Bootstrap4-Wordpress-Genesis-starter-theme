@@ -7,7 +7,7 @@
  *
  * @package Genesis\Admin
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -186,7 +186,7 @@ function genesis_user_meta_save( $user_id ) {
 
 	$meta = wp_parse_args( $_POST['genesis-meta'], $defaults );
 
-	$meta['headline']   = strip_tags( $meta['headline'] );
+	$meta['headline']   = wp_strip_all_tags( $meta['headline'] );
 	$meta['intro_text'] = current_user_can( 'unfiltered_html' ) ? $meta['intro_text'] : genesis_formatting_kses( $meta['intro_text'] );
 
 	foreach ( $meta as $key => $value ) {

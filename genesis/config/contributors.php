@@ -7,7 +7,7 @@
  *
  * @package Genesis\Contributors
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -41,17 +41,35 @@ return array(
 		'gravatar' => 'c845c86ebe395cea0d21c03bc4a93957',
 		'role'     => 'lead-developer',
 	),
+	'johnparris'       => array(
+		'name'     => 'John Parris',
+		'twitter'  => 'John_Parris',
+		'gravatar' => '1b31a4fe3905a88053a566b6037002d5',
+		'role'     => 'lead-developer',
+	),
+	'garyjones'        => array(
+		'name'     => 'Gary Jones',
+		'twitter'  => 'garyj',
+		'gravatar' => 'e70d4086e89c2e1e081870865be68485',
+		'role'     => 'lead-developer',
+	),
+	'tonyamork'        => array(
+		'name'     => 'Tonya Mork',
+		'twitter'  => 'hellofromTonya',
+		'gravatar' => 'cd9217f16a69ad83496f5e182caf0649',
+		'role'     => 'lead-developer',
+	),
 	'ronrennick'       => array(
 		'name'     => 'Ron Rennick',
 		'twitter'  => 'sillygrampy',
 		'gravatar' => '7b8ff059b9a4504dfbaebd4dd190466e',
-		'role'     => 'contributor',
+		// 'role'     => 'contributor',
 	),
 	'leeanthony'       => array(
 		'name'     => 'Lee Anthony',
-		'twitter'  => 'seothemes',
+		'twitter'  => 'seothemeswp',
 		'gravatar' => '0520d97bf4999e910f18ccbe51a07c99',
-		'role'     => 'contributor',
+		// 'role'     => 'contributor',
 	),
 	'jaredatchison'    => array(
 		'name'     => 'Jared Atchison',
@@ -87,19 +105,19 @@ return array(
 		'name'     => 'Marcy Diaz',
 		'twitter'  => 'mjsdiaz1',
 		'gravatar' => 'b51816d10eea5a7c59ff204961011a08',
-		'role'     => 'contributor',
+		// 'role'     => 'contributor',
 	),
 	'robincornett'     => array(
 		'name'     => 'Robin Cornett',
 		'twitter'  => 'robincornett',
 		'gravatar' => '92f90103972341af5dcf421661209729',
-		// 'role'     => 'contributor',
+		'role'     => 'contributor',
 	),
 	'nickcroft'        => array(
 		'name'     => 'Nick Croft',
 		'twitter'  => 'nick_thegeek',
 		'gravatar' => '3241d4eab93215b5487e162b87569e42',
-		// 'role'     => 'contributor',
+		'role'     => 'contributor',
 	),
 	'daviddecker'      => array(
 		'name'     => 'David Decker',
@@ -147,7 +165,7 @@ return array(
 		'name'     => 'Mike Hemberger',
 		'twitter'  => 'jivedig',
 		'gravatar' => '371c8693fa81eb43dadc28eaaba367f8',
-		'role'     => 'contributor',
+		// 'role'     => 'contributor',
 	),
 	'christophherr'    => array(
 		'name'     => 'Christoph Herr',
@@ -155,9 +173,15 @@ return array(
 		'gravatar' => '16e62c03133d8068dac42352fd3a9909',
 		'role'     => 'contributor',
 	),
+	'jayhill'          => array(
+		'name'     => 'Jay Hill',
+		'twitter'  => 'wpdevlife',
+		'gravatar' => '2afc00d7b8851571b9d61a4997212071',
+		'role'     => 'contributor',
+	),
 	'tiagohillebrandt' => array(
 		'name'     => 'Tiago Hillebrandt',
-		'twitter'  => 'https://twitter.com/tiagoscd',
+		'twitter'  => 'tiagoscd',
 		'gravatar' => 'f621dee2befcb84893d2543905afb66f',
 		'role'     => 'contributor',
 	),
@@ -171,13 +195,7 @@ return array(
 		'name'     => 'Tim Jensen',
 		'twitter'  => 'timothy_jensen_',
 		'gravatar' => 'a1d48c77f8d239fe09ed9e05a88980e1',
-		'role'     => 'contributor',
-	),
-	'garyjones'        => array(
-		'name'     => 'Gary Jones',
-		'twitter'  => 'garyj',
-		'gravatar' => 'e70d4086e89c2e1e081870865be68485',
-		'role'     => 'contributor',
+		// 'role'     => 'contributor',
 	),
 	'sridharkatakam'   => array(
 		'name'     => 'Sridhar Katakam',
@@ -195,7 +213,7 @@ return array(
 		'name'     => 'Brandon Kraft',
 		'twitter'  => 'kraft',
 		'gravatar' => 'fa4976cfd706b9be00f6494df9aa99d9',
-		// 'role'     => 'contributor',
+		'role'     => 'contributor',
 	),
 	'laurenmancke'     => array(
 		'name'     => 'Lauren Mancke',
@@ -225,7 +243,7 @@ return array(
 		'name'     => 'Jeremy Pry',
 		'twitter'  => 'JPry',
 		'gravatar' => '84552f74b71a1a3e6aae380aa9ab3bd3',
-		// 'role'     => 'contributor',
+		'role'     => 'contributor',
 	),
 	'gregrickaby'      => array(
 		'name'     => 'Greg Rickaby',
@@ -243,7 +261,7 @@ return array(
 		'name'     => 'Travis Smith',
 		'twitter'  => 'wp_smith',
 		'gravatar' => '7e673cdf99e6d7448f3cbaf1424c999c',
-		// 'role'     => 'contributor',
+		'role'     => 'contributor',
 	),
 	'rafaltomal'       => array(
 		'name'     => 'Rafal Tomal',

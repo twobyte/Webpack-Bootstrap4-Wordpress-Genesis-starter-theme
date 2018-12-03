@@ -7,7 +7,7 @@
  *
  * @package Genesis\Admin
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -274,6 +274,7 @@ class Genesis_Admin_Import_Export extends Genesis_Admin_Basic {
 		 */
 		do_action( 'genesis_import', $_REQUEST['genesis-import'], $_FILES['genesis-import-upload'] );
 
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		$upload = file_get_contents( $_FILES['genesis-import-upload']['tmp_name'] );
 
 		$options = json_decode( $upload, true );

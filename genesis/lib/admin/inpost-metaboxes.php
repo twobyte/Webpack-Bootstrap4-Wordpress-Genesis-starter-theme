@@ -7,7 +7,7 @@
  *
  * @package Genesis\Admin
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -101,7 +101,7 @@ function genesis_inpost_seo_save( $post_id, $post ) {
 	// Sanitize the title, description, and tags.
 	foreach ( (array) $data as $key => $value ) {
 		if ( in_array( $key, array( '_genesis_title', '_genesis_description', '_genesis_keywords' ) ) ) {
-			$data[ $key ] = strip_tags( $value );
+			$data[ $key ] = wp_strip_all_tags( $value );
 		}
 	}
 

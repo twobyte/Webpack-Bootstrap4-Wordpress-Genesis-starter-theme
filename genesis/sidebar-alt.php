@@ -7,15 +7,17 @@
  *
  * @package Genesis\Templates
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
 // Output secondary sidebar structure.
-genesis_markup( array(
-	'open'    => '<aside %s>' . genesis_sidebar_title( 'sidebar-alt' ),
-	'context' => 'sidebar-secondary',
-) );
+genesis_markup(
+	array(
+		'open'    => '<aside %s>' . genesis_sidebar_title( 'sidebar-alt' ),
+		'context' => 'sidebar-secondary',
+	)
+);
 
 /**
  * Fires immediately after the Secondary Sidebar opening markup.
@@ -39,7 +41,9 @@ do_action( 'genesis_sidebar_alt' );
 do_action( 'genesis_after_sidebar_alt_widget_area' );
 
 // End .sidebar-secondary.
-genesis_markup( array(
-	'close'   => '</aside>',
-	'context' => 'sidebar-secondary',
-) );
+genesis_markup(
+	array(
+		'close'   => '</aside>',
+		'context' => 'sidebar-secondary',
+	)
+);

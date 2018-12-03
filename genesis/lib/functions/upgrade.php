@@ -7,7 +7,7 @@
  *
  * @package Genesis\Updates
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -46,27 +46,6 @@ function genesis_first_version_compare( $version, $operator ) {
 }
 
 /**
- * Determine if a version string is considered a major release under Genesis rules.
- *
- * For Genesis, a release of something like 2.5.0 is a major release version, as is 2.6.0.
- * 2.5.1 or 2.6.2 is considered a minor release version.
- *
- * All values of `PARENT_THEME_VERSION` are given as 3 digits (5 characters), x.y.z. The major
- * release after 2.9.0 will be 3.0.0, and not 2.10.0 - Genesis does not follow semantic versioning.
- *
- * As such, we can simply check if the 4th and 5th characters until the end, are `.0`. This means
- * that a value of `2.6.0-dev` will NOT be counted as a major version.
- *
- * @since 2.6.0
- *
- * @param string $version Version number.
- * @return bool True if version has `.0` as 4th and 5th character onwards, false otherwise.
- */
-function genesis_is_major_version( $version ) {
-	return '.0' === substr( $version, 3 );
-}
-
-/**
  * Ping https://api.genesistheme.com/ asking if a new version of this theme is available.
  *
  * If not, it returns false.
@@ -86,15 +65,13 @@ function genesis_is_major_version( $version ) {
  */
 function genesis_update_check() {
 
-	// Use cache.
-	static $genesis_update = null;
-
-	global $wp_version;
-
 	// If updates are disabled.
 	if ( ! genesis_get_option( 'update' ) || ! current_theme_supports( 'genesis-auto-updates' ) ) {
 		return array();
 	}
+
+	// Use cache.
+	static $genesis_update = null;
 
 	// If cache is empty, pull transient.
 	if ( ! $genesis_update ) {
@@ -104,27 +81,24 @@ function genesis_update_check() {
 	// If transient has expired, do a fresh update check.
 	if ( ! $genesis_update ) {
 
-		$url     = 'https://api.genesistheme.com/update-themes/';
-		$options = apply_filters(
+		$update_config  = require GENESIS_CONFIG_DIR . '/update-check.php';
+
+		/**
+		 * Filter the request data sent to the update server.
+		 *
+		 * @since 1.1.0
+		 *
+		 * @param array The request data sent to the update server.
+		 */
+		$update_config['post_args'] = apply_filters(
 			'genesis_update_remote_post_options',
-			array(
-				'body' => array(
-					'genesis_version' => PARENT_THEME_VERSION,
-					'html5'           => genesis_html5(),
-					'php_version'     => phpversion(),
-					'uri'             => home_url(),
-					'stylesheet'      => get_stylesheet(),
-					'user-agent'      => "WordPress/$wp_version;",
-					'wp_version'      => $wp_version,
-				),
-			)
+			$update_config['post_args']
 		);
 
-		$response      = wp_remote_post( $url, $options );
-		$response_body = wp_remote_retrieve_body( $response );
+		$update_check   = new Genesis_Update_Check( $update_config );
 
-		// If an error occurred, return FALSE, store for 1 hour.
-		if ( 'error' === $response_body || is_wp_error( $response_body ) || ! is_serialized( $response_body ) ) {
+		// If an error occurred, return empty array, store for 1 hour.
+		if ( ! $update_check->get_update() ) {
 			$genesis_update = array(
 				'new_version' => PARENT_THEME_VERSION,
 			);
@@ -133,7 +107,7 @@ function genesis_update_check() {
 		}
 
 		// Else, unserialize.
-		$genesis_update = maybe_unserialize( $response_body );
+		$genesis_update = $update_check->get_update();
 
 		// And store in transient for 24 hours.
 		set_transient( 'genesis-update', $genesis_update, DAY_IN_SECONDS );
@@ -163,6 +137,15 @@ function genesis_upgrade_db_latest() {
 		'upgrade'       => 1,
 	) );
 
+}
+
+/**
+ * Upgrade the database to version 2700.
+ *
+ * @since 2.7.0
+ */
+function genesis_upgrade_2700() {
+	delete_option( 'genesis-scribe-nag-disabled' );
 }
 
 /**
@@ -668,10 +651,19 @@ function genesis_upgrade() {
 		genesis_upgrade_2603();
 	}
 
+	// UPDATE DB TO VERSION 2700.
+	if ( genesis_get_option( 'db_version', null, false ) < '2700' ) {
+		genesis_upgrade_2700();
+	}
+
 	// UPDATE DB TO LATEST VERSION.
 	if ( genesis_get_option( 'db_version', null, false ) < PARENT_DB_VERSION ) {
 		genesis_upgrade_db_latest();
 	}
+
+	// Clear the cache to prevent a redirect loop in some object caching environments
+	wp_cache_flush();
+	wp_cache_delete( 'alloptions', 'options' );
 
 	/**
 	 * Fires after upgrade processes have completed.
@@ -722,7 +714,7 @@ function genesis_silent_upgrade() {
 
 add_action( 'genesis_upgrade', 'genesis_upgrade_redirect' );
 /**
- * Redirect the user back to the theme settings page, refreshing the data and notifying the user that they have
+ * Redirect the user back to the "What's New" page, refreshing the data and notifying the user that they have
  * successfully updated.
  *
  * @since 1.6.0
@@ -735,13 +727,7 @@ function genesis_upgrade_redirect() {
 		return;
 	}
 
-	if ( genesis_is_major_version( PARENT_THEME_VERSION ) ) {
-		genesis_admin_redirect( 'genesis-upgraded' ); // What's New page.
-	} else {
-		genesis_admin_redirect( 'genesis', array( // Theme Settings page.
-			'upgraded' => 'true',
-		) );
-	}
+	genesis_admin_redirect( 'genesis-upgraded' ); // What's New page.
 
 }
 
@@ -782,8 +768,8 @@ add_filter( 'update_theme_complete_actions', 'genesis_update_action_links', 10, 
  *
  * @param array  $actions Existing array of action links.
  * @param string $theme   Theme name.
- * @return string Removes all existing action links in favour of a single link, if Genesis is
- *                the theme being updated. Otherwise, return existing action links.
+ * @return array Removes all existing action links in favour of a single link, if Genesis is
+ *               the theme being updated. Otherwise, return existing action links.
  */
 function genesis_update_action_links( array $actions, $theme ) {
 
@@ -791,7 +777,13 @@ function genesis_update_action_links( array $actions, $theme ) {
 		return $actions;
 	}
 
-	return sprintf( '<a href="%s">%s</a>', menu_page_url( 'genesis', 0 ), __( 'Click here to complete the upgrade', 'genesis' ) );
+	return array(
+		sprintf(
+			'<a href="%s">%s</a>',
+			menu_page_url( 'genesis', 0 ),
+			esc_html__( 'Click here to complete the upgrade', 'genesis' )
+		),
+	);
 
 }
 

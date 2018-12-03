@@ -7,7 +7,7 @@
  *
  * @package StudioPress\Genesis
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -27,7 +27,7 @@
 			<p><span class="description">
 				<?php
 				/* translators: Open and close anchor tags. */
-				printf( esc_html__( 'This can be helpful for diagnosing problems with your theme when seeking assistance at the %shelp page%s.', 'genesis' ), '<a href="https://my.studiopress.com/support/" target="_blank">', '</a>' );
+				printf( esc_html__( 'This can be helpful for diagnosing problems with your theme when seeking assistance at the %shelp page%s.', 'genesis' ), '<a href="https://my.studiopress.com/support/" target="_blank" rel="noopener noreferrer">', '</a>' );
 				?>
 			</span></p>
 		</td>

@@ -7,7 +7,7 @@
  *
  * @package Genesis\Framework
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -30,10 +30,12 @@ function genesis() {
 	 */
 	do_action( 'genesis_before_content_sidebar_wrap' );
 
-	genesis_markup( array(
-		'open'    => '<div %s>',
-		'context' => 'content-sidebar-wrap',
-	) );
+	genesis_markup(
+		array(
+			'open'    => '<div %s>',
+			'context' => 'content-sidebar-wrap',
+		)
+	);
 
 		/**
 		 * Fires before the content, after the content sidebar wrap opening markup.
@@ -42,10 +44,12 @@ function genesis() {
 		 */
 		do_action( 'genesis_before_content' );
 
-		genesis_markup( array(
-			'open'    => '<main %s>',
-			'context' => 'content',
-		) );
+		genesis_markup(
+			array(
+				'open'    => '<main %s>',
+				'context' => 'content',
+			)
+		);
 
 			/**
 			 * Fires before the loop hook, after the main content opening markup.
@@ -68,10 +72,12 @@ function genesis() {
 			 */
 			do_action( 'genesis_after_loop' );
 
-		genesis_markup( array(
-			'close'   => '</main>', // End .content.
-			'context' => 'content',
-		) );
+		genesis_markup(
+			array(
+				'close'   => '</main>', // End .content.
+				'context' => 'content',
+			)
+		);
 
 		/**
 		 * Fires after the content, before the main content sidebar wrap closing markup.
@@ -80,10 +86,12 @@ function genesis() {
 		 */
 		do_action( 'genesis_after_content' );
 
-	genesis_markup( array(
-		'close'   => '</div>',
-		'context' => 'content-sidebar-wrap',
-	) );
+	genesis_markup(
+		array(
+			'close'   => '</div>',
+			'context' => 'content-sidebar-wrap',
+		)
+	);
 
 	/**
 	 * Fires before the footer, after the content sidebar wrap.

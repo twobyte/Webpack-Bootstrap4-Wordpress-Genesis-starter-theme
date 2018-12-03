@@ -7,7 +7,7 @@
  *
  * @package Genesis\WidgetAreas
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -242,19 +242,23 @@ function genesis_widget_area( $id, $args = array() ) {
 	}
 
 	$defaults = apply_filters( 'genesis_widget_area_defaults', array(
-		'before'              => genesis_markup( array(
-						'open'    => '<aside class="widget-area">' . genesis_sidebar_title( $id ),
-						'context' => 'widget-area-wrap',
-						'echo'    => false,
-						'params'  => array(
-							'id' => $id,
-						),
-				) ),
-		'after'               => genesis_markup( array(
-						'close'   => '</aside>',
-						'context' => 'widget-area-wrap',
-						'echo'    => false,
-				) ),
+		'before'              => genesis_markup(
+			array(
+				'open'    => '<aside class="widget-area">' . genesis_sidebar_title( $id ),
+				'context' => 'widget-area-wrap',
+				'echo'    => false,
+				'params'  => array(
+					'id' => $id,
+				),
+			)
+		),
+		'after'               => genesis_markup(
+			array(
+				'close'   => '</aside>',
+				'context' => 'widget-area-wrap',
+				'echo'    => false,
+			)
+		),
 		'default'             => '',
 		'show_inactive'       => 0,
 		'before_sidebar_hook' => 'genesis_before_' . $id . '_widget_area',
@@ -288,7 +292,7 @@ function genesis_widget_area( $id, $args = array() ) {
 	}
 
 	// After hook.
-	if( $args['after_sidebar_hook'] ) {
+	if ( $args['after_sidebar_hook'] ) {
 			/**
 			 * Fires before widget area is output.
 			 *
@@ -322,10 +326,10 @@ function genesis_a11y_register_sidebar_defaults( $args ) {
 
 	if ( genesis_a11y( 'headings' ) ) {
 		$args['before_title'] = '<h3 class="widgettitle widget-title">';
-    	$args['after_title']  = "</h3>\n";
+		$args['after_title']  = "</h3>\n";
 	}
 
-    return $args;
+	return $args;
 }
 
 /**

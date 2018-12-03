@@ -7,7 +7,7 @@
  *
  * @package Genesis\Breadcrumbs
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -40,37 +40,7 @@ class Genesis_Breadcrumb {
 	public function __construct() {
 
 		// Default arguments.
-		$this->args = array(
-			'home'                    => __( 'Home', 'genesis' ),
-			'sep'                     => __( ' <span aria-label="breadcrumb separator">/</span> ', 'genesis' ),
-			'list_sep'                => ', ',
-			'prefix'                  => genesis_markup(
-				array(
-					'open'    => '<div %s>',
-					'context' => 'breadcrumb',
-					'echo'    => false,
-				)
-			),
-			'suffix'                  => genesis_markup(
-				array(
-					'close' => '</div>',
-					'echo'  => false,
-				)
-			),
-			'heirarchial_attachments' => true,
-			'heirarchial_categories'  => true,
-			'labels'                  => array(
-				'prefix'    => __( 'You are here: ', 'genesis' ),
-				'author'    => __( 'Archives for ', 'genesis' ),
-				'category'  => __( 'Archives for ', 'genesis' ),
-				'tag'       => __( 'Archives for ', 'genesis' ),
-				'date'      => __( 'Archives for ', 'genesis' ),
-				'search'    => __( 'Search for ', 'genesis' ),
-				'tax'       => __( 'Archives for ', 'genesis' ),
-				'post_type' => __( 'Archives for ', 'genesis' ),
-				'404'       => __( 'Not found: ', 'genesis' ),
-			),
-		);
+		$this->args = require GENESIS_CONFIG_DIR . '/breadcrumbs.php';
 
 	}
 
@@ -502,6 +472,10 @@ class Genesis_Breadcrumb {
 		$post_type        = get_query_var( 'post_type' );
 		$post_type_object = get_post_type_object( $post_type );
 
+		if ( null === $post_type_object ) {
+			return '';
+		}
+
 		$cpt_archive_link = get_post_type_archive_link( $post_type );
 		if ( $cpt_archive_link ) {
 			$crumb = $this->get_breadcrumb_link(
@@ -792,6 +766,69 @@ class Genesis_Breadcrumb {
 	}
 
 	/**
+	 * Return markup for the wrapped link text.
+	 *
+	 * @since 2.7.0
+	 *
+	 * @param string The content to be wrapped.
+	 * @return string HTML markup for wrapped link text.
+	 */
+	protected function get_breadcrumb_link_text( $content ) {
+
+		return genesis_markup(
+			array(
+				'open'    => '<span %s>',
+				'close'   => '</span>',
+				'content' => $content,
+				'context' => 'breadcrumb-link-text-wrap',
+				'echo'    => false,
+			)
+		);
+
+	}
+
+	/**
+	 * Return markup for a meta tag for each breadcrumb item.
+	 *
+	 * @since 2.7.0
+	 *
+	 * @return string HTML markup for meta tag.
+	 */
+	protected function get_breadcrumb_link_meta() {
+
+		return genesis_markup(
+			array(
+				'open'    => '<meta %s>',
+				'context' => 'breadcrumb-link-wrap-meta',
+				'echo'    => false,
+			)
+		);
+
+	}
+
+	/**
+	 * Return markup for a link wrap for each breadcrumb link.
+	 *
+	 * @since 2.7.0
+	 *
+	 * @param string The content to be wrapped.
+	 * @return string HTML markup for link wrap.
+	 */
+	protected function get_breadcrumb_link_wrap( $content ) {
+
+		return genesis_markup(
+			array(
+				'open'    => '<span %s>',
+				'close'   => '</span>',
+				'content' => $content,
+				'context' => 'breadcrumb-link-wrap',
+				'echo'    => false,
+			)
+		);
+
+	}
+
+	/**
 	 * Return anchor link for a single crumb.
 	 *
 	 * @since 1.5.0
@@ -808,10 +845,18 @@ class Genesis_Breadcrumb {
 		// Empty title, for backward compatibility.
 		$title = '';
 
-		$itemprop_item = genesis_html5() ? ' itemprop="item"' : '';
-		$itemprop_name = genesis_html5() ? ' itemprop="name"' : '';
-
-		$link = sprintf( '<a href="%s"%s><span%s>%s</span></a>', esc_attr( $url ), $itemprop_item, $itemprop_name, $content );
+		$link = genesis_markup(
+			array(
+				'open'    => '<a %s>',
+				'close'   => '</a>',
+				'content' => $this->get_breadcrumb_link_text( $content ),
+				'context' => 'breadcrumb-link',
+				'params'  => array(
+					'href' => $url,
+				),
+				'echo'    => false,
+			)
+		);
 
 		/**
 		 * Filter the anchor link for a single breadcrumb.
@@ -826,9 +871,11 @@ class Genesis_Breadcrumb {
 		 */
 		$link = apply_filters( 'genesis_breadcrumb_link', $link, $url, $title, $content, $this->args );
 
-		if ( genesis_html5() ) {
-			$link = sprintf( '<span %s>', genesis_attr( 'breadcrumb-link-wrap' ) ) . $link . '</span>';
-		}
+		// Append meta tag to link markup.
+		$link .= $this->get_breadcrumb_link_meta();
+
+		// Wrap link.
+		$link = $this->get_breadcrumb_link_wrap( $link );
 
 		if ( $sep ) {
 			$link .= $sep;

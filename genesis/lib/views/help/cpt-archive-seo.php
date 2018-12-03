@@ -7,7 +7,7 @@
  *
  * @package StudioPress\Genesis
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -17,7 +17,7 @@
 	<?php esc_html_e( 'The Custom Document Title sets the page title as seen in browsers and search engines. ', 'genesis' ); ?>
 </p>
 <p>
-	<?php esc_html_e( 'The Meta description and keywords fill in the meta tags for the archive page. The Meta description is the short text blurb that appear in search engine results.', 'genesis' ); ?>
+	<?php esc_html_e( 'The Meta description and keywords fill in the meta tags for the archive page. The Meta description is the short text blurb that appears in search engine results.', 'genesis' ); ?>
 </p>
 <p>
 	<?php esc_html_e( 'Most search engines do not use Keywords at this time or give them very little consideration; however, it\'s worth using in case keywords are given greater consideration in the future and also to help guide your content. If the content doesn’t match with your targeted key words, then you may need to consider your content more carefully.', 'genesis' ); ?>

@@ -7,7 +7,7 @@
  *
  * @package Genesis\Markup
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -177,7 +177,7 @@ function genesis_markup( $args = array() ) {
 		 *
 		 * @since 2.4.0
 		 *
-		 * @param string $open HTML tag being processed by the API.
+		 * @param string $close HTML tag being processed by the API.
 		 * @param array  $args Array with markup arguments.
 		 *
 		 * @see genesis_markup $args Array.
@@ -207,6 +207,7 @@ function genesis_xhtml_check() {
 		require_once PARENT_DIR . '/lib/structure/xhtml.php';
 		add_filter( 'genesis_markup_open', 'genesis_markup_open_xhtml', 10, 2 );
 		add_filter( 'genesis_markup_close', 'genesis_markup_close_xhtml', 10, 2 );
+		add_filter( 'genesis_markup_search-form-label_content', '__return_empty_string' );
 		_genesis_builtin_sidebar_params();
 	}
 
@@ -469,6 +470,66 @@ function genesis_attributes_breadcrumb_link_wrap( $attributes ) {
 
 }
 
+add_filter( 'genesis_attr_breadcrumb-link-wrap-meta', 'genesis_attributes_breadcrumb_link_wrap_meta' );
+/**
+ * Add attributes for breadcrumb link wrap meta element.
+ *
+ * @since 2.7.0
+ *
+ * @param array $attributes Existing attributes for breadcrumb link wrap meta element.
+ * @return array Amended attributes for breadcrumb link wrap meta element.
+ */
+function genesis_attributes_breadcrumb_link_wrap_meta( $attributes ) {
+
+	static $position = 0;
+
+	$position++;
+
+	$attributes['class']    = '';
+	$attributes['itemprop'] = 'position';
+	$attributes['content']  = $position;
+
+	return $attributes;
+
+}
+
+add_filter( 'genesis_attr_breadcrumb-link', 'genesis_attributes_breadcrumb_link', 10, 3 );
+/**
+ * Add attributes for breadcrumb link element.
+ *
+ * @since 2.7.0
+ *
+ * @param array $attributes Existing attributes for breadcrumb link element.
+ * @param string $context   Not used. Markup context (ie. `footer-widget-area`).
+ * @param array  $args      Markup arguments.
+ * @return array Amended attributes for breadcrumb link element.
+ */
+function genesis_attributes_breadcrumb_link( $attributes, $context, $args ) {
+
+	$attributes['href']     = esc_url( $args['params']['href'] );
+	$attributes['itemprop'] = 'item';
+
+	return $attributes;
+
+}
+
+add_filter( 'genesis_attr_breadcrumb-link-text-wrap', 'genesis_attributes_breadcrumb_link_text_wrap' );
+/**
+ * Add attributes for breadcrumb link text wrap.
+ *
+ * @since 2.7.0
+ *
+ * @param array $attributes Existing attributes for breadcrumb link text wrap.
+ * @return array Amended attributes for breadcrumb link text wrap.
+ */
+function genesis_attributes_breadcrumb_link_text_wrap( $attributes ) {
+
+	$attributes['itemprop'] = 'name';
+
+	return $attributes;
+
+}
+
 add_filter( 'genesis_attr_search-form', 'genesis_attributes_search_form' );
 /**
  * Add attributes for search form.
@@ -486,6 +547,145 @@ function genesis_attributes_search_form( $attributes ) {
 	$attributes['method']    = 'get';
 	$attributes['action']    = home_url( '/' );
 	$attributes['role']      = 'search';
+
+	return $attributes;
+
+}
+
+add_filter( 'genesis_markup_search-form_content', 'genesis_markup_search_form_content' );
+/**
+ * Amend the search form content to include a meta tag (for schema).
+ *
+ * @since 2.7.0
+ *
+ * @param string $content Existing search form content.
+ * @return string Potentially modified search form content.
+ */
+function genesis_markup_search_form_content( $content ) {
+
+	if ( ! genesis_html5() ) {
+		return $content;
+	}
+
+	$meta = array(
+		'open'    => '<meta %s>',
+		'context' => 'search-form-meta',
+		'echo'    => false,
+	);
+
+	return $content . genesis_markup( $meta );
+
+}
+
+add_filter( 'genesis_attr_search-form-meta', 'genesis_attributes_search_form_meta' );
+/**
+ * Add attributes for search form meta tag.
+ *
+ * @since 2.7.0
+ *
+ * @param array $attributes Existing attributes for search form meta element.
+ * @return array Amended attributes for search form meta element.
+ */
+function genesis_attributes_search_form_meta( $attributes ) {
+
+	$attributes['class']    = '';
+	$attributes['itemprop'] = 'target';
+	$attributes['content']  = home_url( '/?s={s}' );
+
+	return $attributes;
+
+}
+
+add_filter( 'genesis_markup_search-form-label_open', 'genesis_markup_search_form_label_control', 10, 2 );
+add_filter( 'genesis_markup_search-form-label_close', 'genesis_markup_search_form_label_control', 10, 2 );
+/**
+ * Control the open/close tags for the search form label.
+ *
+ * Ensure that the label open/close tags get disabled if the label has no content.
+ *
+ * @since 2.7.0
+ *
+ * @param string $tag  Existing tag for search form label element.
+ * @param array  $args Markup arguments.
+ * @return string Potentially modified tag for search form label element.
+ */
+function genesis_markup_search_form_label_control( $tag, $args ) {
+
+	if ( '' == $args['content'] ) {
+		return '';
+	}
+
+	return $tag;
+
+}
+
+add_filter( 'genesis_attr_search-form-label', 'genesis_attributes_search_form_label', 10, 3 );
+/**
+ * Add attributes for search form label.
+ *
+ * @since 2.7.0
+ *
+ * @param array  $attributes Existing attributes for footer widget area wrapper elements.
+ * @param string $context    Not used. Markup context (ie. `footer-widget-area`).
+ * @param array  $args       Markup arguments.
+ * @return array Amended attributes for search form label element.
+ */
+function genesis_attributes_search_form_label( $attributes, $context, $args ) {
+
+	if ( isset( $args['params']['input_id'] ) ) {
+		$attributes['for'] = $args['params']['input_id'];
+	}
+
+	$attributes['class'] .= ' screen-reader-text';
+
+	return $attributes;
+
+}
+
+add_filter( 'genesis_attr_search-form-input', 'genesis_attributes_search_form_input', 10, 3 );
+/**
+ * Add attributes for search form input element.
+ *
+ * @since 2.7.0
+ *
+ * @param array  $attributes Existing attributes for footer widget area wrapper elements.
+ * @param string $context    Not used. Markup context (ie. `footer-widget-area`).
+ * @param array  $args       Markup arguments.
+ * @return array Amended attributes.
+ */
+function genesis_attributes_search_form_input( $attributes, $context, $args ) {
+
+	$attributes['type'] = 'search';
+	$attributes['name'] = 's';
+
+	foreach ( array( 'id', 'value', 'placeholder' ) as $param ) {
+		if ( isset( $args['params'][ $param ] ) ) {
+			$attributes[ $param ] = $args['params'][ $param ];
+		}
+	}
+
+	return $attributes;
+
+}
+
+add_filter( 'genesis_attr_search-form-submit', 'genesis_attributes_search_form_submit', 10, 3 );
+/**
+ * Add attributes for search form submit element.
+ *
+ * @since 2.7.0
+ *
+ * @param array  $attributes Existing attributes for footer widget area wrapper elements.
+ * @param string $context    Not used. Markup context (ie. `footer-widget-area`).
+ * @param array  $args       Markup arguments.
+ * @return array Amended attributes.
+ */
+function genesis_attributes_search_form_submit( $attributes, $context, $args ) {
+
+	$attributes['type'] = 'submit';
+
+	if ( isset( $args['params']['value'] ) ) {
+		$attributes['value'] = $args['params']['value'];
+	}
 
 	return $attributes;
 
@@ -573,7 +773,7 @@ add_filter( 'genesis_attr_nav-link', 'genesis_attributes_nav_link' );
  *
  * @since 2.2.0
  *
- * @link https://github.com/copyblogger/genesis/issues/1226
+ * @link https://github.com/studiopress/genesis/issues/1226
  *
  * @param array $attributes Existing attributes for navigation item links.
  * @return array Amended attributes for navigation item links.
@@ -778,6 +978,7 @@ function genesis_attributes_entry_image_link( $attributes ) {
 
 	$attributes['href']        = get_permalink();
 	$attributes['aria-hidden'] = 'true';
+	$attributes['tabindex']    = '-1';
 	$attributes['class']       = 'entry-image-link';
 
 	return $attributes;
@@ -1324,4 +1525,34 @@ function genesis_skiplinks_attr_footer_widgets( $attributes ) {
 
 	return $attributes;
 
+}
+
+add_filter( 'genesis_attr_pagination-previous', 'genesis_adjacent_entry_attr_previous_post' );
+/**
+ * Add the alignleft class to the previous post link container.
+ *
+ * @since 2.7.0
+ *
+ * @param $attributes array Existing attributes for the previous post element.
+ * @return            array Amended attributes for the previous post element.
+ */
+function genesis_adjacent_entry_attr_previous_post( $attributes ) {
+	$attributes['class'] .= ' alignleft';
+
+	return $attributes;
+}
+
+add_filter( 'genesis_attr_pagination-next', 'genesis_adjacent_entry_attr_next_post' );
+/**
+ * Add the alignright class to the next post link container.
+ *
+ * @since 2.7.0
+ *
+ * @param $attributes array Existing attributes for the next post element.
+ * @return            array Amended attributes for the next post element.
+ */
+function genesis_adjacent_entry_attr_next_post( $attributes ) {
+	$attributes['class'] .= ' alignright';
+
+	return $attributes;
 }

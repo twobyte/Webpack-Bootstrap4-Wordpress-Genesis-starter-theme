@@ -7,7 +7,7 @@
  *
  * @package Genesis\JS
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  */
 
 /* global genesis, genesisL10n, genesis_toggles, confirm */

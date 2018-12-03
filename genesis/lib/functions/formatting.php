@@ -7,7 +7,7 @@
  *
  * @package Genesis\Formatting
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -79,7 +79,7 @@ function get_the_content_limit( $max_characters, $more_link_text = '(more...)', 
 		$output = sprintf( '<p>%s %s</p>', $content, $link );
 	} else {
 		$output = sprintf( '<p>%s</p>', $content );
-		$link = '';
+		$link   = '';
 	}
 
 	return apply_filters( 'get_the_content_limit', $output, $content, $link, $max_characters );
@@ -96,10 +96,11 @@ function get_the_content_limit( $max_characters, $more_link_text = '(more...)', 
  */
 function genesis_a11y_more_link( $more_link_text ) {
 
- 	if ( ! empty( $more_link_text ) && genesis_a11y( 'screen-reader-text' ) ) {
+	if ( ! empty( $more_link_text ) && genesis_a11y( 'screen-reader-text' ) ) {
 		$more_link_text .= ' <span class="screen-reader-text">' . __( 'about ', 'genesis' ) . get_the_title() . '</span>';
- 	}
- 	return $more_link_text;
+	}
+
+	return $more_link_text;
 
 }
 
@@ -115,7 +116,7 @@ function genesis_a11y_more_link( $more_link_text ) {
 function the_content_limit( $max_characters, $more_link_text = '(more...)', $stripteaser = false ) {
 
 	$content = get_the_content_limit( $max_characters, $more_link_text, $stripteaser );
-	echo apply_filters( 'the_content_limit', $content );
+	echo apply_filters( 'the_content_limit', $content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 }
 
@@ -206,14 +207,12 @@ function genesis_paged_post_url( $i, $post_id = 0 ) {
 
 	if ( 1 == $i ) {
 		$url = get_permalink( $post_id );
+	} elseif ( '' == get_option( 'permalink_structure' ) || in_array( $post->post_status, array( 'draft', 'pending' ) ) ) {
+		$url = add_query_arg( 'page', $i, get_permalink( $post_id ) );
+	} elseif ( 'page' == get_option( 'show_on_front' ) && get_option( 'page_on_front' ) == $post->ID ) {
+		$url = trailingslashit( get_permalink( $post_id ) ) . user_trailingslashit( "$wp_rewrite->pagination_base/" . $i, 'single_paged' );
 	} else {
-		if ( '' == get_option( 'permalink_structure' ) || in_array( $post->post_status, array( 'draft', 'pending' ) ) ) {
-			$url = add_query_arg( 'page', $i, get_permalink( $post_id ) );
-		} elseif ( 'page' == get_option( 'show_on_front' ) && get_option( 'page_on_front' ) == $post->ID ) {
-			$url = trailingslashit( get_permalink( $post_id ) ) . user_trailingslashit( "$wp_rewrite->pagination_base/" . $i, 'single_paged' );
-		} else {
-			$url = trailingslashit( get_permalink( $post_id ) ) . user_trailingslashit( $i, 'single_paged' );
-		}
+		$url = trailingslashit( get_permalink( $post_id ) ) . user_trailingslashit( $i, 'single_paged' );
 	}
 
 	return $url;
@@ -370,7 +369,7 @@ function genesis_human_time_diff( $older_date, $newer_date = false, $relative_de
 	while ( count( $date_partials ) < $relative_depth && $i < count( $units ) ) {
 		$seconds = $units[ $i ][0];
 		if ( ( $count = floor( ( $since - $counted_seconds ) / $seconds ) ) != 0 ) {
-			$date_partials[] = sprintf( translate_nooped_plural( $units[ $i ][1], $count, 'genesis' ), $count );
+			$date_partials[]  = sprintf( translate_nooped_plural( $units[ $i ][1], $count, 'genesis' ), $count );
 			$counted_seconds += $count * $seconds;
 		}
 		$i++;

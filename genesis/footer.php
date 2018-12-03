@@ -7,15 +7,17 @@
  *
  * @package Genesis\Templates
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
 genesis_structural_wrap( 'site-inner', 'close' );
-genesis_markup( array(
-	'close'   => '</div>',
-	'context' => 'site-inner',
-) );
+genesis_markup(
+	array(
+		'close'   => '</div>',
+		'context' => 'site-inner',
+	)
+);
 
 /**
  * Fires immediately after the site inner closing markup, before `genesis_footer` action hook.
@@ -38,10 +40,12 @@ do_action( 'genesis_footer' );
  */
 do_action( 'genesis_after_footer' );
 
-genesis_markup( array(
-	'close'   => '</div>',
-	'context' => 'site-container',
-) );
+genesis_markup(
+	array(
+		'close'   => '</div>',
+		'context' => 'site-container',
+	)
+);
 
 /**
  * Fires immediately before wp_footer(), after the site container closing markup.
@@ -51,10 +55,12 @@ genesis_markup( array(
 do_action( 'genesis_after' );
 wp_footer(); // We need this for plugins.
 
-genesis_markup( array(
-	'close'   => '</body>',
-	'context' => 'body',
-) );
+genesis_markup(
+	array(
+		'close'   => '</body>',
+		'context' => 'body',
+	)
+);
 
 ?>
 </html>

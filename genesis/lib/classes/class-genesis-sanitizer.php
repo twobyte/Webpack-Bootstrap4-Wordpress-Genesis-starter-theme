@@ -7,7 +7,7 @@
  *
  * @package Genesis\Sanitizer
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -60,7 +60,7 @@ class Genesis_Sanitizer {
 	 */
 	public static function no_html( $new_value ) {
 
-		return strip_tags( $new_value );
+		return wp_strip_all_tags( $new_value );
 
 	}
 

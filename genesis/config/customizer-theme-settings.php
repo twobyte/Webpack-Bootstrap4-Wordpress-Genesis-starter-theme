@@ -7,7 +7,7 @@
  *
  * @package Genesis\Customizer\Theme Settings
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -78,7 +78,7 @@ return array(
 				'description' => sprintf( __( 'Auto Ads must be enabled in your AdSense account for this feature to work properly. <a href="%s">Click here to enable.</a>', 'genesis' ), 'https://www.google.com/adsense/new/myads/auto-ads/' ) .
 									'<br /><br />' .
 									/* translators: %s: AdSense URL */
-									sprintf( __( "Don't have AdSense? <a href='%s' target='_blank'>Click here</a> to sign up!", 'genesis' ), 'https://www.google.com/adsense/start/?utm_source=Genesis&utm_medium=partnerships&utm_campaign=GenesisCustomizer' ),
+									sprintf( __( "Don't have AdSense? <a href='%s' target='_blank' rel='noopener noreferrer'>Click here</a> to sign up!", 'genesis' ), 'https://www.google.com/adsense/start/?utm_source=Genesis&utm_medium=partnerships&utm_campaign=GenesisCustomizer' ),
 				'panel'       => 'genesis',
 				'controls'    => array(
 					'adsense_id' => array(
@@ -94,7 +94,7 @@ return array(
 			),
 			'genesis_color_scheme' => array(
 				'active_callback' => 'genesis_has_color_schemes',
-				'theme_supports'  => 'genesis_style_selector',
+				'theme_supports'  => 'genesis-style-selector',
 				'title'           => __( 'Color Scheme', 'genesis' ),
 				'panel'           => 'genesis',
 				'controls'        => array(
@@ -271,7 +271,7 @@ return array(
 						),
 					),
 					'image_size'                => array(
-						'label'    => __( 'Featured image size', 'genesis' ),
+						'label'    => __( 'Featured Image Size', 'genesis' ),
 						'section'  => 'genesis_archives',
 						'type'     => 'select',
 						'choices'  => genesis_get_image_sizes_for_customizer(),

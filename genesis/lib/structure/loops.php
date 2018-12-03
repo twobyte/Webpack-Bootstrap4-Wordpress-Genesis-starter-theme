@@ -7,7 +7,7 @@
  *
  * @package Genesis\Loops
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -112,14 +112,20 @@ function genesis_standard_loop() {
 			 */
 			do_action( 'genesis_before_entry_content' );
 
-			printf( '<div %s>', genesis_attr( 'entry-content' ) );
+			genesis_markup( array(
+				'open'    => '<div %s>',
+				'context' => 'entry-content',
+			) );
 			/**
 			 * Fires inside the standard loop, inside the entry content markup.
 			 *
 			 * @since 2.0.0
 			 */
 			do_action( 'genesis_entry_content' );
-			echo '</div>';
+			genesis_markup( array(
+				'close'   => '</div>',
+				'context' => 'entry-content',
+			) );
 
 			/**
 			 * Fires inside the standard loop, before the entry footer action hook, after the entry content.
@@ -375,7 +381,7 @@ function genesis_grid_loop( $args = array() ) {
 	$paged = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
 
 	// Potentially remove features on page 2+.
-	if ( $paged > 1  && ! $args['features_on_all'] ) {
+	if ( $paged > 1 && ! $args['features_on_all'] ) {
 		$args['features'] = 0;
 	}
 
@@ -464,7 +470,6 @@ function genesis_grid_loop_content() {
 	global $_genesis_loop_args;
 
 	if ( in_array( 'genesis-feature', get_post_class() ) ) {
-
 		if ( $_genesis_loop_args['feature_image_size'] ) {
 
 			$image = genesis_get_image( array(
@@ -484,9 +489,7 @@ function genesis_grid_loop_content() {
 		} else {
 			the_content( genesis_a11y_more_link( esc_html( $_genesis_loop_args['more'] ) ) );
 		}
-
 	} else {
-
 		if ( $_genesis_loop_args['grid_image_size'] ) {
 
 			$image = genesis_get_image( array(
@@ -507,7 +510,6 @@ function genesis_grid_loop_content() {
 			the_excerpt();
 			printf( '<a href="%s" class="more-link">%s</a>', get_permalink(), genesis_a11y_more_link( esc_html( $_genesis_loop_args['more'] ) ) );
 		}
-
 	}
 
 }

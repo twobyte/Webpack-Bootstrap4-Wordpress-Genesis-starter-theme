@@ -7,7 +7,7 @@
  *
  * @package StudioPress\Genesis
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -49,7 +49,7 @@
 	</tr>
 
 	<tr valign="top">
-		<th scope="row"><?php esc_html_e( 'Document Title Order', 'genesis' ); ?></th>
+		<th scope="row"><label for="<?php $this->field_id( 'doctitle_seplocation' ); ?>"><?php esc_html_e( 'Document Title Order', 'genesis' ); ?></label></th>
 		<td>
 			<select name="<?php $this->field_name( 'doctitle_seplocation' ); ?>" id="<?php $this->field_id( 'doctitle_seplocation' ); ?>">
 				<option value="left" <?php selected( $this->get_field_value( 'doctitle_seplocation' ), 'left' ); ?>><?php esc_html_e( 'Additions on left', 'genesis' ); ?></option>

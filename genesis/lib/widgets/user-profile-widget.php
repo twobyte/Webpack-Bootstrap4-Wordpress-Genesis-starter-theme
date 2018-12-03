@@ -7,7 +7,7 @@
  *
  * @package Genesis\Widgets
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -124,9 +124,9 @@ class Genesis_User_Profile_Widget extends WP_Widget {
 	 */
 	public function update( $new_instance, $old_instance ) {
 
-		$new_instance['title']          = strip_tags( $new_instance['title'] );
+		$new_instance['title']          = wp_strip_all_tags( $new_instance['title'] );
 		$new_instance['bio_text']       = current_user_can( 'unfiltered_html' ) ? $new_instance['bio_text'] : genesis_formatting_kses( $new_instance['bio_text'] );
-		$new_instance['page_link_text'] = strip_tags( $new_instance['page_link_text'] );
+		$new_instance['page_link_text'] = wp_strip_all_tags( $new_instance['page_link_text'] );
 
 		return $new_instance;
 

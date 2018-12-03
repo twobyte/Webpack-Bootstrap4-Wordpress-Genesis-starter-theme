@@ -7,7 +7,7 @@
  *
  * @package Genesis\Menus
  * @author  StudioPress
- * @license GPL-2.0+
+ * @license GPL-2.0-or-later
  * @link    https://my.studiopress.com/themes/genesis/
  */
 
@@ -101,8 +101,8 @@ function genesis_get_nav_menu( $args = array() ) {
 		return null;
 	}
 
-	$nav_markup_open  = genesis_structural_wrap( 'menu-' . $sanitized_location, 'open', 0 );
-	$nav_markup_close = genesis_structural_wrap( 'menu-' . $sanitized_location, 'close', 0 );
+	$nav_markup_open  = genesis_get_structural_wrap( 'menu-' . $sanitized_location, 'open' );
+	$nav_markup_close = genesis_get_structural_wrap( 'menu-' . $sanitized_location, 'close' );
 
 	$params = array(
 		'theme_location' => $args['theme_location'],
@@ -150,7 +150,7 @@ function genesis_get_nav_menu( $args = array() ) {
  *
  * @since 2.1.0
  *
- * @param string $args Menu arguments.
+ * @param string|array $args Menu arguments.
  */
 function genesis_nav_menu( $args ) {
 	echo genesis_get_nav_menu( $args );
