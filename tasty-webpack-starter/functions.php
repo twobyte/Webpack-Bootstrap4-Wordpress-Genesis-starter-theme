@@ -121,7 +121,7 @@ add_theme_support( 'genesis-after-entry-widget-area' );
 //* Add support for 3-column footer widgets
 add_theme_support( 'genesis-footer-widgets', 4 );
 //* Rename primary and secondary navigation menus
-add_theme_support( 'genesis-menus' , array( 'primary' => __( 'After Header Menu', 'genesis-sample' ), 'secondary' => __( 'Footer Menu', 'genesis-sample' ) ) );
+add_theme_support( 'genesis-menus' , array( 'primary' => __( 'After Header Menu', 'tasty' ), 'secondary' => __( 'Footer Menu', 'tasty' ) ) );
 
 //* Reposition the secondary navigation menu
 remove_action( 'genesis_after_header', 'genesis_do_subnav' );
@@ -224,8 +224,8 @@ Misc Theme Functions
  * Unregister the superfish scripts
  */
 function tasty_unregister_superfish() {
-	wp_deregister_script( 'superfish' );
-	wp_deregister_script( 'superfish-args' );
+	wp_dequeue_script( 'superfish' );
+	wp_dequeue_script( 'superfish-args' );
 }
 add_action( 'wp_enqueue_scripts', 'tasty_unregister_superfish' );
 

@@ -5,12 +5,14 @@
 
 /* Column Classes
 ------------------------------------------------------------ */
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
 
 @import "settings/mixins";
 @import "settings/variables";
-@import '../../bower_components/font-awesome/scss/font-awesome';
+@import '~font-awesome/scss/font-awesome';
 // Custom Bootstrap option
-@import "settings/bootstrap";
+@import "~bootstrap/scss/bootstrap";
 
 
 // General, Typography

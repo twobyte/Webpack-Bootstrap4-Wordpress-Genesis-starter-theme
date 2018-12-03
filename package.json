@@ -1,7 +1,7 @@
 {
   "name": "tastywebpack",
   "title": "Tasty Web Pack",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Starter WordPress child theme webpack builder of Studiopress Genesis Framework by Tasty Digital",
   "keywords": [
     "WordPress",
@@ -34,43 +34,47 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "autoprefixer": "^9.4.0",
     "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
+    "babel-loader": "^8.0.4",
     "babel-preset-env": "^1.7.0",
-    "caniuse-lite": "^1.0.30000749",
-    "css-loader": "^0.28.4",
-    "extract-text-webpack-plugin": "^3.0.2",
-    "file-loader": "^1.1.5",
-    "imports-loader": "^0.7.1",
+    "caniuse-lite": "^1.0.30000913",
+    "css-loader": "^1.0.1",
+    "file-loader": "^2.0.0",
+    "imports-loader": "^0.8.0",
     "json-loader": "^0.5.7",
+    "mini-css-extract-plugin": "^0.4.5",
     "modernizr": "^3.6.0",
     "modernizr-loader": "^1.0.1",
-    "node-sass": "^4.5.3",
-    "postcss": "^6.0.8",
-    "postcss-import": "^11.0.0",
-    "postcss-loader": "^2.0.6",
-    "resolve-url-loader": "^2.1.0",
-    "sass-loader": "^6.0.6",
-    "shx": "^0.3.1",
-    "style-loader": "^0.19.0",
-    "url-loader": "^0.6.2",
-    "webpack": "^3.12.0",
-    "webpack-bundle-analyzer": "^2.13.1",
-    "webpack-dev-server": "^2.11.2"
+    "node-sass": "^4.10.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "postcss": "^7.0.6",
+    "postcss-import": "^12.0.1",
+    "postcss-loader": "^3.0.0",
+    "resolve-url-loader": "^3.0.0",
+    "sass-loader": "^7.1.0",
+    "shx": "^0.3.2",
+    "style-loader": "^0.23.1",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.26.1",
+    "webpack-bundle-analyzer": "^3.0.3",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
   },
   "dependencies": {
     "bootstrap": "^4.1.1",
     "fastclick": "^1.0.6",
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
-    "popper.js": "^1.14.3",
+    "popper.js": "^1.14.6",
     "slicknav": "^1.0.8",
-    "webpack-manifest-plugin": "^2.0.3"
+    "webpack-manifest-plugin": "^2.0.4"
   },
   "scripts": {
     "clean": "shx rm -rf $npm_package_config_theme/$npm_package_config_buildFolder/ && shx echo 'Theme’s dist folder cleaned'",
-    "production": "npm run clean && NODE_ENV=production node_modules/.bin/webpack -p",
-    "start": "npm run clean && NODE_ENV=development node_modules/.bin/webpack-dev-server --open",
+    "production": "npm run clean && NODE_ENV=production node_modules/.bin/webpack -p --mode production",
+    "start": "npm run clean && NODE_ENV=development node_modules/.bin/webpack-dev-server --open --mode development",
     "postinstall": "cd $npm_package_config_theme && composer install && cd .. && npm run production"
   }
 }

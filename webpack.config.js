@@ -3,7 +3,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 //const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 
@@ -18,23 +18,18 @@ const cssFilename = '[name].[contenthash:8].css';
 
 const webPackFolder = buildFolder+'/'; // this is relative to within the themeFolder
 const devPath = 'http://localhost:8080/wp-content/themes/'+themeFolder+'/'+webPackFolder;
-const outputPath = (process.env.NODE_ENV !== 'development') ? webPackFolder : devPath;
-const assetPath = (process.env.NODE_ENV !== 'development') ? '' : devPath;
+const devMode = process.env.NODE_ENV !== 'production';
+const outputPath = devMode ? devPath : webPackFolder;
+const assetPath = devMode ? devPath : '';
 
-const extractSass = new ExtractTextPlugin({
-	filename: cssFilename,
-    allChunks: true,
-    disable: process.env.NODE_ENV === "development"
-});
 
  
 module.exports = {
   context: path.resolve(__dirname, './src'),
   entry: {
   	app: ['./app.js'],
-  	//main: ['../sass/main.scss'],
+  	editorstyles: ['./sass/editor-style.scss'],
   	modernizr: './modernizr.js'
-  	//     app: './app.js',
   },
   output: {
     path: path.resolve(__dirname, themeFolder, './'+buildFolder),
@@ -69,41 +64,47 @@ module.exports = {
 	    },
 		{
 	        test: /\.(scss|css|sass)$/,
-	        use: extractSass.extract({
-	            use: [{
-	                loader: "css-loader",
-	                options: {
-						importLoaders: 2,
-	                    sourceMap: true
-	                }
-	            }, 
-	            {
-		            loader: 'postcss-loader',
-		            options: {
-		            	sourceMap: true
-		            }
-		        }, 
-	            {
-		            loader: 'resolve-url-loader',
-		            options: {
-		            	sourceMap: true
-		            }
-		        },
-		        {
-	                loader: "sass-loader",
-	                options: {
-	                    //includePaths: ["src/sass"],
-	                    sourceMap: true
-	                }
-	            }],
-	            // use style-loader in development
-	            fallback: "style-loader"
-	        })
+	        use: [
+		        	devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+					{
+		                loader: "css-loader",
+		                options: {
+							importLoaders: 2,
+		                    sourceMap: true
+		                }
+		            }, 
+		            {
+			            loader: 'postcss-loader',
+			            options: {
+			            	sourceMap: true
+			            }
+			        }, 
+		            {
+			            loader: 'resolve-url-loader',
+			            options: {
+			            	sourceMap: true
+			            }
+			        },
+			        {
+		                loader: "sass-loader",
+		                options: {
+		                    //includePaths: ["src/sass"],
+		                    sourceMap: true
+		                }
+		            },
+		    ],
         },
 		{
 			test: /\.(jpg|jpeg|gif|png)$/,
-			//exclude: /node_modules/,
-			loader:'url-loader?limit=1024&name=images/[name].[ext]'
+			use: [{
+                loader: 'file-loader',
+                options: {
+                    name: '[name].[ext]',
+                    limit: 1024, 
+                    outputPath: 'images/',
+					publicPath:assetPath+'images/'
+                }
+            }]
 		},
 		{
             test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
@@ -118,6 +119,7 @@ module.exports = {
         },
 		{
 			test: /\.modernizrrc.js$/,
+			exclude: /node_modules/,
 			use: [ 'modernizr-loader' ]
 		},
 		{
@@ -128,7 +130,11 @@ module.exports = {
     ],
   },
   plugins: [
-    extractSass,
+    new MiniCssExtractPlugin({
+		filename: cssFilename,
+	    allChunks: true,
+	    disable: devMode
+    }),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.ProvidePlugin({
 	    $: 'jquery',
@@ -159,6 +165,10 @@ module.exports = {
   externals: {
 	jquery: 'jQuery',
 	PinUtils: 'PinUtils'
-  }
+  },
+  optimization: {
+    namedModules: true,
+    namedChunks: true
+  }  
   
 };

@@ -106,6 +106,11 @@ function get_asset_uri( string $asset_path, string $base_url ) {
 	return trailingslashit( $base_url ) . $asset_path;
 }
 
+function get_handle($asset_path){
+	$scripthandle = substr(strrchr($asset_path, "/"), 1);
+	$scripthandle = urlencode(substr($scripthandle,0,strpos($scripthandle,'.')));
+	return $scripthandle;
+}
 /**
  * @param string $directory Root directory containing `src` and `build` directory.
  * @param array $opts {
@@ -115,7 +120,7 @@ function get_asset_uri( string $asset_path, string $base_url ) {
  *     @type array  $styles   Style dependencies.
  * }
  */
-function enqueue_assets( $directory, $opts = [] ) {
+function enqueue_assets( $directory, $opts = [], $isadmin = false ) {
 	
 	$defaults = [
 		'base_url' => '',
@@ -146,7 +151,7 @@ function enqueue_assets( $directory, $opts = [] ) {
 		
 		$is_js = preg_match( '/\.js$/', $asset_path );
 		$is_css = preg_match( '/\.css$/', $asset_path );
-		
+		$scripthandle = get_handle($asset_path);
 		
 		
 		if ( ! $is_js && ! $is_css ) {
@@ -154,44 +159,50 @@ function enqueue_assets( $directory, $opts = [] ) {
 			// Assets such as source maps and images are also listed; ignore these.
 			continue;
 		}
-
-		if ( $is_js ) {
+		
+		if($scripthandle == 'editorstyles'){
+			//echo '<h1>'.get_asset_uri( $asset_path, $base_url ).'</h1>';
+			if($isadmin && $is_css){
+				add_editor_style(get_asset_uri( $asset_path, $base_url ));			
 			
-			if( $jscount > 0 ) { 
-				$scripthandle = substr(strrchr($asset_path, "/"), 1);
-				$scripthandle = urlencode(substr($scripthandle,0,strpos($scripthandle,'.')));
+			}
+			// Editor only styles – ignore these on front end and dev.
+			continue;
+		}else if(!$isadmin){
+			if ( $is_js ) {
+				if( $jscount == 0 ) { 
+					$scripthandle = $opts['handle'];
+				}
 				
-			}else{
-				$scripthandle = $opts['handle'];
+				//echo '<h1>'.$scripthandle.'</h1>';
+				// modernizr should be loaded into <head>
+				$infooter = ($scripthandle !== 'modernizr');
+				wp_enqueue_script(
+					$scripthandle,
+					get_asset_uri( $asset_path, $base_url ),
+					$opts['scripts'],
+					null,
+					$infooter
+				);
+				$jscount=$jscount+1;
+				
+			} else if ( $is_css ) {
+				if( $csscount == 0 ) { 
+					$scripthandle = $opts['handle'];
+				}
+				
+				$has_css = true;
+				wp_enqueue_style(
+					$scripthandle,
+					get_asset_uri( $asset_path, $base_url ),
+					$opts['styles']
+				);
+				$csscount++;
+				
 			}
-			// modernizr should be loaded into <head>
-			$infooter = ($scripthandle !== 'modernizr');
-			wp_enqueue_script(
-				$scripthandle,
-				get_asset_uri( $asset_path, $base_url ),
-				$opts['scripts'],
-				null,
-				$infooter
-			);
-			$jscount=$jscount+1;
-			
-		} else if ( $is_css ) {
-			if( $csscount > 0 ) { 
-				$csshandle = substr(strrchr($asset_path, "/"), 1);
-				$csshandle = urlencode(substr($script,0,strpos($script,'.'))); 
-			}else{
-				$csshandle = $opts['handle'];
-			}
-			
-			$has_css = true;
-			wp_enqueue_style(
-				$csshandle,
-				get_asset_uri( $asset_path, $base_url ),
-				$opts['styles']
-			);
-			$csscount++;
-			
 		}
+		
+		
 	}
 
 	// Ensure CSS dependencies are always loaded, even when using CSS-in-JS in
@@ -205,3 +216,6 @@ function enqueue_assets( $directory, $opts = [] ) {
 		wp_enqueue_style( $opts['handle'] );
 	}
 }
+
+
+

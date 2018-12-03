@@ -1,13 +1,13 @@
 {
-  "app.js": "dist/app.fbeb06e8.js",
-  "app.css": "dist/app.4c1a0d5d.css",
-  "app.js.map": "dist/app.fbeb06e8.js.map",
-  "app.css.map": "dist/app.4c1a0d5d.css.map",
-  "modernizr.js": "dist/modernizr.3e6076ed.js",
-  "modernizr.js.map": "dist/modernizr.3e6076ed.js.map",
-  "fonts/fontawesome-webfont.eot": "dist/fonts/fontawesome-webfont.eot",
-  "fonts/fontawesome-webfont.woff": "dist/fonts/fontawesome-webfont.woff",
-  "fonts/fontawesome-webfont.ttf": "dist/fonts/fontawesome-webfont.ttf",
-  "fonts/fontawesome-webfont.svg": "dist/fonts/fontawesome-webfont.svg",
-  "fonts/fontawesome-webfont.woff2": "dist/fonts/fontawesome-webfont.woff2"
+  "app.css": "dist/app.a6684797.css",
+  "app.js": "dist/app.d989afa6.js",
+  "app.css.map": "dist/app.a6684797.css.map",
+  "app.js.map": "dist/app.d989afa6.js.map",
+  "editorstyles.css": "dist/editorstyles.7735bce1.css",
+  "editorstyles.js": "dist/editorstyles.773f97bb.js",
+  "editorstyles.css.map": "dist/editorstyles.7735bce1.css.map",
+  "editorstyles.js.map": "dist/editorstyles.773f97bb.js.map",
+  "modernizr.js": "dist/modernizr.48af61b8.js",
+  "modernizr.js.map": "dist/modernizr.48af61b8.js.map",
+  "fonts/style.scss": "dist/fonts/fontawesome-webfont.woff2"
 }
