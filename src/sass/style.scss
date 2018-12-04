@@ -22,8 +22,6 @@
 */
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
-
-
 // Reset, Variables, Mixins, Etc
 // DO NOT EDIT ORDER OF FILES
 @import "settings/mixins";
@@ -31,6 +29,9 @@
 @import '~font-awesome/scss/font-awesome';
 // Custom Bootstrap option
 @import "~bootstrap/scss/bootstrap";
+
+// Third party mobile menu styles (loaded in app.js)
+@import "~slicknav/scss/slicknav";
 
 @import "partials/accessibility";
 @import "partials/layout";
@@ -56,6 +57,8 @@
 @import "partials/forms";
 @import "partials/gallery";
 @import "partials/cookie-notice";
+
+
 
 //@import "partials/wp-job-manager";
 
