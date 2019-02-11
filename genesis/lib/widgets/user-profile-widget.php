@@ -55,7 +55,7 @@ class Genesis_User_Profile_Widget extends WP_Widget {
 			'height'  => 250,
 		);
 
-		parent::__construct( 'user-profile', __( 'Genesis - User Profile', 'genesis' ), $widget_ops, $control_ops );
+		parent::__construct( 'user-profile', esc_html__( 'Genesis - User Profile', 'genesis' ), $widget_ops, $control_ops );
 
 	}
 
@@ -74,7 +74,7 @@ class Genesis_User_Profile_Widget extends WP_Widget {
 		echo $args['before_widget'];
 
 		if ( ! empty( $instance['title'] ) ) {
-			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base ) . $args['after_title']; // WPCS: prefix ok.
+			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base ) . $args['after_title'];
 		}
 
 		$text = '';
@@ -104,10 +104,10 @@ class Genesis_User_Profile_Widget extends WP_Widget {
 		$user_name    = ( ! empty( $display_name ) && genesis_a11y( 'screen-reader-text' ) ) ? '<span class="screen-reader-text">' . $display_name . ': </span>' : '';
 
 		if ( $instance['posts_link'] ) {
-			printf( '<div class="posts_link posts-link"><a href="%s">%s%s</a></div>', get_author_posts_url( $instance['user'] ), $user_name, __( 'View My Blog Posts', 'genesis' ) );
+			printf( '<div class="posts_link posts-link"><a href="%s">%s%s</a></div>', esc_url( get_author_posts_url( $instance['user'] ) ), esc_html( $user_name ), esc_html__( 'View My Blog Posts', 'genesis' ) );
 		}
 
-		echo $args['after_widget'];
+		echo $args['after_widget']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Need to build the widget HTML.
 
 	}
 
@@ -174,8 +174,8 @@ class Genesis_User_Profile_Widget extends WP_Widget {
 				);
 				$sizes = apply_filters( 'genesis_gravatar_sizes', $sizes );
 				foreach ( (array) $sizes as $label => $size ) {
-				?>
-					<option value="<?php echo absint( $size ); ?>" <?php selected( $size, $instance['size'] ); ?>><?php printf( '%s (%spx)', $label, $size ); ?></option>
+					?>
+					<option value="<?php echo absint( $size ); ?>" <?php selected( $size, $instance['size'] ); ?>><?php printf( '%s (%spx)', esc_html( $label ), esc_html( $size ) ); ?></option>
 				<?php } ?>
 			</select>
 		</p>
@@ -206,9 +206,9 @@ class Genesis_User_Profile_Widget extends WP_Widget {
 			<?php
 			wp_dropdown_pages(
 				array(
-					'name'             => $this->get_field_name( 'page' ),
-					'show_option_none' => __( 'None', 'genesis' ),
-					'selected'         => $instance['page'],
+					'name'             => $this->get_field_name( 'page' ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- False positive.
+					'show_option_none' => esc_html__( 'None', 'genesis' ), // WP core uses this value without further escaping, so we escape it here.
+					'selected'         => $instance['page'], // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- False positive.
 				)
 			);
 			?>

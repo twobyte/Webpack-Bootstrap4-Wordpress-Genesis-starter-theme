@@ -139,16 +139,17 @@ function genesis_privacy_personal_data_exporters( array $exporters ) {
  */
 function genesis_export_author_archive_info( $email_address ) {
 
-	$export_data = array();
+	$email_address = trim( $email_address );
 
-	if ( empty( $email_address ) ) {
-		return $export_data;
-	}
+	$export_data = array();
 
 	$user = get_user_by( 'email', $email_address );
 
-	if ( empty( $user ) ) {
-		return $export_data;
+	if ( ! $user ) {
+		return array(
+			'data' => $export_data,
+			'done' => true,
+		);
 	}
 
 	foreach ( genesis_get_author_archive_fields() as $key => $name ) {

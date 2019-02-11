@@ -31,40 +31,7 @@ function genesis_create_initial_layouts() {
 	// Common path to default layout images.
 	$url = GENESIS_ADMIN_IMAGES_URL . '/layouts/';
 
-	$layouts = apply_filters( 'genesis_initial_layouts', array(
-		'content-sidebar'         => array(
-			'label'   => __( 'Content, Primary Sidebar', 'genesis' ),
-			'img'     => $url . 'cs.gif',
-			'default' => is_rtl() ? false : true,
-			'type'    => array( 'site' ),
-		),
-		'sidebar-content'         => array(
-			'label'   => __( 'Primary Sidebar, Content', 'genesis' ),
-			'img'     => $url . 'sc.gif',
-			'default' => is_rtl() ? true : false,
-			'type'    => array( 'site' ),
-		),
-		'content-sidebar-sidebar' => array(
-			'label' => __( 'Content, Primary Sidebar, Secondary Sidebar', 'genesis' ),
-			'img'   => $url . 'css.gif',
-			'type'  => array( 'site' ),
-		),
-		'sidebar-sidebar-content' => array(
-			'label' => __( 'Secondary Sidebar, Primary Sidebar, Content', 'genesis' ),
-			'img'   => $url . 'ssc.gif',
-			'type'  => array( 'site' ),
-		),
-		'sidebar-content-sidebar' => array(
-			'label' => __( 'Secondary Sidebar, Content, Primary Sidebar', 'genesis' ),
-			'img'   => $url . 'scs.gif',
-			'type'  => array( 'site' ),
-		),
-		'full-width-content'      => array(
-			'label' => __( 'Full Width Content', 'genesis' ),
-			'img'   => $url . 'c.gif',
-			'type'  => array( 'site' ),
-		),
-	), $url );
+	$layouts = apply_filters( 'genesis_initial_layouts', genesis_get_config( 'layouts' ), $url );
 
 	foreach ( (array) $layouts as $layout_id => $layout_args ) {
 		genesis_register_layout( $layout_id, $layout_args );
@@ -257,7 +224,7 @@ function genesis_get_layouts( $type = 'site' ) {
 	$types[] = 'site';
 
 	if ( is_numeric( $types[0] ) ) {
-		$id = $types[0];
+		$id       = $types[0];
 		$types[0] = $types[1] . '-' . $types[0];
 	}
 
@@ -281,7 +248,7 @@ function genesis_get_layouts( $type = 'site' ) {
 	 * @since 2.5.0
 	 *
 	 * @param array  $layouts Layout data.
-	 * @param string $type 	  Layout type.
+	 * @param string $type    Layout type.
 	 */
 	$layouts = (array) apply_filters( 'genesis_get_layouts', $layouts, $type );
 
@@ -413,7 +380,6 @@ function genesis_site_layout( $use_cache = true ) {
 		if ( '' !== $layout_cache ) {
 			return esc_attr( $layout_cache );
 		}
-
 	}
 
 	global $wp_query;
@@ -579,7 +545,7 @@ function genesis_get_structural_wrap( $context = '', $output = 'open' ) {
 			break;
 	}
 
-	$output = apply_filters( "genesis_structural_wrap-{$context}", $output, $original_output );
+	$output = apply_filters( "genesis_structural_wrap-{$context}", $output, $original_output ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores -- Genesis way of dynamic filters.
 
 	return $output;
 
@@ -603,13 +569,13 @@ function genesis_get_structural_wrap( $context = '', $output = 'open' ) {
 function genesis_structural_wrap( $context = '', $output = 'open', $deprecated = null ) {
 
 	if ( null !== $deprecated ) {
-		$message = 'The default is true, so remove the third argument.';
+		$message = __( 'The default is true, so remove the third argument.', 'genesis' );
 
 		if ( false === (bool) $deprecated ) {
-			$message = 'Use `genesis_get_structural_wrap()` instead.';
+			$message = __( 'Use `genesis_get_structural_wrap()` instead.', 'genesis' );
 		}
 
-		_deprecated_argument( __FUNCTION__, '2.7.0', $message );
+		_deprecated_argument( __FUNCTION__, '2.7.0', esc_html( $message ) );
 	}
 
 	$output = genesis_get_structural_wrap( $context, $output );
@@ -624,6 +590,8 @@ function genesis_structural_wrap( $context = '', $output = 'open', $deprecated =
 	echo $output;
 
 }
+
+// phpcs:disable PHPCompatibility.FunctionNameRestrictions.ReservedFunctionNames.FunctionDoubleUnderscore, WordPress.NamingConventions.ValidFunctionName.FunctionDoubleUnderscore, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Highly unlikely PHP will start using __genesis.
 
 /**
  * Return layout key 'content-sidebar'.

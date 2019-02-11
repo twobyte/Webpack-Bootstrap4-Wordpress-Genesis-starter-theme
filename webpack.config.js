@@ -50,7 +50,8 @@ module.exports = {
             secure: false
         }
     },
-    allowedHosts: allowedHosts
+    allowedHosts: allowedHosts,
+    disableHostCheck: true
   }, 
   module: {
     rules: [

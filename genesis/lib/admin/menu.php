@@ -119,6 +119,11 @@ function genesis_add_admin_submenus() {
 	// Add the upgraded page (no menu).
 	new Genesis_Admin_Upgraded();
 
+	// Create Getting Started onboarding page.
+	if ( version_compare( $GLOBALS['wp_version'], '5.0', '>=' ) && is_readable( locate_template( '/config/onboarding.php' ) ) ) {
+		new Genesis_Admin_Onboarding();
+	}
+
 }
 
 add_action( 'admin_menu', 'genesis_add_cpt_archive_page', 5 );

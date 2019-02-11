@@ -39,14 +39,11 @@ function tasty_write_logotype( $title, $inside, $wrap ) {
 			$svgW = $box[2] - $box[0];
 			$svgH = $box[3] - $box[1];
 		}
-
-		$svg = file_get_contents(get_stylesheet_directory().$svgPath);
-		$logos .= '<!--[if gte IE 9]><!-->'; // needed to not choke up IE8
-		$logos .= ( isset($svgW) && isset($svgH) && ($svgW*$svgH>0) ) ? sprintf('<div class="svg-logo" style="width:%spx;height:%spx">',$svgW,$svgH) : '';
-		$logos .= $svg;
-		$logos .= ( isset($svgW) && isset($svgH) && ($svgW*$svgH>0) ) ? '</div>' : '';
-		$logos .= '<!--<![endif]-->';
+		
+		$logos .= sprintf( '<img src="%s" alt="%s" width="%s" height="%s" class="svg-img" />', get_stylesheet_directory_uri().$svgPath, get_bloginfo( 'name' ), $svgW,$svgH );
+		
 		$altbitmap = ' class="altbitmap"';
+		
 	}
 	
 	if(file_exists(get_stylesheet_directory().$bitmapPath)){

@@ -71,7 +71,8 @@ function genesis_get_option( $key, $setting = null, $use_cache = true ) {
 		$options = apply_filters( 'genesis_options', $settings_cache[ $setting ], $setting );
 	} else {
 		// Set value and cache setting.
-		$options = $settings_cache[ $setting ] = apply_filters( 'genesis_options', get_option( $setting ), $setting );
+		$settings_cache[ $setting ] = apply_filters( 'genesis_options', get_option( $setting ), $setting );
+		$options                    = $settings_cache[ $setting ];
 	}
 
 	// Check for non-existent option.
@@ -79,7 +80,7 @@ function genesis_get_option( $key, $setting = null, $use_cache = true ) {
 		// Cache non-existent option.
 		$options_cache[ $setting ][ $key ] = '';
 	} else {
-		// Option has not been previously been cached, so cache now.
+		// Option has not previously been cached, so cache now.
 		$options_cache[ $setting ][ $key ] = is_array( $options[ $key ] ) ? $options[ $key ] : wp_kses_decode_entities( $options[ $key ] );
 	}
 

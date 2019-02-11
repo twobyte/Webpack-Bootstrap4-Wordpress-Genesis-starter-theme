@@ -202,10 +202,10 @@ function genesis_constants() {
 	// Define Theme Info Constants.
 	// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
 	define( 'PARENT_THEME_NAME', 'Genesis' );
-	define( 'PARENT_THEME_VERSION', '2.7.1' );
-	define( 'PARENT_THEME_BRANCH', '2.7' );
-	define( 'PARENT_DB_VERSION', '2700' );
-	define( 'PARENT_THEME_RELEASE_DATE', date_i18n( 'F j, Y', '1542240000' ) );
+	define( 'PARENT_THEME_VERSION', '2.8.1' );
+	define( 'PARENT_THEME_BRANCH', '2.8' );
+	define( 'PARENT_DB_VERSION', '2800' );
+	define( 'PARENT_THEME_RELEASE_DATE', date_i18n( 'F j, Y', strtotime( '30 January 2019' ) ) );
 
 	// Define Parent and Child Directory Location and URL Constants.
 	define( 'PARENT_DIR', get_template_directory() );
@@ -350,6 +350,9 @@ function genesis_load_framework() {
 		require_once $admin_dir . 'use-child-theme.php';
 		require_once $admin_dir . 'sanitization.php';
 		require_once $admin_dir . 'privacy-requests.php';
+		require_once $admin_dir . 'onboarding/theme-activation.php';
+		require_once $admin_dir . 'onboarding/ajax-functions.php';
+		require_once $functions_dir . 'onboarding.php';
 	}
 	if ( is_customize_preview() ) {
 		require_once $admin_dir . 'customizer.php';

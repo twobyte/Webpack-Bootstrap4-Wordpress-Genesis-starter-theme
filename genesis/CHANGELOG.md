@@ -6,6 +6,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 Up until release 2.7.0, this project did _not_ follow semantic versioning. It followed the WordPress policy where updates of x and y in an x.y.z version number means a major release, and updates to z means a patch release.
 
+## [2.8.1] - 2019-01-30
+### Fixed
+- Fixed `genesis_human_time_diff()` to display accurate relative dates.
+- Fixed a problem with `aria-hidden` and `tabindex` attributes were being escaped, causing the quotes to be unintentionally encoded.
+
+## [2.8.0] - 2019-01-16
+### Added
+- Add a `genesis_get_config()` function, to locate and load config files from Genesis and a child theme.
+- Add a new "onboarding" feature that allows users to import homepage demo content in WordPress 5.0.
+- Add a new function that allows you to get an author box by specified user.
+
+### Changed
+- Improved/clarified the labels on settings/customizer pages.
+- Changed references of "- None -" to "None" in forms, for better accessibility.
+
+## [2.7.3] - 2018-12-19
+### Fixed
+- Fixed an issue with the search form, where some elements were missing attributes, or had the wrong attributes.
+
+## [2.7.2] - 2018-12-13
+### Fixed
+- Fixed issue with schema on the breadcrumbs wrapper by removing breadcrumb div schema.org attributes when not needed, use RDFa for Breadcrumb NavXT.
+- Fixed issue with the search form not properly outputting a label when a11y is enabled.
+
 ## [2.7.1] - 2018-11-15
 ### Fixed
 - Fixed issue with filtered content being passed to `wp_kses_post()`.
@@ -1071,7 +1095,10 @@ _Requires WordPress 3.1.0._
 
 First public release.
 
-[Unreleased]: https://github.com/studiopress/genesis/compare/2.7.1...HEAD
+[2.8.1]: https://github.com/studiopress/genesis/compare/2.8.0...2.8.1
+[2.8.0]: https://github.com/studiopress/genesis/compare/2.7.3...2.8.0
+[2.7.3]: https://github.com/studiopress/genesis/compare/2.7.2...2.7.3
+[2.7.2]: https://github.com/studiopress/genesis/compare/2.7.1...2.7.2
 [2.7.1]: https://github.com/studiopress/genesis/compare/2.7.0...2.7.1
 [2.7.0]: https://github.com/studiopress/genesis/compare/2.6.1...2.7.0
 [2.6.1]: https://github.com/studiopress/genesis/compare/2.6.0...2.6.1

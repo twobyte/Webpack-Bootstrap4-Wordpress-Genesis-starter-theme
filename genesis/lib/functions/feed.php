@@ -66,12 +66,12 @@ function genesis_feed_redirect() {
 	$comments_feed_uri = genesis_get_option( 'comments_feed_uri' );
 
 	if ( $feed_uri && ! is_comment_feed() && genesis_get_option( 'redirect_feed' ) ) {
-		wp_redirect( $feed_uri, 302 );
+		wp_redirect( $feed_uri, 302 ); // phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect -- User inputs redirect URL.
 		exit;
 	}
 
 	if ( $comments_feed_uri && is_comment_feed() && genesis_get_option( 'redirect_comments_feed' ) ) {
-		wp_redirect( $comments_feed_uri, 302 );
+		wp_redirect( $comments_feed_uri, 302 ); // phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect -- User inputs redirect URL.
 		exit;
 	}
 

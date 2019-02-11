@@ -20,35 +20,30 @@ $genesis_allowed_code = array(
 ?>
 <div class="wrap about-wrap">
 
-<img src="<?php echo esc_attr( get_template_directory_uri() . '/lib/admin/images/whats-new.png' ); ?>" class="alignright whats-new" />
-
 <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
-<p class="about-text"><?php esc_html_e( 'In addition to the typical bug fixes and performance enhancements, Genesis 2.7 is focused on updating some key architectural components, and is aimed at modernizing the codebase to prepare for some exciting future updates.', 'genesis' ); ?></p>
+<p class="about-text"><?php esc_html_e( 'Genesis 2.8 provides developers with new tools to make Genesis themes with less code and better user experience!', 'genesis' ); ?></p>
 
 <div class="changelog">
-	<div class="feature-section">
+
 		<h2 class="screen-reader-text"><?php _e( 'Changes', 'genesis' ); ?></h2>
 
-		<h3><?php esc_html_e( 'Preparing for WordPress 5.0', 'genesis' ); ?></h3>
-		<p><?php esc_html_e( 'WordPress 5.0 is just around the corner, and we want to make sure your site is prepared!', 'genesis' ) ; ?></p>
-		<p><?php esc_html_e( 'Although Genesis 2.7 does not include any features that directly rely on WordPress 5.0 or the Gutenberg editor, we have spent a great deal of time preparing the Genesis code structure for new features that definitely will integrate with WordPress 5.0.', 'genesis' ) ; ?></p>
+		<h3><?php esc_html_e( 'Child themes, now config driven', 'genesis' ); ?></h3>
+		<p><?php esc_html_e( "Child themes should be simple. But lately, they've been getting more and more complicated. So in Genesis 2.8, we're introducing a new function to locate and load config files to enable and configure Genesis features – features such as a new onboarding experience, custom header images, default editor colors, and font size selections, using the new block editor in WordPress 5.0.", 'genesis' ) ; ?></p>
+		<p><?php esc_html_e( 'This new configuration-driven approach will allow us to build more features into Genesis, while only loading the ones your child theme needs.', 'genesis' ) ; ?></p>
 
-		<h3><?php esc_html_e( 'PHP 5.3', 'genesis' ); ?></h3>
-		<p><?php esc_html_e( 'Genesis 2.7 requires PHP version 5.3 or greater in order to function properly.', 'genesis' ) ; ?></p>
-		<p><?php esc_html_e( 'Why?', 'genesis' ) ; ?></p>
-		<p><?php esc_html_e( 'Because we\'re trying to be good internet citizens! And though we can\'t jump immediately to requiring PHP 7.2, we are beginning to slowly increase our minimum requirements in Genesis, to encourage users to upgrade outdated PHP versions, as well as give ourselves the ability to create cool new features that rely on the more modern tools available only in more modern versions of PHP.', 'genesis' ) ; ?></p>
-
-		<h3><?php esc_html_e( 'More Modern Architecture', 'genesis' ); ?></h3>
-		<p><p><?php esc_html_e( 'Genesis is nearly a decade old! Which means that it uses some coding methods that could use a modern refresh.', 'genesis' ) ; ?></p>
-		<p><?php esc_html_e( 'We may not be able to modernize the entire codebase in one release, but we can make it better and better each time we release an update. And that\'s exactly what we did in Genesis 2.7.', 'genesis' ) ; ?></p>
-		<p><?php esc_html_e( 'We began moving code to classes where appropriate, and are moving more and more of the default Genesis behavior toward easy to read configuration files.', 'genesis' ) ; ?></p>
-		<p><?php esc_html_e( 'We think this is a worthy investment in the long-term quality and maintainability of the Genesis Framework, clearing the way for newer experiences and better products in the Genesis ecosystem.', 'genesis' ) ; ?></p>
+		<h3><?php esc_html_e( 'New child theme onboarding experience', 'genesis' ); ?></h3>
+		<p><?php esc_html_e( 'Have you ever activated a WordPress theme and been disappointed by that first impression?', 'genesis' ); ?></p>
+		<p><?php esc_html_e( 'Sometimes starting from scratch is too intimidating – or too time consuming.', 'genesis' ); ?></p>
+		<p><?php esc_html_e( 'Genesis 2.8, when running on WordPress 5.0 or later, includes a new "onboarding" tool. This allows Genesis theme users to import some homepage demo content, just to help get things started.', 'genesis' ); ?></p>
+		<p><?php esc_html_e( 'Of course, the homepage can also be built using the new block editor released with WordPress 5.0.', 'genesis' ); ?></p>
+		<p><?php esc_html_e( 'Just install the theme as you normally would, and the onboarding tool will walk you through the process.', 'genesis' ); ?></p>
+		<p><?php esc_html_e( 'This new feature only requires a config file (loaded using the new config loader), and no special code!', 'genesis' ); ?></p>
+		<p><?php printf( wp_kses( __( 'You can see the onboarding feature in action by using the <a href="%s">Genesis Sample child theme</a>, currently available on our Github.', 'genesis' ), $genesis_allowed_code ), 'https://github.com/studiopress/genesis-sample/' ); ?></p>
 
 		<h3><?php esc_html_e( 'The Details', 'genesis' ); ?></h3>
-		<p><?php printf( wp_kses( __( 'We keep a detailed changelog for each release. The changelog for Genesis 2.7 can be found <a href="%s">here</a>.', 'genesis' ), $genesis_allowed_code ), 'https://studiopress.github.io/genesis/changelog/2.7.0' ); ?></p>
+		<p><?php printf( wp_kses( __( 'We keep a detailed changelog for each release. The changelog for Genesis 2.8 can be found <a href="%s">here</a>.', 'genesis' ), $genesis_allowed_code ), 'https://studiopress.github.io/genesis/changelog/2.8.0' ); ?></p>
 
-	</div>
 </div>
 
 <div class="project-leads">

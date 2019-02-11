@@ -542,11 +542,6 @@ function genesis_do_author_box_single() {
 /**
  * Return the author box and its contents.
  *
- * The title is filterable via `genesis_author_box_title`, and the gravatar size is filterable via
- * `genesis_author_box_gravatar_size`.
- *
- * The final output is filterable via `genesis_author_box`, which passes many variables through.
- *
  * @since 2.7.0
  *
  * @global WP_User $authordata Author (user) object.
@@ -559,14 +554,37 @@ function genesis_get_author_box( $context = '' ) {
 
 	global $authordata;
 
-	$authordata    = is_object( $authordata ) ? $authordata : get_userdata( get_query_var( 'author' ) );
-	$gravatar_size = apply_filters( 'genesis_author_box_gravatar_size', 70, $context );
-	$gravatar      = get_avatar( get_the_author_meta( 'email' ), $gravatar_size );
-	$description   = wpautop( get_the_author_meta( 'description' ) );
+	$user_id = is_object( $authordata ) ? $authordata->ID : (int) get_query_var( 'author' );
+
+	return genesis_get_author_box_by_user( $user_id, $context );
+
+}
+
+/**
+ * Return the author box and its contents by WP_User ID.
+ *
+ * The title is filterable via `genesis_author_box_title`,
+ *      the description is filterable via `genesis_author_box_description`,
+ *      and the gravatar size is filterable via `genesis_author_box_gravatar_size`.
+ *
+ * The final output is filterable via `genesis_author_box`, which passes many variables through.
+ *
+ * @since 2.7.0
+ *
+ * @param  int    $user_id Required. The user ID to get the author box from.
+ * @param  string $context Optional. Allows different author box markup for different contexts, specifically 'single'.
+ *                         Default is empty string.
+ * @return string HTML for author box.
+ */
+function genesis_get_author_box_by_user( $user_id, $context = '' ) {
+
+	$gravatar_size = apply_filters( 'genesis_author_box_gravatar_size', 70, $context, $user_id );
+	$gravatar      = get_avatar( get_the_author_meta( 'email', $user_id ), $gravatar_size );
+	$description   = apply_filters( 'genesis_author_box_description', wpautop( get_the_author_meta( 'description', $user_id ) ), $context, $user_id );
 
 	// The author box markup, contextual.
 	if ( genesis_html5() ) {
-		$title = __( 'About', 'genesis' ) . ' <span itemprop="name">' . get_the_author() . '</span>';
+		$title = __( 'About', 'genesis' ) . ' <span itemprop="name">' . get_the_author_meta( 'display_name', $user_id ) . '</span>';
 
 		/**
 		 * Author box title filter.
@@ -577,14 +595,15 @@ function genesis_get_author_box( $context = '' ) {
 		 *
 		 * @param string $title   Assembled Title.
 		 * @param string $context Context.
+		 * @param int    $user_id User ID.
 		 */
-		$title = apply_filters( 'genesis_author_box_title', $title, $context );
+		$title = apply_filters( 'genesis_author_box_title', $title, $context, $user_id );
 
 		$heading_element = 'h1';
 
 		if ( 'single' === $context && ! genesis_get_seo_option( 'semantic_headings' ) ) {
 			$heading_element = 'h4';
-		} elseif ( genesis_a11y( 'headings' ) || get_the_author_meta( 'headline', (int) get_query_var( 'author' ) ) ) {
+		} elseif ( genesis_a11y( 'headings' ) || get_the_author_meta( 'headline', $user_id ) ) {
 			$heading_element = 'h4';
 		}
 
@@ -593,11 +612,11 @@ function genesis_get_author_box( $context = '' ) {
 		$pattern .= '<div class="author-box-content" itemprop="description">%s</div>';
 		$pattern .= '</section>';
 	} else {
-		$title = apply_filters( 'genesis_author_box_title', sprintf( '<strong>%s %s</strong>', __( 'About', 'genesis' ), get_the_author() ), $context );
+		$title = apply_filters( 'genesis_author_box_title', sprintf( '<strong>%s %s</strong>', __( 'About', 'genesis' ), get_the_author_meta( 'display_name', $user_id ) ), $context, $user_id );
 
 		$pattern = '<div class="author-box">%s<h1>%s</h1><div>%s</div></div>';
 
-		if ( 'single' === $context || get_the_author_meta( 'headline', (int) get_query_var( 'author' ) ) ) {
+		if ( 'single' === $context || get_the_author_meta( 'headline', $user_id ) ) {
 			$pattern = '<div class="author-box"><div>%s %s<br />%s</div></div>';
 		}
 	}
@@ -611,14 +630,15 @@ function genesis_get_author_box( $context = '' ) {
 	 *
 	 * @since unknown
 	 *
-	 * @param string $output  Assembled output.
-	 * @param string $context Context.
-	 * @param string $pattern (s)printf pattern.
-	 * @param string $context Gravatar.
-	 * @param string $context Title.
-	 * @param string $context Description.
+	 * @param string $output      Assembled output.
+	 * @param string $context     Context.
+	 * @param string $pattern     (s)printf pattern.
+	 * @param string $gravatar    Gravatar.
+	 * @param string $title       Title.
+	 * @param string $description Description.
+	 * @param int    $user_id     User ID.
 	 */
-	$output = apply_filters( 'genesis_author_box', $output, $context, $pattern, $gravatar, $title, $description );
+	$output = apply_filters( 'genesis_author_box', $output, $context, $pattern, $gravatar, $title, $description, $user_id );
 
 	return $output;
 

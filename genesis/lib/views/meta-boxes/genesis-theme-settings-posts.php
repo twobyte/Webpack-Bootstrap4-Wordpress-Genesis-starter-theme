@@ -65,7 +65,7 @@
 				<p>
 					<label for="<?php $this->field_id( 'image_alignment' ); ?>"><?php esc_html_e( 'Image Alignment:', 'genesis' ); ?></label>
 					<select name="<?php $this->field_name( 'image_alignment' ); ?>" id="<?php $this->field_id( 'image_alignment' ); ?>">
-						<option value=""><?php esc_html_e( '- None -', 'genesis' ) ?></option>
+						<option value=""><?php esc_html_e( 'None', 'genesis' ) ?></option>
 						<option value="alignleft" <?php selected( $this->get_field_value( 'image_alignment' ), 'alignleft' ); ?>><?php esc_html_e( 'Left', 'genesis' ) ?></option>
 						<option value="alignright" <?php selected( $this->get_field_value( 'image_alignment' ), 'alignright' ); ?>><?php esc_html_e( 'Right', 'genesis' ) ?></option>
                 <option value="aligncenter" <?php selected( $this->get_field_value( 'image_alignment' ), 'aligncenter' ); ?>><?php _e( 'Center', 'genesis' ) ?></option>

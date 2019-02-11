@@ -17,6 +17,8 @@ global $wp_version;
  * The configuration array that is passed to `Genesis_Update_Check` in `Genesis_Update`.
  *
  * This array is used to build the POST that retrieves update information from an update server.
+ *
+ * @since 2.7.0
  */
 return array(
 	'post_url'      => 'https://api.genesistheme.com/update-themes/',

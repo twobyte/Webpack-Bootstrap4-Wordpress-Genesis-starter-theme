@@ -36,7 +36,7 @@ add_action( 'genesis_customizer', 'genesis_customizer_theme_settings' );
  */
 function genesis_customizer_theme_settings( Genesis_Customizer $genesis_customizer ) {
 
-	$config = require GENESIS_CONFIG_DIR . '/customizer-theme-settings.php';
+	$config = genesis_get_config( 'customizer-theme-settings' );
 
 	/**
 	 * Filter the `$config` array, built from /config/customizer-theme-settings.php.
@@ -61,7 +61,7 @@ add_action( 'genesis_customizer', 'genesis_customizer_seo_settings' );
  */
 function genesis_customizer_seo_settings( Genesis_Customizer $genesis_customizer ) {
 
-	$config = require GENESIS_CONFIG_DIR . '/customizer-seo-settings.php';
+	$config = genesis_get_config( 'customizer-seo-settings' );
 
 	/**
 	 * Filter the `$config` array, built from /config/customizer-seo-settings.php.

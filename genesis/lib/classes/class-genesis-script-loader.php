@@ -161,12 +161,13 @@ class Genesis_Script_Loader {
 		}
 
 		// If we're on a Genesis admin screen.
-		if ( genesis_is_menu_page( 'genesis' ) || genesis_is_menu_page( 'seo-settings' ) || genesis_is_menu_page( 'design-settings' ) ) {
+		if ( genesis_is_menu_page( 'genesis' ) || genesis_is_menu_page( 'seo-settings' ) || genesis_is_menu_page( 'design-settings' ) || genesis_is_menu_page( 'genesis-getting-started' ) ) {
 
 			$this->enqueue_and_localize_admin_scripts();
 			return;
 
 		}
+
 
 		// If we're viewing an edit post page, make sure we need Genesis SEO JS.
 		if (
@@ -213,6 +214,11 @@ class Genesis_Script_Loader {
 
 		wp_localize_script( 'genesis_admin_js', 'genesis_toggles', apply_filters( 'genesis_toggles', $toggles ) );
 
+		$onboarding = array(
+			'nonce' => wp_create_nonce( 'genesis-onboarding' ),
+		);
+
+		wp_localize_script( 'genesis_admin_js', 'genesis_onboarding', $onboarding );
 	}
 
 	/**

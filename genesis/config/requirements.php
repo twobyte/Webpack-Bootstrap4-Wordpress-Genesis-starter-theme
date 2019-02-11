@@ -14,6 +14,11 @@
 $genesis_wp_version  = '4.7';
 $genesis_php_version = '5.3';
 
+/**
+ * The requirements configuration. An environment that does not meet these minimums will not be able to use Genesis.
+ *
+ * @since 2.7.0
+ */
 return array(
 	'wordpress' => array(
 		'version' => $genesis_wp_version,

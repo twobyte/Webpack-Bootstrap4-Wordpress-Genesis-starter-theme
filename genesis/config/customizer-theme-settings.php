@@ -14,6 +14,8 @@
 /**
  * The config array for setting up a Customizer panel, sections within that panel, settings and controls.
  *
+ * If child theme contains a `customizer-theme-settings.php` config, it will be used instead of this config.
+ *
  * @since 2.6.0
  */
 return array(
@@ -142,7 +144,7 @@ return array(
 					),
 					'breadcrumb_front_page' => array(
 						'active_callback' => 'genesis_page_show_on_front',
-						'label'           => __( 'Breadcrumbs on Front Page', 'genesis' ),
+						'label'           => __( 'Breadcrumbs on Front page', 'genesis' ),
 						'section'         => 'genesis_breadcrumbs',
 						'type'            => 'checkbox',
 						'settings'        => array(
@@ -151,7 +153,7 @@ return array(
 					),
 					'breadcrumb_posts_page' => array(
 						'active_callback' => 'genesis_page_show_on_front',
-						'label'           => __( 'Breadcrumbs on Posts Page', 'genesis' ),
+						'label'           => __( 'Breadcrumbs on Posts page', 'genesis' ),
 						'section'         => 'genesis_breadcrumbs',
 						'type'            => 'checkbox',
 						'settings'        => array(
@@ -183,7 +185,7 @@ return array(
 						),
 					),
 					'breadcrumb_404'        => array(
-						'label'    => __( 'Breadcrumbs on 404 Page', 'genesis' ),
+						'label'    => __( 'Breadcrumbs on 404 page', 'genesis' ),
 						'section'  => 'genesis_breadcrumbs',
 						'type'     => 'checkbox',
 						'settings' => array(
@@ -284,7 +286,7 @@ return array(
 						'section'  => 'genesis_archives',
 						'type'     => 'select',
 						'choices'  => array(
-							''            => __( '- None -', 'genesis' ),
+							''            => __( 'None', 'genesis' ),
 							'alignleft'   => __( 'Left', 'genesis' ),
 							'alignright'  => __( 'Right', 'genesis' ),
 							'aligncenter' => __( 'Center', 'genesis' ),

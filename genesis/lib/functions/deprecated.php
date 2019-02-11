@@ -24,7 +24,7 @@
  */
 function genesis_search_form() {
 
-	_deprecated_function( __FUNCTION__, '2.7.0', "get_search_form()" );
+	_deprecated_function( __FUNCTION__, '2.7.0', 'get_search_form()' );
 
 	$search_form_template = locate_template( 'searchform.php' );
 	ob_start();
@@ -35,7 +35,7 @@ function genesis_search_form() {
 
 }
 
-/*
+/**
  * Deprecated. Genesis now (as of 2.7.0) uses semantic versioning, and will no longer redirect to different pages based on major/minor version status.
  *
  * Determine if a version string is considered a major release under Genesis rules.
@@ -279,7 +279,7 @@ function genesis_nav( $args = array() ) {
 	_deprecated_function( __FUNCTION__, '2.2.0', 'genesis_nav_menu' );
 
 	if ( isset( $args['context'] ) ) {
-		_deprecated_argument( __FUNCTION__, '1.2', __( 'The argument, "context", has been replaced with "theme_location" in the $args array.', 'genesis' ) );
+		_deprecated_argument( __FUNCTION__, '1.2', esc_html__( 'The argument, "context", has been replaced with "theme_location" in the $args array.', 'genesis' ) );
 	}
 
 	// Default arguments.
@@ -431,7 +431,7 @@ function genesis_older_newer_posts_nav() {
  */
 function genesis_show_theme_info_in_head() {
 
-	_deprecated_function( __FUNCTION__, '2.0.0', __( 'data in style sheet files', 'genesis' ) );
+	_deprecated_function( __FUNCTION__, '2.0.0', esc_html__( 'data in style sheet files', 'genesis' ) );
 
 	if ( ! genesis_get_option( 'show_info' ) ) {
 		return;
@@ -463,11 +463,11 @@ function genesis_show_theme_info_in_head() {
  * @param string $text Optional string containing an entity.
  * @return mixed Return a string by default, but might be filtered to return another type.
  */
-function g_ent( $text = '' ) {
+function g_ent( $text = '' ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Deprecated function name.
 
-	_deprecated_function( __FUNCTION__, '2.0.0', __( 'decimal or hexidecimal entities', 'genesis' ) );
+	_deprecated_function( __FUNCTION__, '2.0.0', esc_html__( 'decimal or hexidecimal entities', 'genesis' ) );
 
-	return apply_filters( 'g_ent', $text );
+	return apply_filters( 'g_ent', $text ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Deprecated filter name.
 
 }
 
@@ -1430,10 +1430,12 @@ function genesis_post_date( $format = '', $label = '' ) {
 
 	_deprecated_function( __FUNCTION__, '1.5.0', 'genesis_post_date_shortcode()' );
 
-	echo genesis_post_date_shortcode( array(
-		'format' => $format,
-		'label'  => $label,
-	) );
+	echo genesis_post_date_shortcode(
+		array(
+			'format' => $format,
+			'label'  => $label,
+		)
+	);
 
 }
 
@@ -1451,9 +1453,11 @@ function genesis_post_author_posts_link( $label = '' ) {
 
 	_deprecated_function( __FUNCTION__, '1.5.0', 'genesis_post_author_posts_link_shortcode()' );
 
-	echo genesis_post_author_posts_link_shortcode( array(
-		'before' => $label,
-	) );
+	echo genesis_post_author_posts_link_shortcode(
+		array(
+			'before' => $label,
+		)
+	);
 
 }
 
@@ -1473,11 +1477,13 @@ function genesis_post_comments_link( $zero = null, $one = null, $more = null ) {
 
 	_deprecated_function( __FUNCTION__, '1.5.0', 'genesis_post_comments_shortcode()' );
 
-	echo genesis_post_comments_shortcode( array(
-		'zero' => $zero,
-		'one'  => $one,
-		'more' => $more,
-	) );
+	echo genesis_post_comments_shortcode(
+		array(
+			'zero' => $zero,
+			'one'  => $one,
+			'more' => $more,
+		)
+	);
 
 }
 
@@ -1496,10 +1502,12 @@ function genesis_post_categories_link( $sep = ', ', $label = '' ) {
 
 	_deprecated_function( __FUNCTION__, '1.5.0', 'genesis_post_categories_shortcode()' );
 
-	echo genesis_post_categories_shortcode( array(
-		'sep'    => $sep,
-		'before' => $label,
-	) );
+	echo genesis_post_categories_shortcode(
+		array(
+			'sep'    => $sep,
+			'before' => $label,
+		)
+	);
 
 }
 
@@ -1518,10 +1526,12 @@ function genesis_post_tags_link( $sep = ', ', $label = '' ) {
 
 	_deprecated_function( __FUNCTION__, '1.5.0', 'genesis_post_tags_shortcode()' );
 
-	echo genesis_post_tags_shortcode( array(
-		'sep'    => $sep,
-		'before' => $label,
-	) );
+	echo genesis_post_tags_shortcode(
+		array(
+			'sep'    => $sep,
+			'before' => $label,
+		)
+	);
 
 }
 

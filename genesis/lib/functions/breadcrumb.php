@@ -56,7 +56,7 @@ function genesis_do_breadcrumbs() {
 		return;
 	}
 
-	$config = require GENESIS_CONFIG_DIR . '/breadcrumbs.php';
+	$config = genesis_get_config( 'breadcrumbs' );
 
 	if ( function_exists( 'bcn_display' ) ) {
 		echo $config['prefix'];

@@ -12,18 +12,6 @@
     "setClasses"
   ],
   "feature-detects": [
-    "test/hashchange",
-    "test/history",
-    "test/svg",
-    "test/css/backgroundsize",
-    "test/css/borderradius",
-    "test/css/boxshadow",
-    "test/css/fontface",
-    "test/css/generatedcontent",
-    "test/css/opacity",
-    "test/css/rgba",
-    "test/css/textshadow",
-    "test/css/transitions",
-    "test/svg/inline"
+    "test/svg/asimg"
   ]
 }

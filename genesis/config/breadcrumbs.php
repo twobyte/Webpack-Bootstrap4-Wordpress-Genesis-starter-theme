@@ -13,6 +13,10 @@
 
 /**
  * The breadcrumbs configuration array.
+ *
+ * If child theme contains a `breadcrumbs.php` config, it will be used instead of this config.
+ *
+ * @since 2.7.0
  */
 return array(
 	'home'                    => __( 'Home', 'genesis' ),
