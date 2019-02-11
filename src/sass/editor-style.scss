@@ -10,16 +10,22 @@
 
 @import "settings/mixins";
 @import "settings/variables";
-@import '~font-awesome/scss/font-awesome';
+//@import '~font-awesome/scss/font-awesome';
+
+@import "settings/genesis";
+
 // Custom Bootstrap option
 @import "~bootstrap/scss/bootstrap";
 
 
+
 // General, Typography
+/*
 @import "partials/general";
 @import "partials/typography";
 @import "partials/tables";
 @import "partials/theme";
+*/
 
 /* Images
 ------------------------------------------------------------ */

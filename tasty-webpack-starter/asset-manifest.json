@@ -1,13 +1,12 @@
 {
-  "app.css": "dist/app.fb526e03.css",
-  "app.js": "dist/app.979d9342.js",
-  "app.css.map": "dist/app.fb526e03.css.map",
-  "app.js.map": "dist/app.979d9342.js.map",
-  "editorstyles.css": "dist/editorstyles.63510987.css",
-  "editorstyles.js": "dist/editorstyles.85e3c8f6.js",
-  "editorstyles.css.map": "dist/editorstyles.63510987.css.map",
-  "editorstyles.js.map": "dist/editorstyles.85e3c8f6.js.map",
+  "app.css": "dist/app.77b951cb.css",
+  "app.js": "dist/app.dd1b850b.js",
+  "app.css.map": "dist/app.77b951cb.css.map",
+  "app.js.map": "dist/app.dd1b850b.js.map",
+  "editorstyles.css": "dist/editorstyles.b2de8539.css",
+  "editorstyles.js": "dist/editorstyles.187ff330.js",
+  "editorstyles.css.map": "dist/editorstyles.b2de8539.css.map",
+  "editorstyles.js.map": "dist/editorstyles.187ff330.js.map",
   "modernizr.js": "dist/modernizr.c731f758.js",
-  "modernizr.js.map": "dist/modernizr.c731f758.js.map",
-  "fonts/style.scss": "dist/fonts/fontawesome-webfont.woff2"
+  "modernizr.js.map": "dist/modernizr.c731f758.js.map"
 }

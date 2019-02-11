@@ -79,6 +79,108 @@ add_filter('genesis_seo_title', 'tasty_write_logotype', 10, 3 );
 
 
 
+// Remove Edit link
+add_filter( 'genesis_edit_post_link', '__return_false' );
+
+
+add_filter('genesis_footer_creds_text', 'tasty_footer_creds_filter');
+function tasty_footer_creds_filter( $creds ) {
+	$creds = '[footer_copyright year=2016] '.get_bloginfo ('name').' &middot; Website by <a href="http://tastydigital.com/" rel="Web designer">Tasty Digital</a>';
+	return $creds;
+}
+
+
+add_filter('language_attributes', 'modernizr_class');
+function modernizr_class($output) {
+    return $output . ' class="no-js"';
+}
+
+
+
+/**
+ * Remove default link for images
+ */
+function tasty_imagelink_setup() {
+	$image_set = get_option( 'image_default_link_type' );
+	if ($image_set !== 'none') {
+		update_option( 'image_default_link_type', 'none' );
+	}
+}
+add_action( 'admin_init', 'tasty_imagelink_setup', 10 );
+
+/**
+ * Remove Query Strings From Static Resources
+ */
+function tasty_remove_script_version( $src ){
+	$parts = explode( '?ver', $src );
+	return $parts[0];
+}	
+add_filter( 'script_loader_src', 'tasty_remove_script_version', 15, 1 );
+add_filter( 'style_loader_src', 'tasty_remove_script_version', 15, 1 );
+
+
+/**
+ * Remove Read More Jump
+ */
+function tasty_remove_more_jump_link( $link ) {
+	$offset = strpos( $link, '#more-' );
+	if ($offset) {
+		$end = strpos( $link, '"',$offset );
+	}
+	if ($end) {
+		$link = substr_replace( $link, '', $offset, $end-$offset );
+	}
+	return $link;
+}
+add_filter( 'the_content_more_link', 'tasty_remove_more_jump_link' );
+
+
+/****************************************
+Misc Theme Functions
+*****************************************/
+
+/**
+ * Unregister the superfish scripts
+ */
+function tasty_unregister_superfish() {
+	wp_dequeue_script( 'superfish' );
+	wp_dequeue_script( 'superfish-args' );
+}
+add_action( 'wp_enqueue_scripts', 'tasty_unregister_superfish' );
+
+/**
+ * Filter Yoast SEO Metabox Priority
+ */
+function tasty_filter_yoast_seo_metabox() {
+	return 'low';
+}
+add_filter( 'wpseo_metabox_prio', 'tasty_filter_yoast_seo_metabox' );
+
+/** Adding custom Favicon */
+add_filter( 'genesis_pre_load_favicon', 'tasty_favicon' );
+function tasty_favicon( $favicon_url ) {
+	if(file_exists(get_stylesheet_directory() . FAVICON_URL)){
+		return get_stylesheet_directory_uri() . FAVICON_URL;
+	}else{
+		return $favicon_url;
+	}
+}
+
+
+//* Remove 'Editor' from 'Appearance' Menu. 
+//* This stops users and hackers from being able to edit files from within WordPress.  
+define( 'DISALLOW_FILE_EDIT', true );
+
+
+// don’t load WPML CSS
+define('ICL_DONT_LOAD_NAVIGATION_CSS', true);
+define('ICL_DONT_LOAD_LANGUAGE_SELECTOR_CSS', true);
+define('ICL_DONT_LOAD_LANGUAGES_JS', true);
+
+
+
+
+
 /*
 function typekit(){
 	?>

@@ -26,11 +26,16 @@
 // DO NOT EDIT ORDER OF FILES
 @import "settings/mixins";
 @import "settings/variables";
-@import '~font-awesome/scss/font-awesome';
+//@import '~font-awesome/scss/font-awesome';
+
+
+@import "settings/genesis";
+
 // Custom Bootstrap option
 @import "~bootstrap/scss/bootstrap";
 
 // Third party mobile menu styles (loaded in app.js)
+/*
 @import "~slicknav/scss/slicknav";
 
 @import "partials/accessibility";
@@ -40,7 +45,9 @@
 @import "partials/footer";
 
 /// General, Typography
+*/
 @import "partials/general";
+/*
 @import "partials/layout";
 @import "partials/typography";
 @import "partials/tables";
@@ -56,6 +63,7 @@
 @import "partials/sidebars";
 @import "partials/forms";
 @import "partials/gallery";
+*/
 @import "partials/cookie-notice";
 
 

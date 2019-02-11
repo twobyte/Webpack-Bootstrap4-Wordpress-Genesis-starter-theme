@@ -6,59 +6,38 @@
  *
  * @package Genesis Sample
  * @author  StudioPress
- * @license GPL-2.0+
- * @link    http://www.studiopress.com/
+ * @license GPL-2.0-or-later
+ * @link    https://www.studiopress.com/
  */
 
 add_action( 'wp_enqueue_scripts', 'genesis_sample_css' );
 /**
-* Checks the settings for the link color, and accent color.
-* If any of these value are set the appropriate CSS is output.
-*
-* @since 2.2.3
-*/
+ * Checks the settings for the link color, and accent color.
+ * If any of these value are set the appropriate CSS is output.
+ *
+ * @since 2.2.3
+ */
 function genesis_sample_css() {
 
-	$handle  = defined( 'CHILD_THEME_NAME' ) && CHILD_THEME_NAME ? sanitize_title_with_dashes( CHILD_THEME_NAME ) : 'child-theme';
+	$handle = defined( 'CHILD_THEME_NAME' ) && CHILD_THEME_NAME ? sanitize_title_with_dashes( CHILD_THEME_NAME ) : 'child-theme';
 
-	$color_link = get_theme_mod( 'genesis_sample_link_color', genesis_sample_customizer_get_default_link_color() );
+	$color_link   = get_theme_mod( 'genesis_sample_link_color', genesis_sample_customizer_get_default_link_color() );
 	$color_accent = get_theme_mod( 'genesis_sample_accent_color', genesis_sample_customizer_get_default_accent_color() );
+	$logo         = wp_get_attachment_image_src( get_theme_mod( 'custom_logo' ), 'full' );
+
+	if ( $logo ) {
+		$logo_height           = absint( $logo[2] );
+		$logo_max_width        = get_theme_mod( 'genesis_sample_logo_width', 350 );
+		$logo_width            = absint( $logo[1] );
+		$logo_ratio            = $logo_width / max( $logo_height, 1 );
+		$logo_effective_height = min( $logo_width, $logo_max_width ) / max( $logo_ratio, 1 );
+		$logo_padding          = max( 0, ( 60 - $logo_effective_height ) / 2 );
+	}
 
 	$css = '';
 
-	//* Calculate Color Contrast
-	function genesis_sample_color_contrast( $color ) {
-	
-		$hexcolor = str_replace( '#', '', $color );
-
-		$red   = hexdec( substr( $hexcolor, 0, 2 ) );
-		$green = hexdec( substr( $hexcolor, 2, 2 ) );
-		$blue  = hexdec( substr( $hexcolor, 4, 2 ) );
-
-		$luminosity = ( ( $red * 0.2126 ) + ( $green * 0.7152 ) + ( $blue * 0.0722 ) );
-
-		return ( $luminosity > 128 ) ? '#333333' : '#ffffff';
-
-	}
-	
-	//* Calculate Color Brightness
-	function genesis_sample_color_brightness( $color, $change ) {
-
-		$hexcolor = str_replace( '#', '', $color );
-
-		$red   = hexdec( substr( $hexcolor, 0, 2 ) );
-		$green = hexdec( substr( $hexcolor, 2, 2 ) );
-		$blue  = hexdec( substr( $hexcolor, 4, 2 ) );
-	
-		$red   = max( 0, min( 255, $red + $change ) );
-		$green = max( 0, min( 255, $green + $change ) );  
-		$blue  = max( 0, min( 255, $blue + $change ) );
-
-		return '#'.dechex( $red ).dechex( $green ).dechex( $blue );
-
-	}
-
-	$css .= ( genesis_sample_customizer_get_default_link_color() !== $color_link ) ? sprintf( '
+	$css .= ( genesis_sample_customizer_get_default_link_color() !== $color_link ) ? sprintf(
+		'
 
 		a,
 		.entry-title a:focus,
@@ -68,32 +47,102 @@ function genesis_sample_css() {
 		.genesis-nav-menu .current-menu-item > a,
 		.genesis-nav-menu .sub-menu .current-menu-item > a:focus,
 		.genesis-nav-menu .sub-menu .current-menu-item > a:hover,
-		.js nav button:focus,
-		.js .menu-toggle:focus {
+		.menu-toggle:focus,
+		.menu-toggle:hover,
+		.sub-menu-toggle:focus,
+		.sub-menu-toggle:hover {
 			color: %s;
 		}
-		', $color_link ) : '';
 
-	$css .= ( genesis_sample_customizer_get_default_accent_color() !== $color_accent ) ? sprintf( '
+		',
+		$color_link
+	) : '';
+
+	$css .= ( genesis_sample_customizer_get_default_accent_color() !== $color_accent ) ? sprintf(
+		'
 
 		button:focus,
 		button:hover,
-		input:focus[type="button"],
-		input:focus[type="reset"],
-		input:focus[type="submit"],
-		input:hover[type="button"],
-		input:hover[type="reset"],
-		input:hover[type="submit"],
-		.archive-pagination li a:focus,
-		.archive-pagination li a:hover,
-		.archive-pagination .active a,
+		input[type="button"]:focus,
+		input[type="button"]:hover,
+		input[type="reset"]:focus,
+		input[type="reset"]:hover,
+		input[type="submit"]:focus,
+		input[type="submit"]:hover,
+		input[type="reset"]:focus,
+		input[type="reset"]:hover,
+		input[type="submit"]:focus,
+		input[type="submit"]:hover,
 		.button:focus,
-		.button:hover,
-		.sidebar .enews-widget input[type="submit"] {
-			background-color: %s;
-			color: %s;
+		.button:hover {
+			background-color: %1$s;
+			color: %2$s;
 		}
-		', $color_accent, genesis_sample_color_contrast( $color_accent ) ) : '';
+
+		@media only screen and (min-width: 960px) {
+			.genesis-nav-menu > .menu-highlight > a:hover,
+			.genesis-nav-menu > .menu-highlight > a:focus,
+			.genesis-nav-menu > .menu-highlight.current-menu-item > a {
+				background-color: %1$s;
+				color: %2$s;
+			}
+		}
+		',
+		$color_accent,
+		genesis_sample_color_contrast( $color_accent )
+	) : '';
+
+	$css .= ( has_custom_logo() && ( 200 <= $logo_effective_height ) ) ?
+		'
+		.site-header {
+			position: static;
+		}
+		'
+	: '';
+
+	$css .= ( has_custom_logo() && ( 350 !== $logo_max_width ) ) ? sprintf(
+		'
+		.wp-custom-logo .site-container .title-area {
+			max-width: %spx;
+		}
+		',
+		$logo_max_width
+	) : '';
+
+	// Place menu below logo and center logo once it gets big.
+	$css .= ( has_custom_logo() && ( 600 <= $logo_max_width ) ) ?
+		'
+		.wp-custom-logo .title-area,
+		.wp-custom-logo .menu-toggle,
+		.wp-custom-logo .nav-primary {
+			float: none;
+		}
+
+		.wp-custom-logo .title-area {
+			margin: 0 auto;
+			text-align: center;
+		}
+
+		@media only screen and (min-width: 960px) {
+			.wp-custom-logo .nav-primary {
+				text-align: center;
+			}
+
+			.wp-custom-logo .nav-primary .sub-menu {
+				text-align: left;
+			}
+		}
+		'
+	: '';
+
+	$css .= ( has_custom_logo() && $logo_padding && ( 1 < $logo_effective_height ) ) ? sprintf(
+		'
+		.wp-custom-logo .title-area {
+			padding-top: %spx;
+		}
+		',
+		$logo_padding + 5
+	) : '';
 
 	if ( $css ) {
 		wp_add_inline_style( $handle, $css );

@@ -6,47 +6,19 @@
  *
  * @package Genesis Sample
  * @author  StudioPress
- * @license GPL-2.0+
- * @link    http://www.studiopress.com/
+ * @license GPL-2.0-or-later
+ * @link    https://www.studiopress.com/
  */
-
-/**
- * Get default link color for Customizer.
- *
- * Abstracted here since at least two functions use it.
- *
- * @since 2.2.3
- *
- * @return string Hex color code for link color.
- */
-function genesis_sample_customizer_get_default_link_color() {
-	return '#c3251d';
-}
-
-/**
- * Get default accent color for Customizer.
- *
- * Abstracted here since at least two functions use it.
- *
- * @since 2.2.3
- *
- * @return string Hex color code for accent color.
- */
-function genesis_sample_customizer_get_default_accent_color() {
-	return '#c3251d';
-}
 
 add_action( 'customize_register', 'genesis_sample_customizer_register' );
 /**
- * Register settings and controls with the Customizer.
+ * Registers settings and controls with the Customizer.
  *
  * @since 2.2.3
- * 
+ *
  * @param WP_Customize_Manager $wp_customize Customizer object.
  */
-function genesis_sample_customizer_register() {
-
-	global $wp_customize;
+function genesis_sample_customizer_register( $wp_customize ) {
 
 	$wp_customize->add_setting(
 		'genesis_sample_link_color',
@@ -61,10 +33,10 @@ function genesis_sample_customizer_register() {
 			$wp_customize,
 			'genesis_sample_link_color',
 			array(
-				'description' => __( 'Change the default color for linked titles, menu links, post info links and more.', 'genesis-sample' ),
-			    'label'       => __( 'Link Color', 'genesis-sample' ),
-			    'section'     => 'colors',
-			    'settings'    => 'genesis_sample_link_color',
+				'description' => __( 'Change the color of post info links, hover color of linked titles, hover color of menu items, and more.', 'genesis-sample' ),
+				'label'       => __( 'Link Color', 'genesis-sample' ),
+				'section'     => 'colors',
+				'settings'    => 'genesis_sample_link_color',
 			)
 		)
 	);
@@ -82,11 +54,36 @@ function genesis_sample_customizer_register() {
 			$wp_customize,
 			'genesis_sample_accent_color',
 			array(
-				'description' => __( 'Change the default color for button hovers.', 'genesis-sample' ),
-			    'label'       => __( 'Accent Color', 'genesis-sample' ),
-			    'section'     => 'colors',
-			    'settings'    => 'genesis_sample_accent_color',
+				'description' => __( 'Change the default hover color for button links, the menu button, and submit buttons. This setting does not apply to buttons created with the Buttons block.', 'genesis-sample' ),
+				'label'       => __( 'Accent Color', 'genesis-sample' ),
+				'section'     => 'colors',
+				'settings'    => 'genesis_sample_accent_color',
 			)
+		)
+	);
+
+	$wp_customize->add_setting(
+		'genesis_sample_logo_width',
+		array(
+			'default'           => 350,
+			'sanitize_callback' => 'absint',
+		)
+	);
+
+	// Add a control for the logo size.
+	$wp_customize->add_control(
+		'genesis_sample_logo_width',
+		array(
+			'label'       => __( 'Logo Width', 'genesis-sample' ),
+			'description' => __( 'The maximum width of the logo in pixels.', 'genesis-sample' ),
+			'priority'    => 9,
+			'section'     => 'title_tagline',
+			'settings'    => 'genesis_sample_logo_width',
+			'type'        => 'number',
+			'input_attrs' => array(
+				'min' => 100,
+			),
+
 		)
 	);
 

@@ -1,22 +1,4 @@
-@media only screen and (min-width: $mobile) {
-	
-	html {
-		overflow-y: scroll; 
-	}
-}
-
-
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0,0,0,0);
-    border: 0;
-}
-
+/* Logo */
 
 .altbitmap {
 	display: none;
@@ -24,7 +6,13 @@
 .no-svgasimg .altbitmap {
 	display: block;
 }
-
+.title-area {
+    padding-bottom: 18px;
+    padding-top: 18px;
+}
+.genesis-nav-menu {
+    margin: 0.5rem 0;
+}
 /* ==========================================================================
    Selection Highlights
    ========================================================================== */
@@ -41,204 +29,5 @@
 	text-shadow: none;
 }
 
-/* ==========================================================================
-   Links
-   ========================================================================== */
-
-a,
-button,
-input:focus,
-input[type="button"],
-input[type="reset"],
-input[type="submit"],
-textarea:focus,
-.button,
-.gallery img {
-	-webkit-transition: all 0.1s ease-in-out;
-	-moz-transition:    all 0.1s ease-in-out;
-	-ms-transition:     all 0.1s ease-in-out;
-	-o-transition:      all 0.1s ease-in-out;
-	transition:         all 0.1s ease-in-out;
-}
-
-a {
-	color: $textColor;
-	text-decoration: none;
-	position: relative;
-	.site-inner & {
-		border-bottom: 1px solid $brandColor;
-		&:hover {
-			border-color: #FFFFFF;
-			text-decoration: none;
-		}
-	}
-	.site-inner .pagination & {
-		border-bottom: none;
-	}
-	&:hover {
-		color: $linkColor;
-	}
-	&:active {
-		top:1px;
-	}
-}
-#lightbox-nav a {
-	-webkit-transition: none;
-	-moz-transition:    none;
-	-ms-transition:     none;
-	-o-transition:      none;
-	transition:         none;
-	
-}
-#lightbox-container-image-data-box {
-	box-sizing: content-box;
-}
-
-
-div#cboxCurrent {
-	font-size: 14px !important;
-	line-height: 1.2 !important;
-	font-family: $body-font-family !important;
-	
-}
-
-
-/* ## WordPress
---------------------------------------------- */
-
-a.aligncenter img {
-	display: block;
-	margin: 0 auto;
-}
-
-a.alignnone {
-	display: inline-block;
-}
-
-.alignleft {
-	float: left;
-	text-align: left;
-}
-
-.alignright {
-	float: right;
-	text-align: right;
-}
-
-a.alignleft,
-a.alignnone,
-a.alignright {
-	max-width: 100%;
-}
-
-img.centered,
-.aligncenter {
-	display: block;
-	margin: 0 auto 24px;
-}
-
-img.alignnone,
-.alignnone {
-	margin-bottom: 12px;
-}
-
-a.alignleft,
-img.alignleft,
-.wp-caption.alignleft {
-	margin: 0 24px 24px 0;
-}
-
-a.alignright,
-img.alignright,
-.wp-caption.alignright {
-	margin: 0 0 24px 24px;
-}
-
-.wp-caption-text {
-	font-weight: 600;
-	margin: 0;
-	text-align: center;
-}
-
-.entry-content p.wp-caption-text {
-	margin-bottom: 0;
-}
-
-.entry-content .wp-audio-shortcode,
-.entry-content .wp-playlist,
-.entry-content .wp-video {
-	margin: 0 0 28px;
-}
-
-
-/* ## Objects
---------------------------------------------- */
-
-embed,
-iframe,
-img,
-object,
-video,
-.wp-caption {
-	max-width: 100%;
-}
-
-img {
-	height: auto;
-}
-
-figure {
-	margin: 0;
-}
-
-/* ## Avatar
---------------------------------------------- */
-
-.avatar {
-	border-radius: 50%;
-	float: left;
-}
-
-.author-box .avatar,
-.alignleft .avatar {
-	margin-right: 24px;
-}
-
-.alignright .avatar {
-	margin-left: 24px;
-}
-
-.comment .avatar {
-	margin: 0 16px 24px 0;
-}
-
-/* ## Genesis
---------------------------------------------- */
-
-.breadcrumb {
-	background-color: $offwhite;
-	margin-bottom: 1px;
-	padding: 12px 30px;
-}
-
-.after-entry,
-.archive-description,
-.author-box {
-	background-color: $offwhite;
-	margin-bottom: 40px;
-	padding: 60px;
-}
-
-.archive-description p:last-child,
-.author-box p:last-child {
-	margin-bottom: 0;
-}
-
-/* ## Jetpack
---------------------------------------------- */
-
-#wpstats {
-	display: none;
-}
 
 

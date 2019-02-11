@@ -12,16 +12,20 @@
  
 // props to [Brian Gardner and the CopyBlogger team] (https://github.com/copyblogger/genesis-sample)
 
-/** Child theme (do not remove) */
+// Starts the engine.
+require_once get_template_directory() . '/lib/init.php';
+
+// Defines the child theme (do not remove).
 define( 'CHILD_THEME_NAME', 'Tasty Webpack Starter' );
 define( 'CHILD_THEME_URL', 'http://tastydigital.com/' );
-define( 'CHILD_THEME_VERSION', '2.0.0' );
+define( 'CHILD_THEME_VERSION', '2.8.0' );
 
 // update app settings
-define( 'LOGO_URL', '/assets/images/TastyDigital-logo');
-define( 'FAVICON_URL', '/assets/images/favicon.ico');
+define( 'LOGO_URL', '/images/TastyDigital-logo');
+define( 'FAVICON_URL', '/images/favicon.ico');
 define( 'GOOGLE_API_KEY', 'UA-XXXXXXX-X');
-	
+
+
 // secret sauce to support webpack dev server...
 remove_action( 'wp_enqueue_scripts', 'genesis_enqueue_main_stylesheet', 5 );
 require __DIR__ . '/webpack-wp-scripts.php';
@@ -39,224 +43,232 @@ function webpack_enqueue_assets() {
 add_action( 'wp_enqueue_scripts', 'webpack_enqueue_assets', 5 );
 
 
-/** Start the engine */
-include_once( get_template_directory() . '/lib/init.php' );
-
-//* Setup Theme
-include_once( get_stylesheet_directory() . '/lib/theme-defaults.php' );
 
 
-//* Set Localization (do not remove)
-load_child_theme_textdomain( 'tasty-starter', apply_filters( 'child_theme_textdomain', get_stylesheet_directory() . '/languages', 'tasty-starter' ) );
+// Sets up the Theme.
+require_once get_stylesheet_directory() . '/lib/theme-defaults.php';
 
-//* Add Image upload and Color select to WordPress Theme Customizer
-require_once( get_stylesheet_directory() . '/lib/customize.php' );
+add_action( 'after_setup_theme', 'genesis_sample_localization_setup' );
+/**
+ * Sets localization (do not remove).
+ *
+ * @since 1.0.0
+ */
+function genesis_sample_localization_setup() {
 
-//* Include Customizer CSS
-include_once( get_stylesheet_directory() . '/lib/output.php' );
+	load_child_theme_textdomain( 'tasty-starter', get_stylesheet_directory() . '/languages' );
 
-
-function tasty_theme_add_editor_styles() {
-	add_editor_style( 'editor-style.css' );
 }
-add_action( 'admin_init', 'tasty_theme_add_editor_styles' );
 
+// Adds helper functions.
+require_once get_stylesheet_directory() . '/lib/helper-functions.php';
 
-// Clean up Head
-remove_action( 'wp_head', 'rsd_link' );
-remove_action( 'wp_head', 'wlwmanifest_link' );
-remove_action( 'wp_head', 'wp_generator' );
-remove_action( 'wp_head', 'wp_shortlink_wp_head' );
-remove_action( 'wp_head', 'feed_links', 2 );
-remove_action( 'wp_head', 'feed_links_extra', 3);
+// Adds image upload and color select to Customizer.
+require_once get_stylesheet_directory() . '/lib/customize.php';
 
+// Includes Customizer CSS.
+require_once get_stylesheet_directory() . '/lib/output.php';
 
-//* Disable any and all mention of emoji's
-//* Source code credit: http://ottopress.com/
-remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
-remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
-remove_action( 'wp_print_styles', 'print_emoji_styles' );
-remove_action( 'admin_print_styles', 'print_emoji_styles' );   
-remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
-remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );     
-remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
+// Adds WooCommerce support.
+require_once get_stylesheet_directory() . '/lib/woocommerce/woocommerce-setup.php';
 
+// Adds the required WooCommerce styles and Customizer CSS.
+require_once get_stylesheet_directory() . '/lib/woocommerce/woocommerce-output.php';
 
+// Adds the Genesis Connect WooCommerce notice.
+require_once get_stylesheet_directory() . '/lib/woocommerce/woocommerce-notice.php';
 
-// Structural Wraps
-add_theme_support( 'genesis-structural-wraps', array(
-	'header',
-	'nav',
-	//'subnav',
-	'site-inner',
-	'footer-widgets',
-	'footer'
-) );
+add_action( 'after_setup_theme', 'genesis_child_gutenberg_support' );
+/**
+ * Adds Gutenberg opt-in features and styling.
+ *
+ * @since 2.7.0
+ */
+function genesis_child_gutenberg_support() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- using same in all child themes to allow action to be unhooked.
+	require_once get_stylesheet_directory() . '/lib/gutenberg/init.php';
+}
 
+add_action( 'wp_enqueue_scripts', 'genesis_sample_enqueue_scripts_styles' );
+/**
+ * Enqueues scripts and styles.
+ *
+ * @since 1.0.0
+ */
+function genesis_sample_enqueue_scripts_styles() {
 
-//* Add HTML5 markup structure
-add_theme_support( 'html5', array( 'caption', 'comment-form', 'comment-list', 'gallery', 'search-form' ) );
+	wp_enqueue_style(
+		'genesis-sample-fonts',
+		'//fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,700',
+		array(),
+		CHILD_THEME_VERSION
+	);
 
-//* Add Accessibility support
-add_theme_support( 'genesis-accessibility', array( '404-page', 'drop-down-menu', 'headings', 'rems', 'search-form', 'skip-links' ) );
+	wp_enqueue_style( 'dashicons' );
 
-/** Add Viewport meta tag for mobile browsers //*/
+	wp_localize_script(
+		get_stylesheet(),
+		'genesis_responsive_menu',
+		genesis_sample_responsive_menu_settings()
+	);
+
+}
+
+/**
+ * Defines responsive menu settings.
+ *
+ * @since 2.3.0
+ */
+function genesis_sample_responsive_menu_settings() {
+
+	$settings = array(
+		'mainMenu'         => __( 'Menu', 'tasty-starter' ),
+		'menuIconClass'    => 'dashicons-before dashicons-menu',
+		'subMenu'          => __( 'Submenu', 'tasty-starter' ),
+		'subMenuIconClass' => 'dashicons-before dashicons-arrow-down-alt2',
+		'menuClasses'      => array(
+			'combine' => array(
+				'.nav-primary',
+			),
+			'others'  => array(),
+		),
+	);
+
+	return $settings;
+
+}
+
+// Adds support for HTML5 markup structure.
+add_theme_support( 'html5', genesis_get_config( 'html5' ) );
+
+// Adds support for accessibility.
+add_theme_support( 'genesis-accessibility', genesis_get_config( 'accessibility' ) );
+
+// Adds viewport meta tag for mobile browsers.
 add_theme_support( 'genesis-responsive-viewport' );
 
-//* Add support for custom header
-/*add_theme_support( 'custom-header', array(
-	'width'           => 600,
-	'height'          => 160,
-	'header-selector' => '.site-title a',
-	'header-text'     => false,
-	'flex-height'     => true,
-) );*/
+// Adds custom logo in Customizer > Site Identity.
+add_theme_support( 'custom-logo', genesis_get_config( 'custom-logo' ) );
 
-//* Add support for custom background
-//add_theme_support( 'custom-background' );
+// Renames primary and secondary navigation menus.
+add_theme_support( 'genesis-menus', genesis_get_config( 'menus' ) );
 
-//* Add support for after entry widget
+// Adds image sizes.
+add_image_size( 'sidebar-featured', 75, 75, true );
+
+// Adds support for after entry widget.
 add_theme_support( 'genesis-after-entry-widget-area' );
 
-//* Add support for 3-column footer widgets
-add_theme_support( 'genesis-footer-widgets', 4 );
-//* Rename primary and secondary navigation menus
-add_theme_support( 'genesis-menus' , array( 'primary' => __( 'After Header Menu', 'tasty' ), 'secondary' => __( 'Footer Menu', 'tasty' ) ) );
+// Adds support for 3-column footer widgets.
+add_theme_support( 'genesis-footer-widgets', 3 );
 
-//* Reposition the secondary navigation menu
+// Removes header right widget area.
+unregister_sidebar( 'header-right' );
+
+// Removes secondary sidebar.
+unregister_sidebar( 'sidebar-alt' );
+
+// Removes site layouts.
+genesis_unregister_layout( 'content-sidebar-sidebar' );
+genesis_unregister_layout( 'sidebar-content-sidebar' );
+genesis_unregister_layout( 'sidebar-sidebar-content' );
+
+// Removes output of primary navigation right extras.
+remove_filter( 'genesis_nav_items', 'genesis_nav_right', 10, 2 );
+remove_filter( 'wp_nav_menu_items', 'genesis_nav_right', 10, 2 );
+
+add_action( 'genesis_theme_settings_metaboxes', 'genesis_sample_remove_metaboxes' );
+/**
+ * Removes output of unused admin settings metaboxes.
+ *
+ * @since 2.6.0
+ *
+ * @param string $_genesis_admin_settings The admin screen to remove meta boxes from.
+ */
+function genesis_sample_remove_metaboxes( $_genesis_admin_settings ) {
+
+	remove_meta_box( 'genesis-theme-settings-header', $_genesis_admin_settings, 'main' );
+	remove_meta_box( 'genesis-theme-settings-nav', $_genesis_admin_settings, 'main' );
+
+}
+
+add_filter( 'genesis_customizer_theme_settings_config', 'genesis_sample_remove_customizer_settings' );
+/**
+ * Removes output of header and front page breadcrumb settings in the Customizer.
+ *
+ * @since 2.6.0
+ *
+ * @param array $config Original Customizer items.
+ * @return array Filtered Customizer items.
+ */
+function genesis_sample_remove_customizer_settings( $config ) {
+
+	unset( $config['genesis']['sections']['genesis_header'] );
+	unset( $config['genesis']['sections']['genesis_breadcrumbs']['controls']['breadcrumb_front_page'] );
+	return $config;
+
+}
+
+// Displays custom logo.
+add_action( 'genesis_site_title', 'the_custom_logo', 0 );
+
+// Repositions primary navigation menu.
+remove_action( 'genesis_after_header', 'genesis_do_nav' );
+add_action( 'genesis_header', 'genesis_do_nav', 12 );
+
+// Repositions the secondary navigation menu.
 remove_action( 'genesis_after_header', 'genesis_do_subnav' );
-add_action( 'genesis_footer', 'genesis_do_subnav', 5 );
+add_action( 'genesis_footer', 'genesis_do_subnav', 10 );
 
-//* Reduce the secondary navigation menu to one level depth
 add_filter( 'wp_nav_menu_args', 'genesis_sample_secondary_menu_args' );
+/**
+ * Reduces secondary navigation menu to one level depth.
+ *
+ * @since 2.2.3
+ *
+ * @param array $args Original menu options.
+ * @return array Menu options with depth set to 1.
+ */
 function genesis_sample_secondary_menu_args( $args ) {
 
-	if ( 'secondary' != $args['theme_location'] ) {
+	if ( 'secondary' !== $args['theme_location'] ) {
 		return $args;
 	}
 
 	$args['depth'] = 1;
-
 	return $args;
 
 }
 
-//* Modify size of the Gravatar in the author box
 add_filter( 'genesis_author_box_gravatar_size', 'genesis_sample_author_box_gravatar' );
+/**
+ * Modifies size of the Gravatar in the author box.
+ *
+ * @since 2.2.3
+ *
+ * @param int $size Original icon size.
+ * @return int Modified icon size.
+ */
 function genesis_sample_author_box_gravatar( $size ) {
 
 	return 90;
 
 }
 
-//* Modify size of the Gravatar in the entry comments
 add_filter( 'genesis_comment_list_args', 'genesis_sample_comments_gravatar' );
+/**
+ * Modifies size of the Gravatar in the entry comments.
+ *
+ * @since 2.2.3
+ *
+ * @param array $args Gravatar settings.
+ * @return array Gravatar settings with modified size.
+ */
 function genesis_sample_comments_gravatar( $args ) {
 
 	$args['avatar_size'] = 60;
-
 	return $args;
 
 }
-
-
-// Remove Edit link
-add_filter( 'genesis_edit_post_link', '__return_false' );
-
-
-add_filter('genesis_footer_creds_text', 'tasty_footer_creds_filter');
-function tasty_footer_creds_filter( $creds ) {
-	$creds = '[footer_copyright year=2016] '.get_bloginfo ('name').' &middot; Website by <a href="http://tastydigital.com/" rel="Web designer">Tasty Digital</a>';
-	return $creds;
-}
-
-
-add_filter('language_attributes', 'modernizr_class');
-function modernizr_class($output) {
-    return $output . ' class="no-js"';
-}
-
-
-
-/**
- * Remove default link for images
- */
-function tasty_imagelink_setup() {
-	$image_set = get_option( 'image_default_link_type' );
-	if ($image_set !== 'none') {
-		update_option( 'image_default_link_type', 'none' );
-	}
-}
-add_action( 'admin_init', 'tasty_imagelink_setup', 10 );
-
-/**
- * Remove Query Strings From Static Resources
- */
-function tasty_remove_script_version( $src ){
-	$parts = explode( '?ver', $src );
-	return $parts[0];
-}	
-add_filter( 'script_loader_src', 'tasty_remove_script_version', 15, 1 );
-add_filter( 'style_loader_src', 'tasty_remove_script_version', 15, 1 );
-
-
-/**
- * Remove Read More Jump
- */
-function tasty_remove_more_jump_link( $link ) {
-	$offset = strpos( $link, '#more-' );
-	if ($offset) {
-		$end = strpos( $link, '"',$offset );
-	}
-	if ($end) {
-		$link = substr_replace( $link, '', $offset, $end-$offset );
-	}
-	return $link;
-}
-add_filter( 'the_content_more_link', 'tasty_remove_more_jump_link' );
-
-
-/****************************************
-Misc Theme Functions
-*****************************************/
-
-/**
- * Unregister the superfish scripts
- */
-function tasty_unregister_superfish() {
-	wp_dequeue_script( 'superfish' );
-	wp_dequeue_script( 'superfish-args' );
-}
-add_action( 'wp_enqueue_scripts', 'tasty_unregister_superfish' );
-
-/**
- * Filter Yoast SEO Metabox Priority
- */
-function tasty_filter_yoast_seo_metabox() {
-	return 'low';
-}
-add_filter( 'wpseo_metabox_prio', 'tasty_filter_yoast_seo_metabox' );
-
-/** Adding custom Favicon */
-add_filter( 'genesis_pre_load_favicon', 'tasty_favicon' );
-function tasty_favicon( $favicon_url ) {
-	if(file_exists(get_stylesheet_directory() . FAVICON_URL)){
-		return get_stylesheet_directory_uri() . FAVICON_URL;
-	}else{
-		return $favicon_url;
-	}
-}
-
-
-//* Remove 'Editor' from 'Appearance' Menu. 
-//* This stops users and hackers from being able to edit files from within WordPress.  
-define( 'DISALLOW_FILE_EDIT', true );
-
-
-// don’t load WPML CSS
-define('ICL_DONT_LOAD_NAVIGATION_CSS', true);
-define('ICL_DONT_LOAD_LANGUAGE_SELECTOR_CSS', true);
-define('ICL_DONT_LOAD_LANGUAGES_JS', true);
 
 
 /****************************************
@@ -264,5 +276,4 @@ Theme Views
 *****************************************/
 
 include_once( CHILD_DIR . '/lib/theme.php' );
-
 
